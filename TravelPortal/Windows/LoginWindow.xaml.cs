@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
+using Npgsql;
+
 namespace TravelPortal.Windows
 {
     /// <summary>
@@ -25,7 +20,8 @@ namespace TravelPortal.Windows
             Application.Current.Shutdown();
         }
 
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Window_MouseLeftButtonDown(object sender,
+            MouseButtonEventArgs e)
         {
             DragMove();
         }
