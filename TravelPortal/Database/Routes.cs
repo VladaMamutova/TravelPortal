@@ -30,10 +30,37 @@ namespace TravelPortal.Database
             catch (Exception e)
             {
                 throw new Exception(
-                    "Произошла ошибка при фильтрации записей по названию маршрута",
-                    e);
+                    "Произошла ошибка при фильтрации записей по названию " +
+                    "маршрута", e);
             }
+        }
 
+        public static List<Route> Search(DateTime date)
+        {
+            try
+            {
+                return ExecuteQuery(Queries.Routes.FilterDate(new NpgsqlDate(date)));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(
+                    "Произошла ошибка при фильтрации записей по дате начала маршрута " +
+                    "маршрута", e);
+            }
+        }
+
+        public static List<Route> Search(int duration)
+        {
+            try
+            {
+                return ExecuteQuery(Queries.Routes.FilterDuration(duration));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(
+                    "Произошла ошибка при фильтрации записей по длительности маршрута " +
+                    "маршрута", e);
+            }
         }
 
         public static List<Route> ExecuteQuery(string query)

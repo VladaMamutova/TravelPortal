@@ -56,5 +56,26 @@ namespace TravelPortal.Windows
             VouchersDataGrid.ItemsSource = string.IsNullOrWhiteSpace(ClientFio.Text) ?
                 Vouchers.GetAll() : Vouchers.Search(ClientFio.Text);
         }
+
+        private void StartDate_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            RoutesDataGrid.ItemsSource = string.IsNullOrWhiteSpace(StartDate.Text) ?
+                Routes.GetAll() : Routes.Search(StartDate.DisplayDate);
+        }
+
+        private void Duration_Changed(object sender, TextChangedEventArgs e)
+        {
+            RoutesDataGrid.ItemsSource = string.IsNullOrWhiteSpace(StartDate.Text) ?
+                Routes.GetAll() : Routes.Search(Duration.Text);
+        }
+
+        private void StatusBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            VouchersDataGrid.ItemsSource = StatusBox.SelectedIndex == -1
+                ? Vouchers.GetAll()
+                : Vouchers.SearchByStatus(
+                    ((ComboBoxItem) (StatusBox.Items[StatusBox.SelectedIndex]))
+                    .Content.ToString());
+        }
     }
 }

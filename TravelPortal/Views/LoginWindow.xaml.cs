@@ -1,9 +1,7 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using Npgsql;
 
-namespace TravelPortal.Windows
+namespace TravelPortal.Views
 {
     /// <summary>
     /// Логика взаимодействия для LoginWindow.xaml

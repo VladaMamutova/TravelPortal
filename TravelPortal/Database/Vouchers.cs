@@ -32,6 +32,18 @@ namespace TravelPortal.Database
             }
         }
 
+        public static List<Voucher> SearchByStatus(string status)
+        {
+            try
+            {
+                return ExecuteQuery(Queries.Vouchers.FilterStatus(status));
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Произошла ошибка при получении списка путёвок", e);
+            }
+        }
+
         public static List<Voucher> ExecuteQuery(string query)
         {
             using (var connection =

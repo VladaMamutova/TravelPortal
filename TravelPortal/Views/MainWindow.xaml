@@ -52,8 +52,8 @@
                         <TextBox Width="100"  Margin="10 0" materialDesign:HintAssist.Hint="Стоимость"></TextBox>
                         <!--<Slider Style="{StaticResource MaterialDesignDiscreteSlider}" Value="4" Width="150" Height="Auto" SelectionEnd="6" SelectionStart="4" materialDesign:HintAssist.Hint="Стоимость"></Slider>-->
                         <!--materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintComboBox}"-->
-                        <DatePicker Height="40" materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
-                        <TextBox Width="100"  Margin="10 0" materialDesign:HintAssist.Hint="Длительность"></TextBox>
+                        <DatePicker x:Name="StartDate" Height="40" materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateChanged="StartDate_Changed"/>
+                        <TextBox x:Name="Duration" Width="100"  Margin="10 0" materialDesign:HintAssist.Hint="Длительность" TextChanged="Duration_Changed"></TextBox>
                         <ComboBox Height="40" Width="170" Margin="0" VerticalContentAlignment="Bottom">
                             <ComboBoxItem Content="Все виды транспорта" IsSelected="True"/>
                             <ComboBoxItem Content="Транспорт 1"/>
@@ -108,8 +108,8 @@
                     </StackPanel>
                     <!--<Slider Width="100" VerticalContentAlignment="Bottom" Height="Auto" IsSelectionRangeEnabled="True" materialDesign:HintAssist.Hint="Стоимость"></Slider>-->
                     <!--materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintComboBox}"-->
-                    <ComboBox Height="40" Width="200" Margin="0" VerticalContentAlignment="Bottom">
-                        <ComboBoxItem Content="Все социальные положения" IsSelected="True"/>
+                    <ComboBox x:Name="StatusBox" Height="40" Width="200" Margin="0" IsEditable="True" materialDesign:HintAssist.Hint="Все социальные положения"  VerticalContentAlignment="Bottom" SelectionChanged="StatusBox_SelectionChanged">
+                        <!--<ComboBoxItem Content="Все социальные положения"/>-->
                         <ComboBoxItem Content="Домохозяйка"/>
                         <ComboBoxItem Content="Предприниматель"/>
                     </ComboBox>

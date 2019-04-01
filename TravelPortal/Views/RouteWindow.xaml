@@ -1,0 +1,45 @@
+﻿<Window x:Class="TravelPortal.Views.RouteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontSize="14"
+        TextElement.Foreground="#0D47A1"
+        SizeToContent="Height" Width="300" Height="370" ResizeMode="NoResize" BorderBrush="Gray" BorderThickness="1" WindowStyle="None" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+        <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
+            <Setter Property="IsEditable" Value="True"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#FF2196F3" MouseLeftButtonDown="Move">
+            <TextBlock Text="Добавление маршрута" TextAlignment="Left" Margin="10 0 40 0" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" materialDesign:ShadowAssist.ShadowDepth="Depth0" />
+            <Button Style="{DynamicResource MaterialDesignToolButton}"  HorizontalAlignment="Right" Width="30" Click="CloseWindow_OnClick">
+                <materialDesign:PackIcon Kind="Close" Foreground="WhiteSmoke" ToolTip="Закрыть окно"></materialDesign:PackIcon>
+            </Button>
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
+            <TextBox materialDesign:HintAssist.Hint="Название маршрута" TextWrapping="Wrap" HorizontalContentAlignment="Left" Margin="0 0 0 5"/>
+            <Grid Height="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="Дата начала" HorizontalAlignment="Stretch" />
+                <TextBox Grid.Column="2" materialDesign:HintAssist.Hint="Количество дней" HorizontalAlignment="Stretch"/>
+            </Grid>
+            <ComboBox materialDesign:HintAssist.Hint="Вид транспорта" Margin="0 5"/>
+            <ComboBox materialDesign:HintAssist.Hint="Название отеля" Margin="0 5"/>
+            <CheckBox Content="Питание включено" Margin="0 10 0 0"/>
+            <TextBox materialDesign:HintAssist.Hint="Стоимость" Margin="0 5 0 0"/>
+            <Button Content="Сохранить маршрут"  HorizontalAlignment="Stretch" Margin="0 20 0 0"/>
+        </StackPanel>
+    </Grid>
+</Window>
