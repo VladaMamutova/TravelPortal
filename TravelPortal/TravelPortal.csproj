@@ -145,17 +145,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Assets\back.jpg" />
-    <Resource Include="Assets\pexels-photo-247885..jpeg" />
-    <Resource Include="Assets\pexels-photo-247885.jpeg" />
-    <Resource Include="Assets\pexels-photo-374592.jpeg" />
-    <Resource Include="Assets\pexels-photo-701026.jpeg" />
-    <Resource Include="Assets\pexels-photo-701337.jpeg" />
-    <Resource Include="Assets\pexels-photo-701449.jpeg" />
-    <Resource Include="Assets\pexels-photo-701762.jpeg" />
-    <Resource Include="Assets\welcome.jpeg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\welcome.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
