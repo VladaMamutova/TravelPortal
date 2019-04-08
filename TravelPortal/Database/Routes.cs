@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Npgsql;
 using NpgsqlTypes;
-using TravelPortal.Entities;
+using TravelPortal.Models;
 
 namespace TravelPortal.Database
 {

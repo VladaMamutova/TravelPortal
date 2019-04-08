@@ -1,8 +1,10 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using TravelPortal.Database;
+using TravelPortal.ViewModels;
 
-namespace TravelPortal.Windows
+namespace TravelPortal.Views
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -12,6 +14,7 @@ namespace TravelPortal.Windows
         public MainWindow()
         {
             InitializeComponent();
+            RoutesPage.DataContext = new RouteViewModel();
         }
 
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
@@ -65,8 +68,8 @@ namespace TravelPortal.Windows
 
         private void Duration_Changed(object sender, TextChangedEventArgs e)
         {
-            RoutesDataGrid.ItemsSource = string.IsNullOrWhiteSpace(StartDate.Text) ?
-                Routes.GetAll() : Routes.Search(Duration.Text);
+            RoutesDataGrid.ItemsSource = string.IsNullOrWhiteSpace(Duration.Text) ?
+                Routes.GetAll() : Routes.Search(Convert.ToInt32(Duration.Text));
         }
 
         private void StatusBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

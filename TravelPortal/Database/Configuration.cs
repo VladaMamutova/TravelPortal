@@ -2,7 +2,7 @@
 {
     public static class Configuration
     {
-        const string DATABASE_NAME = "tralelagencies";
+        const string DATABASE_NAME = "travelagencies";
         public static string Server { get; set; }
         public static int Port { get; set; }
         public static string UserId { get; set; }

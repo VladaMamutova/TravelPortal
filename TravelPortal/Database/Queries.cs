@@ -30,5 +30,7 @@ namespace TravelPortal.Database
             public static string FilterStatus(string status)=>
                 SelectAll + $"where status_id = (select status_id from status where lower(type) like lower('{status}'))";
         }
+
+        public static string SelectAllHotels = "select name from residence ";
     }
 }

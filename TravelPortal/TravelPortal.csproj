@@ -86,9 +86,10 @@
     <Compile Include="Database\Configuration.cs" />
     <Compile Include="Database\Queries.cs" />
     <Compile Include="Database\Vouchers.cs" />
-    <Compile Include="Entities\Route.cs" />
+    <Compile Include="Models\Route.cs" />
     <Compile Include="Database\Routes.cs" />
-    <Compile Include="Entities\Voucher.cs" />
+    <Compile Include="Models\Voucher.cs" />
+    <Compile Include="ViewModels\RouteViewModel.cs" />
     <Compile Include="Views\VoucherWindow.xaml.cs">
       <DependentUpon>VoucherWindow.xaml</DependentUpon>
     </Compile>

@@ -1,6 +1,6 @@
 ﻿using NpgsqlTypes;
 
-namespace TravelPortal.Entities
+namespace TravelPortal.Models
 {
     public class Route
     {
