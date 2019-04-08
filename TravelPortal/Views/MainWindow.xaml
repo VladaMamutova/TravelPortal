@@ -20,110 +20,19 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <WrapPanel Grid.Column="0" HorizontalAlignment="Stretch" Background="#FF2196F3" MouseLeftButtonDown="Move">
-                <Button Content="Маршруты" Width="150" Height="45" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" materialDesign:ShadowAssist.ShadowDepth="Depth0" Click="Routes_Click"/>
-                <Button Content="Путёвки" Width="150" Height="45" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" materialDesign:ShadowAssist.ShadowDepth="Depth0" Click="Vouchers_Click"/>
+                <Button x:Name="RouteMenuItem" Content="Маршруты" ContentStringFormat="Маршруты" Width="150" Height="45" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" materialDesign:ShadowAssist.ShadowDepth="Depth0" Command="{Binding NavigateCommand}" CommandParameter="{Binding Path=ContentStringFormat, ElementName=RouteMenuItem}"/>
+                <Button x:Name="VoucherMenuItem" Content="Путёвки" ContentStringFormat="Путёвки" Width="150" Height="45" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" materialDesign:ShadowAssist.ShadowDepth="Depth0" Command="{Binding NavigateCommand}" CommandParameter="{Binding Path=ContentStringFormat, ElementName=VoucherMenuItem}"/>
             </WrapPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" Background="#FF2196F3" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0" MouseLeftButtonDown="Move">
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <materialDesign:PackIcon Kind="User"/>
+                    <materialDesign:PackIcon Kind="User" Width="20" Height="20"/>
                 </Button>
-                <TextBlock Text="Мамутова В.А." Foreground="WhiteSmoke" VerticalAlignment="Center" FontSize="14"/>
-                <Button x:Name="ButtonClose" Margin="10 0 0 0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click">
-                    <materialDesign:PackIcon Kind="Power"/>
+                <TextBlock Text="Мамутова В.А." Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+                <Button x:Name="ButtonClose" Margin="10 0 0 0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click">
+                    <materialDesign:PackIcon Kind="Power" Width="25" Height="25"/>
                 </Button>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1" Margin="10" x:Name="RoutesPage" Visibility="Visible">
-            <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <WrapPanel Grid.Column="0">
-                        <StackPanel Margin="10 0" Height="40" Orientation="Horizontal">
-                            <materialDesign:PackIcon Margin="0 5 5 0" Kind="Search" VerticalAlignment="Center" Foreground="#FF2196F3"/>
-                            <TextBox x:Name="RouteName" materialDesign:HintAssist.Hint="Введите наименование маршрута" Width="250" TextChanged="RouteName_Changed" />
-                        </StackPanel>
-                        <TextBox Width="100"  Margin="10 0" materialDesign:HintAssist.Hint="Стоимость"></TextBox>
-                        <!--<Slider Style="{StaticResource MaterialDesignDiscreteSlider}" Value="4" Width="150" Height="Auto" SelectionEnd="6" SelectionStart="4" materialDesign:HintAssist.Hint="Стоимость"></Slider>-->
-                        <!--materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintComboBox}"-->
-                        <DatePicker x:Name="StartDate" Height="40" materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateChanged="StartDate_Changed"/>
-                        <TextBox x:Name="Duration" Width="100"  Margin="10 0" materialDesign:HintAssist.Hint="Длительность" TextChanged="Duration_Changed"></TextBox>
-                    <ComboBox Height="40" Width="170" Margin="0"  IsEditable="True" materialDesign:HintAssist.Hint="Все виды транспорта" VerticalContentAlignment="Bottom"/>
-                    <ComboBox Height="40" Width="150" Margin="10 0" ItemsSource="{Binding Path=HotelCollection}" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="{Binding Path=Hotel}" IsEditable="True" materialDesign:HintAssist.Hint="Все отели" VerticalContentAlignment="Bottom"/>
-                    </WrapPanel>
-                    <Button Grid.Column="1" Content="Добавить" Width="100" Height="30" Margin="10" Click="AddRoute_OnClick"></Button>
-                </Grid>
-                <DataGrid x:Name="RoutesDataGrid" Style="{StaticResource MaterialDesignDataGrid}" Grid.Row="1" FontSize="14" HeadersVisibility="Column" CanUserResizeRows="False" HorizontalGridLinesBrush="LightGray" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False">
-                    <DataGrid.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        </Style>
-                    </DataGrid.CellStyle>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn IsReadOnly ="True" Header="Наименование" Binding="{Binding Path=Name}"/>
-                        <DataGridTextColumn IsReadOnly ="True" Header="Стоимость" Binding="{Binding Path=Cost}"/>
-                        <DataGridTextColumn IsReadOnly ="True" Header="Дата начала" Binding="{Binding Path=Date}"/>
-                            <DataGridTextColumn IsReadOnly ="True" Header="Длительность" Binding="{Binding Path=Duration}"/>
-                        <DataGridTextColumn IsReadOnly ="True" Header="Транспорт" Binding="{Binding Path=Transport}"/>
-                        <DataGridTextColumn IsReadOnly ="True" Header="Отель" Binding="{Binding Path=Residence}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Height="30">
-                <TextBlock Margin="10,0,7,0" Text="Пользователей:" VerticalAlignment="Center" ></TextBlock>
-                <TextBlock Text="{Binding Path=RouteCount}" VerticalAlignment="Center" ></TextBlock>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="1" x:Name="VouchersPage" Visibility="Collapsed" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <WrapPanel Grid.Column="0">
-                    <StackPanel Margin="10 0" Height="40" Orientation="Horizontal">
-                        <materialDesign:PackIcon Margin="0 5 5 0" Kind="Search" VerticalAlignment="Center" Foreground="#FF2196F3"/>
-                        <TextBox x:Name="ClientFio" materialDesign:HintAssist.Hint="Введите ФИО клиента" Width="300" TextChanged="ClientFio_Changed"/>
-                    </StackPanel>
-                    <!--<Slider Width="100" VerticalContentAlignment="Bottom" Height="Auto" IsSelectionRangeEnabled="True" materialDesign:HintAssist.Hint="Стоимость"></Slider>-->
-                    <!--materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintComboBox}"-->
-                    <ComboBox x:Name="StatusBox" Height="40" Width="200" Margin="0" IsEditable="True" materialDesign:HintAssist.Hint="Все социальные положения"  VerticalContentAlignment="Bottom" SelectionChanged="StatusBox_SelectionChanged">
-                        <!--<ComboBoxItem Content="Все социальные положения"/>-->
-                        <ComboBoxItem Content="Домохозяйка"/>
-                        <ComboBoxItem Content="Предприниматель"/>
-                    </ComboBox>
-                </WrapPanel>
-                <Button Grid.Column="1" Content="Добавить" Width="100" Height="30" Margin="10"></Button>
-            </Grid>
-            <DataGrid x:Name="VouchersDataGrid" Style="{StaticResource MaterialDesignDataGrid}" Grid.Row="1" FontSize="14" HeadersVisibility="Column" CanUserResizeRows="False" HorizontalGridLinesBrush="LightGray" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False">
-                <DataGrid.CellStyle>
-                    <Style TargetType="DataGridCell">
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    </Style>
-                </DataGrid.CellStyle>
-                <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly ="True" Header="ФИО клиента" Binding="{Binding Path=ClientFio}"/>
-                    <!--<DataGridTextColumn IsReadOnly ="True" Header="Маршрут" Binding="{Binding Path=Route}"/>-->
-                    <DataGridTextColumn IsReadOnly ="True" Header="Домашний адрес" Binding="{Binding Path=Address}"/>
-                    <DataGridTextColumn IsReadOnly ="True" Header="Телефон" Binding="{Binding Path=Phone}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Height="30">
-                <TextBlock Margin="10,0,7,0" Text="Пользователей:" VerticalAlignment="Center" ></TextBlock>
-                <TextBlock Text="0" VerticalAlignment="Center" ></TextBlock>
-            </StackPanel>
-        </Grid>
+        <Frame Grid.Row="1" Content="{Binding Path=SelectedPage}" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </Window>
