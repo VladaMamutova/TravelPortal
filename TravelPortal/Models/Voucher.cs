@@ -5,21 +5,22 @@ namespace TravelPortal.Models
     public class Voucher
     {
         private int _voucherId;
-        //private int _routeId;
-        //private int _status_id;
 
         public string ClientFio { get; set; }
-        public NpgsqlDate Birthday { get; set; }
+        public string Route { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
+        public NpgsqlDate Birthday { get; set; }
 
-        public Voucher(int voucherId, string clientFio, NpgsqlDate birthday, string address, string phone)
+        public Voucher(int voucherId, string clientFio, string route,
+            string address, string phone, NpgsqlDate birthday)
         {
             _voucherId = voucherId;
             ClientFio = clientFio;
-            Birthday = birthday;
+            Route = route;
             Address = address;
             Phone = phone;
+            Birthday = birthday;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace TravelPortal.Database
             catch (Exception e)
             {
                 throw new Exception(
-                    "Произошла ошибка при получении списка маршрутов", e);
+                    "Произошла ошибка при получении списка маршрутов.", e);
             }
         }
 
@@ -31,7 +31,7 @@ namespace TravelPortal.Database
             {
                 throw new Exception(
                     "Произошла ошибка при фильтрации записей по названию " +
-                    "маршрута", e);
+                    "маршрута.", e);
             }
         }
 
@@ -44,8 +44,8 @@ namespace TravelPortal.Database
             catch (Exception e)
             {
                 throw new Exception(
-                    "Произошла ошибка при фильтрации записей по дате начала маршрута " +
-                    "маршрута", e);
+                    "Произошла ошибка при фильтрации записей по дате начала " +
+                    "маршрута.", e);
             }
         }
 
@@ -58,8 +58,36 @@ namespace TravelPortal.Database
             catch (Exception e)
             {
                 throw new Exception(
-                    "Произошла ошибка при фильтрации записей по длительности маршрута " +
+                    "Произошла ошибка при фильтрации записей по длительности " +
+                    "маршрута.", e);
+            }
+        }
+
+        public static List<Route> FilterResidence(string residence)
+        {
+            try
+            {
+                return ExecuteQuery(Queries.Routes.FilterResidence(residence));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(
+                    "Произошла ошибка при фильтрации записей по отелю " +
                     "маршрута", e);
+            }
+        }
+
+        public static List<Route> FilterTransport(string transport)
+        {
+            try
+            {
+                return ExecuteQuery(Queries.Routes.FilterTransport(transport));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(
+                    "Произошла ошибка при фильтрации записей по типу " +
+                    "транспорта маршрута", e);
             }
         }
 
@@ -82,22 +110,14 @@ namespace TravelPortal.Database
                             double cost = reader.GetDouble(2);
                             NpgsqlDate date = reader.GetDate(3);
                             int duration = reader.GetInt32(4);
+                            string residence = reader.GetString(5).TrimEnd();
+                            bool meels = reader.GetBoolean(6);
+                            string transport = reader.GetString(7).TrimEnd();
+                            //double transportCost = reader.GetDouble(8);
 
                             routes.Add(new Route(routeId, name, date, duration,
-                                cost));
-                            //int routeId = reader.GetInt32(0);
-                            //string name = reader.GetString(1).TrimEnd();
-                            //NpgsqlDate date = reader.GetDate(2);
-                            //int transportTypeId = reader.GetInt32(3);
-                            //int residenceId = reader.GetInt32(4);
-                            //bool meels = reader.GetBoolean(5);
-                            //int duration = reader.GetInt32(6);
-                            //double cost = reader.GetDouble(7);
-                            //int agencyId = reader.GetInt32(8);
-
-                            //routes.Add(new Route(routeId, residenceId,
-                            //    transportTypeId, agencyId, name, date,
-                            //    meels, duration, cost));
+                                cost, residence, meels, transport,
+                                0));
                         }
 
                         return routes;

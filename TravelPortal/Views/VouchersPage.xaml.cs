@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using TravelPortal.Database;
+using TravelPortal.ViewModels;
 
 namespace TravelPortal.Views
 {
@@ -11,6 +12,7 @@ namespace TravelPortal.Views
         public VouchersPage()
         {
             InitializeComponent();
+            DataContext = new VoucherViewModel();
         }
 
         private void ClientFio_Changed(object sender, TextChangedEventArgs e)
@@ -23,9 +25,7 @@ namespace TravelPortal.Views
         {
             VouchersDataGrid.ItemsSource = StatusBox.SelectedIndex == -1
                 ? Vouchers.GetAll()
-                : Vouchers.SearchByStatus(
-                    ((ComboBoxItem)(StatusBox.Items[StatusBox.SelectedIndex]))
-                    .Content.ToString());
+                : Vouchers.SearchByStatus(StatusBox.SelectedItem.ToString());
         }
     }
 }

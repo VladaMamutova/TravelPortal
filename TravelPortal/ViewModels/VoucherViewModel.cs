@@ -4,28 +4,20 @@ using TravelPortal.Database;
 
 namespace TravelPortal.ViewModels
 {
-    /// <summary>
-    /// Модель представления для страницы маршрутов.
-    /// </summary>
-    class RouteViewModel
+    public class VoucherViewModel
     {
-        public List<string> HotelCollection { get; }
-        public string SelectedHotel { get; set; }
+        public List<string> StatusCollection { get; }
+        public string SelectedStatus { get; set; }
 
-        public List<string> TransportCollection { get; }
-        public string SelectedTransport { get; set; }
-
-        public RouteViewModel()
+        public VoucherViewModel()
         {
             using (var connection =
                 new NpgsqlConnection(Configuration.GetConnetionString()))
             {
                 connection.Open();
 
-                HotelCollection =
-                    GetCollection(connection, Queries.SelectAllHotels);
-                TransportCollection = GetCollection(connection,
-                    Queries.SelectAllTransport);
+                StatusCollection =
+                    GetCollection(connection, Queries.SelectAllStatus);
             }
         }
 

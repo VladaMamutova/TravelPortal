@@ -60,12 +60,13 @@ namespace TravelPortal.Database
                         {
                             int voucherId = reader.GetInt32(0);
                             string fio = reader.GetString(1).TrimEnd();
-                            string phone = reader.GetString(2);
-                            string address = reader.GetString(3);
-                            NpgsqlDate birthday = reader.GetDate(4);
+                            string route = reader.GetString(2).TrimEnd();
+                            string phone = reader.GetString(3).TrimEnd();
+                            string address = reader.GetString(4).TrimEnd();
+                            NpgsqlDate birthday = reader.GetDate(5);
 
-                            vouchers.Add(new Voucher(voucherId, fio,
-                                birthday, address, phone));
+                            vouchers.Add(new Voucher(voucherId, fio, route,
+                                address, phone, birthday));
                         }
 
                         return vouchers;

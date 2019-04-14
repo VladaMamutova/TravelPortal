@@ -7,8 +7,10 @@ using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
-    // Модель представления для главного окна,
-    // которая вклюяает представление для меню и главного фрейма.
+    /// <summary>
+    /// Модель представления для главного окна,
+    /// которая включает представление меню и главного фрейма.
+    /// </summary>
     public class MenuViewModel : INotifyPropertyChanged
     {
         private string _selectedPageTitle; 

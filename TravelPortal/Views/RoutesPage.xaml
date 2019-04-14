@@ -5,8 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
+      FontSize="14"
       d:DesignHeight="450" d:DesignWidth="800">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,17 +19,17 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <WrapPanel Grid.Column="0">
-                <StackPanel Margin="10 0" Height="40" Orientation="Horizontal">
+                <StackPanel Margin="5 0" Orientation="Horizontal">
                     <materialDesign:PackIcon Margin="0 5 5 0" Kind="Search" VerticalAlignment="Center" Foreground="#FF2196F3"/>
-                    <TextBox x:Name="RouteName" materialDesign:HintAssist.Hint="Введите наименование маршрута" Width="250" TextChanged="RouteName_Changed" />
+                    <TextBox x:Name="RouteName" materialDesign:HintAssist.Hint="Название маршрута" Width="200" TextChanged="RouteName_Changed" />
                 </StackPanel>
-                <TextBox Width="100"  Margin="10 0" materialDesign:HintAssist.Hint="Стоимость"></TextBox>
+                <TextBox Width="100"  Margin="5 0" materialDesign:HintAssist.Hint="Стоимость"></TextBox>
                 <!--<Slider Style="{StaticResource MaterialDesignDiscreteSlider}" Value="4" Width="150" Height="Auto" SelectionEnd="6" SelectionStart="4" materialDesign:HintAssist.Hint="Стоимость"></Slider>-->
                 <!--materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintComboBox}"-->
-                <DatePicker x:Name="StartDate" Height="40" materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateChanged="StartDate_Changed"/>
-                <TextBox x:Name="Duration" Width="100"  Margin="10 0" materialDesign:HintAssist.Hint="Длительность" TextChanged="Duration_Changed"></TextBox>
-                <ComboBox Height="40" Width="170" Margin="0"  IsEditable="True" materialDesign:HintAssist.Hint="Все виды транспорта" VerticalContentAlignment="Bottom"/>
-                <ComboBox Height="40" Width="150" Margin="10 0" ItemsSource="{Binding HotelCollection}"  SelectedValue="{Binding SelectedHotel}" IsEditable="True" materialDesign:HintAssist.Hint="Все отели" VerticalContentAlignment="Bottom"/>
+                <DatePicker x:Name="StartDate" materialDesign:HintAssist.Hint="Дата начала" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateChanged="StartDate_Changed"/>
+                <TextBox x:Name="Duration" Width="100" Margin="5 0" materialDesign:HintAssist.Hint="Длительность" TextChanged="Duration_Changed"></TextBox>
+                <ComboBox x:Name="TransportBox" Width="170" Margin="5 0" ItemsSource="{Binding TransportCollection}" SelectedValue="{Binding SelectedTransport}" materialDesign:HintAssist.Hint="Вид транспорта" SelectionChanged="TransportTypeBox_SelectionChanged"/>
+                <ComboBox x:Name="ResidenceBox" Width="150" Margin="5 0" ItemsSource="{Binding HotelCollection}" SelectedValue="{Binding SelectedHotel}" materialDesign:HintAssist.Hint="Отель" SelectionChanged="ComboBox_SelectionChanged"/>
             </WrapPanel>
             <Button Grid.Column="1" Content="Добавить" Width="100" Height="30" Margin="10" Click="AddRoute_OnClick"></Button>
         </Grid>
@@ -45,8 +45,10 @@
                 <DataGridTextColumn IsReadOnly ="True" Header="Стоимость" Binding="{Binding Path=Cost}"/>
                 <DataGridTextColumn IsReadOnly ="True" Header="Дата начала" Binding="{Binding Path=Date}"/>
                 <DataGridTextColumn IsReadOnly ="True" Header="Длительность" Binding="{Binding Path=Duration}"/>
-                <DataGridTextColumn IsReadOnly ="True" Header="Транспорт" Binding="{Binding Path=Transport}"/>
                 <DataGridTextColumn IsReadOnly ="True" Header="Отель" Binding="{Binding Path=Residence}"/>
+                <DataGridCheckBoxColumn IsReadOnly ="True" Header="Питание" Binding="{Binding Path=Meels}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Транспорт" Binding="{Binding Path=Transport}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Стоимость проезда" Binding="{Binding Path=TransportCost}"/>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Height="30">
