@@ -41,7 +41,8 @@
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly ="True" Header="Наименование" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Откуда" Binding="{Binding Path=From}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Куда" Binding="{Binding Path=To}"/>
                 <DataGridTextColumn IsReadOnly ="True" Header="Стоимость" Binding="{Binding Path=Cost}"/>
                 <DataGridTextColumn IsReadOnly ="True" Header="Дата начала" Binding="{Binding Path=Date}"/>
                 <DataGridTextColumn IsReadOnly ="True" Header="Длительность" Binding="{Binding Path=Duration}"/>

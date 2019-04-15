@@ -7,46 +7,47 @@ namespace TravelPortal.Database
         public static class Routes
         {
             public const string SelectAll =
-                "select route_id, name, cost, date, duration, " +
-                "(select name from residence where residence_id = routes.residence_id), meels, " +
-                "(select name from transport_type where transport_type_id = routes.transport_type_id) " +
-                //", (select cost from transport_type where transport_type_id = routes.transport_type_id) " +
+                "select route_id, (select name from city where city_id = routes.from_id), " +
+                "(select name from city where city_id = routes.to_id), cost, date, duration, " +
+                "(select name from hotel where hotel_id = routes.hotel_id), meels, " +
+                "(select name from transport where transport_id = (select transport_id from tickets where ticket_id = routes.ticket_id)), " +
+                "(select cost from tickets where ticket_id = routes.ticket_id) " +
                 "from routes ";
 
-            public static string FilterName(string name) =>
-                SelectAll + $"where lower(name) like lower('%{name}%')";
-            
-            public static string FilterDate(NpgsqlDate date) =>
+            public static string Search(NpgsqlDate date) =>
                 SelectAll + $"where date = '{date}'";
 
-            public static string FilterDuration(int duration) =>
+            public static string Search(int duration) =>
                 SelectAll + $"where duration = '{duration}'";
 
-            public static string FilterResidence(string residence) =>
-                SelectAll + $"where residence_id = (select residence_id from residence where lower(name) like lower('{residence}'))";
+            public static string FilterHotel(string hotel) =>
+                SelectAll + $"where hotel_id = (select hotel_id from hotel where lower(name) like lower('{hotel}'))";
 
             public static string FilterTransport(string transport) =>
-                SelectAll + $"where transport_type_id = (select transport_type_id from transport_type where lower(name) like lower('{transport}'))";
+                SelectAll + $"where lower('{transport}') like " +
+                $"lower((select name from transport where transport_id = (select transport_id from tickets where ticket_id= routes.ticket_id)))";
         }
 
         public static class Vouchers
         {
             public const string SelectAll =
                 "select voucher_id, customer_fio, " +
-                "(SELECT name FROM routes where route_id=vouchers.route_id), " +
+                "(SELECT name FROM city where city_id = (select from_id from routes where route_id = vouchers.route_id)), " +
+                "(SELECT name FROM city where city_id = (select to_id from routes where route_id = vouchers.route_id)), " +
+                "(SELECT name FROM hotel where hotel_id = (select hotel_id from routes where route_id=vouchers.route_id))," +
                 "phone, address, birthday from vouchers ";
 
-            public static string FilterFio(string fio) =>
+            public static string Search(string fio) =>
                 SelectAll + $"where lower(customer_fio) like lower('%{fio}%')";
 
             public static string FilterStatus(string status)=>
-                SelectAll + $"where status_id = (select status_id from status where lower(type) like lower('{status}'))";
+                SelectAll + $"where status_id = (select status_id from status where lower(name) like lower('{status}'))";
         }
 
-        public static string SelectAllHotels = "select name from residence ";
+        public static string SelectAllHotels = "select name from hotel ";
 
-        public static string SelectAllTransport = "select name from transport_type ";
+        public static string SelectAllTransport = "select name from transport ";
 
-        public static string SelectAllStatus = "select type from status ";
+        public static string SelectAllStatus = "select name from status ";
     }
 }

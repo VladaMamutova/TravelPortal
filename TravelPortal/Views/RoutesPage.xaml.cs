@@ -20,20 +20,19 @@ namespace TravelPortal.Views
 
         private void RouteName_Changed(object sender, TextChangedEventArgs e)
         {
-            RoutesDataGrid.ItemsSource = string.IsNullOrWhiteSpace(RouteName.Text) ?
-                Routes.GetAll() : Routes.Search(RouteName.Text);
+            
         }
 
         private void StartDate_Changed(object sender, SelectionChangedEventArgs e)
         {
             RoutesDataGrid.ItemsSource = StartDate.SelectedDate == null ?
-                Routes.GetAll() : Routes.Search(StartDate.SelectedDate.Value);
+                Routes.GetAll() : Routes.SearchByDate(StartDate.SelectedDate.Value);
         }
 
         private void Duration_Changed(object sender, TextChangedEventArgs e)
         {
             RoutesDataGrid.ItemsSource = string.IsNullOrWhiteSpace(Duration.Text) ?
-                Routes.GetAll() : Routes.Search(Convert.ToInt32(Duration.Text));
+                Routes.GetAll() : Routes.SearchByDuration(Convert.ToInt32(Duration.Text));
         }
 
         private void AddRoute_OnClick(object sender, RoutedEventArgs e)

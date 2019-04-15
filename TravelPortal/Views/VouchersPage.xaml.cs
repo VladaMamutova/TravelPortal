@@ -18,7 +18,7 @@ namespace TravelPortal.Views
         private void ClientFio_Changed(object sender, TextChangedEventArgs e)
         {
             VouchersDataGrid.ItemsSource = string.IsNullOrWhiteSpace(ClientFio.Text) ?
-                Vouchers.GetAll() : Vouchers.Search(ClientFio.Text);
+                Vouchers.GetAll() : Vouchers.SearchByClientFio(ClientFio.Text);
         }
 
         private void StatusBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

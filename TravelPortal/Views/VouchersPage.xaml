@@ -37,7 +37,9 @@
             </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn IsReadOnly ="True" Header="ФИО клиента" Binding="{Binding Path=ClientFio}"/>
-                <DataGridTextColumn IsReadOnly ="True" Header="Маршрут" Binding="{Binding Path=Route}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Откуда" Binding="{Binding Path=From}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Куда" Binding="{Binding Path=To}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Отель" Binding="{Binding Path=Hotel}"/>
                 <DataGridTextColumn IsReadOnly ="True" Header="Домашний адрес" Binding="{Binding Path=Address}"/>
                 <DataGridTextColumn IsReadOnly ="True" Header="Телефон" Binding="{Binding Path=Phone}"/>
                 <DataGridTextColumn IsReadOnly ="True" Header="Дата рождения" Binding="{Binding Path=Birthday}"/>

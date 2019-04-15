@@ -9,7 +9,8 @@ namespace TravelPortal.Models
         //private int _transportTypeId;
         //private int _agencyId;
 
-        public string Name { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
         public NpgsqlDate Date { get; set; }
         public int Duration { get; set; }
         public double Cost { get; set; }
@@ -18,11 +19,12 @@ namespace TravelPortal.Models
         public string Transport { get; set; }
         public double TransportCost { get; set; }
 
-        public Route(int routeId, string name, NpgsqlDate date, int duration,
+        public Route(int routeId, string from, string to, NpgsqlDate date, int duration,
             double cost, string residence, bool meels, string transport, double transportCost)
         {
             _routeId = routeId;
-            Name = name;
+            From = from;
+            To = to;
             Date = date;
             Duration = duration;
             Cost = cost;

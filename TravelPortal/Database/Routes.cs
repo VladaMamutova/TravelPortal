@@ -21,25 +21,11 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Route> Search(string routeName)
+        public static List<Route> SearchByDate(DateTime date)
         {
             try
             {
-                return ExecuteQuery(Queries.Routes.FilterName(routeName));
-            }
-            catch (Exception e)
-            {
-                throw new Exception(
-                    "Произошла ошибка при фильтрации записей по названию " +
-                    "маршрута.", e);
-            }
-        }
-
-        public static List<Route> Search(DateTime date)
-        {
-            try
-            {
-                return ExecuteQuery(Queries.Routes.FilterDate(new NpgsqlDate(date)));
+                return ExecuteQuery(Queries.Routes.Search(new NpgsqlDate(date)));
             }
             catch (Exception e)
             {
@@ -49,11 +35,11 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Route> Search(int duration)
+        public static List<Route> SearchByDuration(int duration)
         {
             try
             {
-                return ExecuteQuery(Queries.Routes.FilterDuration(duration));
+                return ExecuteQuery(Queries.Routes.Search(duration));
             }
             catch (Exception e)
             {
@@ -67,7 +53,7 @@ namespace TravelPortal.Database
         {
             try
             {
-                return ExecuteQuery(Queries.Routes.FilterResidence(residence));
+                return ExecuteQuery(Queries.Routes.FilterHotel(residence));
             }
             catch (Exception e)
             {
@@ -91,7 +77,7 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Route> ExecuteQuery(string query)
+        private static List<Route> ExecuteQuery(string query)
         {
             using (var connection =
                 new NpgsqlConnection(Configuration.GetConnetionString()))
@@ -106,18 +92,19 @@ namespace TravelPortal.Database
                         while (reader.Read())
                         {
                             int routeId = reader.GetInt32(0);
-                            string name = reader.GetString(1).TrimEnd();
-                            double cost = reader.GetDouble(2);
-                            NpgsqlDate date = reader.GetDate(3);
-                            int duration = reader.GetInt32(4);
-                            string residence = reader.GetString(5).TrimEnd();
-                            bool meels = reader.GetBoolean(6);
-                            string transport = reader.GetString(7).TrimEnd();
-                            //double transportCost = reader.GetDouble(8);
+                            string from = reader.GetString(1).TrimEnd();
+                            string to = reader.GetString(2).TrimEnd();
+                            double cost = reader.GetDouble(3);
+                            NpgsqlDate date = reader.GetDate(4);
+                            int duration = reader.GetInt32(5);
+                            string residence = reader.GetString(6).TrimEnd();
+                            bool meels = reader.GetBoolean(7);
+                            string transport = reader.GetString(8).TrimEnd();
+                            double transportCost = reader.GetDouble(9);
 
-                            routes.Add(new Route(routeId, name, date, duration,
-                                cost, residence, meels, transport,
-                                0));
+                            routes.Add(new Route(routeId, from, to, date,
+                                duration, cost, residence, meels, transport,
+                                transportCost));
                         }
 
                         return routes;

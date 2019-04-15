@@ -20,11 +20,11 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Voucher> Search(string clientFio)
+        public static List<Voucher> SearchByClientFio(string clientFio)
         {
             try
             {
-                return ExecuteQuery(Queries.Vouchers.FilterFio(clientFio));
+                return ExecuteQuery(Queries.Vouchers.Search(clientFio));
             }
             catch (Exception e)
             {
@@ -44,7 +44,7 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Voucher> ExecuteQuery(string query)
+        private static List<Voucher> ExecuteQuery(string query)
         {
             using (var connection =
                 new NpgsqlConnection(Configuration.GetConnetionString()))
@@ -60,12 +60,14 @@ namespace TravelPortal.Database
                         {
                             int voucherId = reader.GetInt32(0);
                             string fio = reader.GetString(1).TrimEnd();
-                            string route = reader.GetString(2).TrimEnd();
-                            string phone = reader.GetString(3).TrimEnd();
-                            string address = reader.GetString(4).TrimEnd();
-                            NpgsqlDate birthday = reader.GetDate(5);
+                            string from = reader.GetString(2).TrimEnd();
+                            string to = reader.GetString(3).TrimEnd();
+                            string hotel = reader.GetString(4).TrimEnd();
+                            string phone = reader.GetString(5).TrimEnd();
+                            string address = reader.GetString(6).TrimEnd();
+                            NpgsqlDate birthday = reader.GetDate(7);
 
-                            vouchers.Add(new Voucher(voucherId, fio, route,
+                            vouchers.Add(new Voucher(voucherId, fio, from, to, hotel,
                                 address, phone, birthday));
                         }
 
