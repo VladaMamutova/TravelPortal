@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using TravelPortal.Annotations;
@@ -58,12 +60,18 @@ namespace TravelPortal.ViewModels
         {
             get
             {
-                _navigateCommand = _navigateCommand ??
+                // Для возвращения объекта команды используем оператор ??,
+                // который называется оператором null - объединения. Если левый
+                // операнд равен null "??" вернёт правый операнд, иначе - левый.
+               _navigateCommand = _navigateCommand ??
+                       // Создаём объект команды: 1 параметр - CommandParameter
+                       // (передавали объект кнопки меню RadioButton),
+                       // 2 параметр - условие выполнения команды.
                        (_navigateCommand = new RelayCommand(obj =>
-                       {
-                           if (obj is string pageName)
+                       { 
+                           if (obj is RadioButton page)
                            {
-                               SelectedPageName = pageName;
+                               SelectedPageName = page.Content.ToString();
                                SelectedPage = Pages[SelectedPageName];
                            }
                        }, obj => Pages.Count > 0));
@@ -71,13 +79,12 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public MenuViewModel() // Тут будет параметризованный конструктор,
-                               // в котором будут создаваться только нужны страницы.
+        public MenuViewModel(Dictionary<string, Page> pages)
         {
-            Pages = new Dictionary<string, Page>();
-            Pages.Add("Маршруты", new RoutesPage());
-            Pages.Add("Путёвки", new VouchersPage());
-            SelectedPageName = "Маршруты";
+            if(pages == null || pages.Count == 0)
+                throw new ArgumentNullException(nameof(pages));
+            Pages = pages;
+            SelectedPageName = pages.Keys.ElementAt(0);
         }
     }
 }

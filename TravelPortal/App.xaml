@@ -15,6 +15,7 @@
             <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
                 <Setter Property="IsEditable" Value="True"></Setter>
             </Style>
+            <Style TargetType="RadioButton" BasedOn="{StaticResource MaterialDesignTabRadioButton}"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

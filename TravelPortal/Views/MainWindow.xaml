@@ -14,25 +14,28 @@
             <RowDefinition Height="45"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <WrapPanel Grid.Column="0" HorizontalAlignment="Stretch" Background="#FF2196F3" MouseLeftButtonDown="Move">
-                <Button x:Name="RouteMenuItem" Content="Маршруты" ContentStringFormat="Маршруты" Width="150" Height="45" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" materialDesign:ShadowAssist.ShadowDepth="Depth0" Command="{Binding NavigateCommand}" CommandParameter="{Binding Path=ContentStringFormat, ElementName=RouteMenuItem}"/>
-                <Button x:Name="VoucherMenuItem" Content="Путёвки" ContentStringFormat="Путёвки" Width="150" Height="45" Foreground="WhiteSmoke" FontSize="20" FontWeight="Bold" materialDesign:ShadowAssist.ShadowDepth="Depth0" Command="{Binding NavigateCommand}" CommandParameter="{Binding Path=ContentStringFormat, ElementName=VoucherMenuItem}"/>
-            </WrapPanel>
-            <StackPanel Grid.Column="1" Orientation="Horizontal" Background="#FF2196F3" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0" MouseLeftButtonDown="Move">
-                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <materialDesign:PackIcon Kind="User" Width="20" Height="20"/>
-                </Button>
-                <TextBlock Text="Мамутова В.А." Foreground="WhiteSmoke" VerticalAlignment="Center"/>
-                <Button x:Name="ButtonClose" Margin="10 0 0 0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click">
-                    <materialDesign:PackIcon Kind="Power" Width="25" Height="25"/>
-                </Button>
-            </StackPanel>
-        </Grid>
+        <materialDesign:ColorZone
+            Mode="PrimaryMid" MouseLeftButtonDown="Move">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" x:Name="TabMenu"
+                Orientation="Horizontal"
+                Margin="2">
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Background="#FF2196F3" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0" MouseLeftButtonDown="Move">
+                    <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <materialDesign:PackIcon Kind="User" Width="20" Height="20"/>
+                    </Button>
+                    <TextBlock Text="Мамутова В.А." Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+                    <Button x:Name="ButtonClose" Margin="10 0 0 0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click">
+                        <materialDesign:PackIcon Kind="Power" Width="25" Height="25"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </materialDesign:ColorZone>
         <Frame Grid.Row="1" Content="{Binding Path=SelectedPage}" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </Window>
