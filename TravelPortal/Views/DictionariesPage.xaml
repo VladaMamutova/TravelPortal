@@ -1,0 +1,104 @@
+﻿<Page x:Class="TravelPortal.Views.DictionariesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+      mc:Ignorable="d" 
+      FontSize="14"
+      d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <dragablz:TabablzControl TabStripPlacement="Left">
+            <dragablz:TabablzControl.ItemContainerStyle>
+                <Style TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemVerticalStyle}">
+                    <Setter Property="Width" Value="230" />
+                    <Setter Property="Height" Value="50"></Setter>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+                </Style>
+            </dragablz:TabablzControl.ItemContainerStyle>
+            <dragablz:TabablzControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Foreground" Value="WhiteSmoke"/>
+                </Style>
+            </dragablz:TabablzControl.Resources>
+            <!--Для вынесения вкладки в отдельное окно!-->
+            <!--<dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController/>
+            </dragablz:TabablzControl.InterTabController>-->
+            <TabItem HorizontalAlignment="Left">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="OfficeBuilding" Width="30" Height="30" Margin="10 0"/>
+                        <TextBlock Text="Агенства" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Добавить" Margin="0 10 10 0"></Button>
+                        <Button Content="Изменить" Margin="0 10 10 0"></Button>
+                    </StackPanel>
+                    <DataGrid Grid.Row="1" Margin="10"></DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Cards" Width="30" Height="30" Margin="10 0"/>
+                       <TextBlock Text="Билеты на проезд" VerticalAlignment="Center"></TextBlock>
+                   </StackPanel>
+                </TabItem.Header>
+               <DataGrid></DataGrid>
+           </TabItem>
+           <TabItem>
+               <TabItem.Header>
+                   <StackPanel Orientation="Horizontal">
+                       <materialDesign:PackIcon Kind="Aeroplane" Width="30" Height="30" Margin="10 0"/>
+                       <TextBlock Text="Вид транспорта" VerticalAlignment="Center"></TextBlock>
+                   </StackPanel>
+                </TabItem.Header>
+               <DataGrid></DataGrid>
+           </TabItem>
+           <TabItem>
+               <TabItem.Header>
+                   <StackPanel Orientation="Horizontal">
+                       <materialDesign:PackIcon Kind="City" Width="30" Height="30" Margin="10 0"/>
+                       <TextBlock Text="Города" VerticalAlignment="Center"></TextBlock>
+                   </StackPanel>
+                </TabItem.Header>
+               <DataGrid></DataGrid>
+           </TabItem>
+           <TabItem>
+               <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Hotel" Width="30" Height="30" Margin="10 0"/>
+                        <TextBlock Text="Отели" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+               <DataGrid></DataGrid>
+           </TabItem>
+           <TabItem>
+               <TabItem.Header>
+                   <StackPanel Orientation="Horizontal">
+                       <materialDesign:PackIcon Kind="TicketUser" Width="30" Height="30" Margin="10 0"/>
+                       <TextBlock Text="Социальное положение" VerticalAlignment="Center"></TextBlock>
+                   </StackPanel>
+                </TabItem.Header>
+               <DataGrid></DataGrid>
+           </TabItem>
+           <TabItem>
+               <TabItem.Header>
+                   <StackPanel Orientation="Horizontal">
+                       <materialDesign:PackIcon Kind="SecurityHome" Width="30" Height="30" Margin="10 0"/>
+                       <TextBlock Text="Форма собственности" VerticalAlignment="Center"></TextBlock>
+                   </StackPanel>
+               </TabItem.Header>
+               <DataGrid></DataGrid>
+           </TabItem>
+        </dragablz:TabablzControl>
+    </Grid>
+</Page>

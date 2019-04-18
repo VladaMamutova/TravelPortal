@@ -11,7 +11,7 @@
         Height="600" Width="1224" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="45"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <materialDesign:ColorZone
@@ -21,10 +21,7 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" x:Name="TabMenu"
-                Orientation="Horizontal"
-                Margin="2">
-                </StackPanel>
+                <StackPanel Grid.Column="0" x:Name="TabMenu" Orientation="Horizontal" Margin="2"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Background="#FF2196F3" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0" MouseLeftButtonDown="Move">
                     <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="User" Width="20" Height="20"/>
@@ -36,6 +33,7 @@
                 </StackPanel>
             </Grid>
         </materialDesign:ColorZone>
-        <Frame Grid.Row="1" Content="{Binding Path=SelectedPage}" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>
+        <Frame Grid.Row="1" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>
+        <!--<Frame Grid.Row="1" Content="{Binding Path=SelectedPage}" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>-->
     </Grid>
 </Window>
