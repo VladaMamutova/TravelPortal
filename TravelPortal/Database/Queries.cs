@@ -25,7 +25,7 @@ namespace TravelPortal.Database
 
             public static string FilterTransport(string transport) =>
                 SelectAll + $"where lower('{transport}') like " +
-                $"lower((select name from transport where transport_id = (select transport_id from tickets where ticket_id= routes.ticket_id)))";
+                "lower((select name from transport where transport_id = (select transport_id from tickets where ticket_id= routes.ticket_id)))";
         }
 
         public static class Vouchers
@@ -52,11 +52,30 @@ namespace TravelPortal.Database
 
         public static class Dictionaries
         {
-            public const string SelectAllFromAgencies =
+            public const string SelectAllAgencies =
                 "select agency_id, regnumber, name, " +
                 "(select name from city where city_id = agencies.city_id), address, " +
                 "(select name from ownership where ownership_id = agencies.ownership_id), " +
                 "phone, date from agencies";
+
+            public static string SelectAllHotels = "select hotel_id, name, type from hotel ";
+
+            public static string SelectAllTickets =
+                "select ticket_id, from, to, " +
+                "(select name from transport where transport_id = tickets.transport_id), " +
+                "cost from tickets ";
+
+            public static string SelectAllCities =
+                "select city_id, name from cities ";
+
+            public static string SelectAllOwnership =
+                "select ownership_id, name from ownership ";
+
+            public static string SelectAllStatus =
+                "select status_id, name from status ";
+
+            public static string SelectAllTransport =
+                "select transport_id, name from transport ";
         }
     }
 }
