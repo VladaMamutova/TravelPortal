@@ -10,5 +10,14 @@
             _id = id;
             Name = name;
         }
+
+        public static string GenerateTitle(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(Name): return "Название";
+                default: return propertyName;
+            }
+        }
     }
 }

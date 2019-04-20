@@ -61,12 +61,14 @@ namespace TravelPortal.Database
             public static string SelectAllHotels = "select hotel_id, name, type from hotel ";
 
             public static string SelectAllTickets =
-                "select ticket_id, from, to, " +
+                "select ticket_id, " +
+                "(select name from city where city_id = tickets.from_id), " +
+                "(select name from city where city_id = tickets.to_id), " +
                 "(select name from transport where transport_id = tickets.transport_id), " +
                 "cost from tickets ";
 
             public static string SelectAllCities =
-                "select city_id, name from cities ";
+                "select city_id, name from city ";
 
             public static string SelectAllOwnership =
                 "select ownership_id, name from ownership ";

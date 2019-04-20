@@ -12,5 +12,15 @@
             Name = name;
             Type = type;
         }
+
+        public static string GenerateTitle(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(Name): return "Название";
+                case nameof(Type): return "Категория";
+                default: return propertyName;
+            }
+        }
     }
 }

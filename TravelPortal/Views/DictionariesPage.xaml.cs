@@ -26,11 +26,30 @@ namespace TravelPortal.Views
             // генерироваться соответствующие пункты меню.
 
             // Меню рядового сотрудника туристического портала.
-            object[] dictionaries = {"Агенства", PackIconKind.OfficeBuilding, "Agencies", null, null };
+            DictionaryViewModel dictionaryViewModel = new DictionaryViewModel();
             Dictionaries.AddToSource(CreateDictionaryTabItem("Агенства",
-                PackIconKind.OfficeBuilding, "Agencies", Command(),
+                PackIconKind.OfficeBuilding, nameof(dictionaryViewModel.Agencies), Command(),
                 Command1(), Agency.GenerateTitle));
-            DataContext = new DictionaryViewModel();
+            Dictionaries.AddToSource(CreateDictionaryTabItem("Билеты на проезд",
+                PackIconKind.Cards, nameof(dictionaryViewModel.Tickets), Command(),
+                Command1(), Ticket.GenerateTitle));
+            Dictionaries.AddToSource(CreateDictionaryTabItem("Вид транспорта",
+                PackIconKind.Aeroplane,
+                nameof(dictionaryViewModel.TransportCollection),
+                Command(), Command1(), SimpleRecord.GenerateTitle));
+            Dictionaries.AddToSource(CreateDictionaryTabItem("Города",
+                PackIconKind.City, nameof(dictionaryViewModel.Cities), Command(),
+                Command1(), SimpleRecord.GenerateTitle));
+            Dictionaries.AddToSource(CreateDictionaryTabItem("Отели",
+                PackIconKind.Hotel, nameof(dictionaryViewModel.Hotels), Command(),
+                Command1(), Hotel.GenerateTitle));
+            Dictionaries.AddToSource(CreateDictionaryTabItem("Социальное положение",
+                PackIconKind.TicketUser, nameof(dictionaryViewModel.Status), Command(),
+                Command1(), SimpleRecord.GenerateTitle));
+            Dictionaries.AddToSource(CreateDictionaryTabItem("Тип собственности",
+                PackIconKind.SecurityHome, nameof(dictionaryViewModel.Ownership), Command(),
+                Command1(), SimpleRecord.GenerateTitle));
+            DataContext = dictionaryViewModel;
 
         }
 

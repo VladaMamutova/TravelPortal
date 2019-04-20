@@ -21,6 +21,8 @@ namespace TravelPortal.ViewModels
     // реализовывать не надо).
     public class DictionaryViewModel : INotifyPropertyChanged
     {
+        #region private ObservableCollection properties for dictionaries
+
         private ObservableCollection<Agency> _agencies;
         private ObservableCollection<SimpleRecord> _cities;
         private ObservableCollection<Hotel> _hotels;
@@ -28,7 +30,11 @@ namespace TravelPortal.ViewModels
         private ObservableCollection<SimpleRecord> _statusCollection;
         private ObservableCollection<Ticket> _tickets;
         private ObservableCollection<SimpleRecord> _transportCollection;
-        
+
+        #endregion
+
+        #region public ObservableCollection properties for dictionaries
+
         public ObservableCollection<Agency> Agencies {
             get => _agencies;
             set
@@ -98,15 +104,7 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(
-            [CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this,
-                new PropertyChangedEventArgs(propertyName));
-        }
+        #endregion
 
         public DictionaryViewModel()
         {
@@ -128,6 +126,18 @@ namespace TravelPortal.ViewModels
                     Queries.Dictionaries.SelectAllTransport);
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged(
+            [CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this,
+                new PropertyChangedEventArgs(propertyName));
+        }
+
+        #region Methods for getting data from dictionaries to ObservableCollections
 
         private static ObservableCollection<Agency> GetAgencies(NpgsqlConnection npgsqlConnection)
         {
@@ -226,5 +236,7 @@ namespace TravelPortal.ViewModels
                 }
             }
         }
+
+        #endregion
     }
 }

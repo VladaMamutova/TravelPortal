@@ -17,5 +17,17 @@
             Transport = transport;
             Cost = cost;
         }
+
+        public static string GenerateTitle(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(From): return "Откуда";
+                case nameof(To): return "Куда";
+                case nameof(Transport): return "Вид транспорта";
+                case nameof(Cost): return "Стоимость";
+                default: return propertyName;
+            }
+        }
     }
 }
