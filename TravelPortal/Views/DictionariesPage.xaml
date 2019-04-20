@@ -9,7 +9,7 @@
       FontSize="14"
       d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <dragablz:TabablzControl TabStripPlacement="Left">
+        <dragablz:TabablzControl TabStripPlacement="Left" BorderThickness="0" x:Name="Dictionaries">
             <dragablz:TabablzControl.ItemContainerStyle>
                 <Style TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemVerticalStyle}">
                     <Setter Property="Width" Value="230" />
@@ -26,7 +26,7 @@
             <!--<dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController/>
             </dragablz:TabablzControl.InterTabController>-->
-            <TabItem HorizontalAlignment="Left">
+            <!--<TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="OfficeBuilding" Width="30" Height="30" Margin="10 0"/>
@@ -98,7 +98,7 @@
                    </StackPanel>
                </TabItem.Header>
                <DataGrid></DataGrid>
-           </TabItem>
+           </TabItem>-->
         </dragablz:TabablzControl>
     </Grid>
 </Page>

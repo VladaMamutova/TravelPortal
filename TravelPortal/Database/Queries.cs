@@ -32,9 +32,9 @@ namespace TravelPortal.Database
         {
             public const string SelectAll =
                 "select voucher_id, customer_fio, " +
-                "(SELECT name FROM city where city_id = (select from_id from routes where route_id = vouchers.route_id)), " +
-                "(SELECT name FROM city where city_id = (select to_id from routes where route_id = vouchers.route_id)), " +
-                "(SELECT name FROM hotel where hotel_id = (select hotel_id from routes where route_id=vouchers.route_id))," +
+                "(select name from city where city_id = (select from_id from routes where route_id = vouchers.route_id)), " +
+                "(select name from city where city_id = (select to_id from routes where route_id = vouchers.route_id)), " +
+                "(select name from hotel where hotel_id = (select hotel_id from routes where route_id=vouchers.route_id))," +
                 "phone, address, birthday from vouchers ";
 
             public static string Search(string fio) =>
@@ -49,5 +49,14 @@ namespace TravelPortal.Database
         public static string SelectAllTransport = "select name from transport ";
 
         public static string SelectAllStatus = "select name from status ";
+
+        public static class Dictionaries
+        {
+            public const string SelectAllFromAgencies =
+                "select agency_id, regnumber, name, " +
+                "(select name from city where city_id = agencies.city_id), address, " +
+                "(select name from ownership where ownership_id = agencies.ownership_id), " +
+                "phone, date from agencies";
+        }
     }
 }
