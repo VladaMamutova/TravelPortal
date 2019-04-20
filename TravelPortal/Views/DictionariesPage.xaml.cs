@@ -40,9 +40,18 @@ namespace TravelPortal.Views
             Dictionaries.AddToSource(CreateDictionaryTabItem("Города",
                 PackIconKind.City, nameof(dictionaryViewModel.Cities), Command(),
                 Command1(), SimpleRecord.GenerateTitle));
-            Dictionaries.AddToSource(CreateDictionaryTabItem("Отели",
+            TabItem tabItem = CreateDictionaryTabItem("Отели",
                 PackIconKind.Hotel, nameof(dictionaryViewModel.Hotels), Command(),
-                Command1(), Hotel.GenerateTitle));
+                Command1(), null);
+
+            ((DataGrid) ((Grid) tabItem.Content).Children[1]).AutoGeneratingColumn += (sender, e) =>
+            {
+                if(e.PropertyName == nameof(Hotel.Type))
+                    e.Column = new DataGridTemplateColumn
+                        { CellTemplate = (DataTemplate)Resources["RatingBarDataTemplate"] };
+                e.Column.Header = Hotel.GenerateTitle(e.PropertyName);
+            };
+            Dictionaries.AddToSource(tabItem);
             Dictionaries.AddToSource(CreateDictionaryTabItem("Социальное положение",
                 PackIconKind.TicketUser, nameof(dictionaryViewModel.Status), Command(),
                 Command1(), SimpleRecord.GenerateTitle));
@@ -117,10 +126,12 @@ namespace TravelPortal.Views
 
             // Таблица с данными.
             DataGrid table = new DataGrid {Margin = new Thickness(10)};
-            table.AutoGeneratingColumn += (sender, e) =>
-            {
-                e.Column.Header = generateTitleFunc.Invoke(e.PropertyName);
-            };
+            if (generateTitleFunc != null)
+                table.AutoGeneratingColumn += (sender, e) =>
+                {
+                    e.Column.Header =
+                        generateTitleFunc.Invoke(e.PropertyName);
+                };
             table.SetBinding(ItemsControl.ItemsSourceProperty,
                 new Binding(dataGridBinding));
             table.SetValue(Grid.RowProperty, 1);
