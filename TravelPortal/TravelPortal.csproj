@@ -90,8 +90,11 @@
     <Compile Include="Database\Queries.cs" />
     <Compile Include="Database\Vouchers.cs" />
     <Compile Include="Models\Agency.cs" />
+    <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Database\Routes.cs" />
+    <Compile Include="Models\SimpleDictionary.cs" />
+    <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Voucher.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\DictionaryViewModel.cs" />
