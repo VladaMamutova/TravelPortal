@@ -125,7 +125,7 @@ namespace TravelPortal.Views
             controls.SetValue(Grid.RowProperty, 0);
 
             // Таблица с данными.
-            DataGrid table = new DataGrid {Margin = new Thickness(10)};
+            DataGrid table = new DataGrid {Margin = new Thickness(10), HorizontalAlignment = HorizontalAlignment.Stretch};
             if (generateTitleFunc != null)
                 table.AutoGeneratingColumn += (sender, e) =>
                 {

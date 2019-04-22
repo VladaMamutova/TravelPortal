@@ -15,7 +15,7 @@
         {
             switch (propertyName)
             {
-                case nameof(Name): return "Название";
+                case nameof(Name): return "Наименование";
                 default: return propertyName;
             }
         }

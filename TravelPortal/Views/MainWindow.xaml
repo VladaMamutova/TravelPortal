@@ -8,7 +8,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontSize="14"
         TextElement.Foreground="#0D47A1"
-        Height="600" Width="1224" WindowStyle="None" WindowStartupLocation="CenterScreen">
+        Height="600" Width="1224" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="MainWindow_OnLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -33,7 +33,6 @@
                 </StackPanel>
             </Grid>
         </materialDesign:ColorZone>
-        <Frame Grid.Row="1" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>
-        <!--<Frame Grid.Row="1" Content="{Binding Path=SelectedPage}" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>-->
+        <Frame Grid.Row="1" Content="{Binding Path=SelectedPage}" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </Window>

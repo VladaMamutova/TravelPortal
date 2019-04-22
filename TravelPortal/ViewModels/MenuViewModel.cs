@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using TravelPortal.Annotations;
+using TravelPortal.Database;
 using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
@@ -79,12 +80,33 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public MenuViewModel(Dictionary<string, Page> pages)
+        public MenuViewModel(Configuration.Roles role)
         {
-            if(pages == null || pages.Count == 0)
-                throw new ArgumentNullException(nameof(pages));
-            Pages = pages;
-            SelectedPageName = pages.Keys.ElementAt(0);
+            Pages = GeneratePages(role);
+            if(Pages.Count == 0) throw new ArgumentException(nameof(role));
+            SelectedPageName = Pages.Keys.ElementAt(0);
+        }
+
+        private Dictionary<string, Page> GeneratePages(Configuration.Roles role)
+        {
+            Dictionary<string, Page> pages = new Dictionary<string, Page>();
+            switch (role)
+            {
+                // Меню рядового сотрудника туристического портала.
+                case Configuration.Roles.Employee:
+                {
+                    pages.Add("Маршруты".ToUpper(), new RoutesPage());
+                    pages.Add("Путёвки".ToUpper(), new VouchersPage());
+                    return pages;
+                }
+                // Меню администратора БД.
+                case Configuration.Roles.Admin:
+                {
+                    pages.Add("Cправочные таблицы".ToUpper(), new DictionariesPage());
+                    return pages;
+                }
+                default: return pages;
+            }
         }
     }
 }

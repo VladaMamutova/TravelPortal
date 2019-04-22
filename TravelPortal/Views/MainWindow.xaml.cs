@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using TravelPortal.Database;
 using TravelPortal.ViewModels;
 
 namespace TravelPortal.Views
@@ -15,29 +16,22 @@ namespace TravelPortal.Views
         public MainWindow()
         {
             InitializeComponent();
-            InitializeMenu();
-            
         }
 
-        public void InitializeMenu()
+        
+        private void InitializeMenu()
         {
-            // В зависимости от роли пользователя будут
-            // генерироваться соответствующие пункты меню.
+            // В зависимости от роли пользователя
+            // генерируем соответствующие пункты меню.
 
-            // Меню рядового сотрудника туристического портала.
-            Dictionary<string, Page> pages = new Dictionary<string, Page>
-            {
-                {"Маршруты".ToUpper(), new RoutesPage()},
-                {"Путёвки".ToUpper(), new VouchersPage()}
-            };
-            MenuViewModel menu = new MenuViewModel(pages);
-            RadioButton[] menuItems = new RadioButton[pages.Count];
+            MenuViewModel menu = new MenuViewModel(Configuration.Role);
+            RadioButton[] menuItems = new RadioButton[menu.Pages.Count];
             for (int i = 0; i < menuItems.Length; i++)
             {
                 menuItems[i] = new RadioButton
                 {
                     Margin = new Thickness(4),
-                    Content = pages.Keys.ElementAt(i),
+                    Content = menu.Pages.Keys.ElementAt(i),
                     Command = menu.NavigateCommand,
                     CommandParameter =  RelativeSource.Self
                 };
@@ -59,6 +53,11 @@ namespace TravelPortal.Views
         private void Move(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            InitializeMenu();
         }
     }
 }
