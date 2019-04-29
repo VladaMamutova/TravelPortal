@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using Npgsql;
 using NpgsqlTypes;
 using TravelPortal.Models;
@@ -12,7 +13,7 @@ namespace TravelPortal.Database
         {
             try
             {
-                return ExecuteQuery(Queries.Routes.SelectAll);
+                return ExecuteQuery(Queries.Routes.selectAllFunction);
             }
             catch (Exception e)
             {

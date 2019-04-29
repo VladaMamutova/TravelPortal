@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Npgsql;
 using NpgsqlTypes;
 using TravelPortal.Annotations;
 using TravelPortal.Database;
 using TravelPortal.Models;
+using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
@@ -21,6 +23,15 @@ namespace TravelPortal.ViewModels
     // реализовывать не надо).
     public class DictionaryViewModel : INotifyPropertyChanged
     {
+        private SimpleRecord _transportSelectedItem;
+        public SimpleRecord TransportSelectedItem {
+            get => _transportSelectedItem;
+            set
+            {
+                _transportSelectedItem = value;
+                OnPropertyChanged(nameof(TransportSelectedItem));
+            }
+        }
         #region private ObservableCollection properties for dictionaries
 
         private ObservableCollection<Agency> _agencies;
@@ -108,22 +119,23 @@ namespace TravelPortal.ViewModels
 
         public DictionaryViewModel()
         {
-            Agencies = new ObservableCollection<Agency>(); using (var connection =
+            using (var connection =
                 new NpgsqlConnection(Configuration.GetConnetionString()))
             {
                 connection.Open();
 
-                Agencies = GetAgencies(connection);
+                //Agencies = GetAgencies(connection);
                 Cities = GetCollection(connection,
                     Queries.Dictionaries.SelectAllCities);
-                Hotels = GetHotels(connection);
-                Ownership = GetCollection(connection,
-                    Queries.Dictionaries.SelectAllOwnership);
-                Status = GetCollection(connection,
-                    Queries.Dictionaries.SelectAllStatus);
-                Tickets = GetTickets(connection);
+                //Hotels = GetHotels(connection);
+                //Ownership = GetCollection(connection,
+                //    Queries.Dictionaries.SelectAllOwnership);
+                //Status = GetCollection(connection,
+                //    Queries.Dictionaries.SelectAllStatus);
+                //Tickets = GetTickets(connection);
                 TransportCollection = GetCollection(connection,
                     Queries.Dictionaries.SelectAllTransport);
+                //if (TransportCollection.Count > 0)TransportSelectedItem = TransportCollection[0];
             }
         }
 
@@ -237,6 +249,29 @@ namespace TravelPortal.ViewModels
             }
         }
 
+        #endregion
+
+        #region Commands
+
+        public RelayCommand AddTransportCommand => new RelayCommand(e => ExecuteRunDialog(null));
+        public RelayCommand ModifyTransportCommand => new RelayCommand(e => ExecuteRunDialog(_transportSelectedItem), o => _transportSelectedItem != null);
+        
+        private void ExecuteRunDialog(object o)
+        {
+            var view = new DictionaryRecordDialog();
+            SimpleRecord simpleRecordCopy = new SimpleRecord((SimpleRecord)o);
+            DictionaryRecordViewModel viewModel =
+                new DictionaryRecordViewModel(DictionaryModels.Transport, view, simpleRecordCopy);
+            view.DataContext = viewModel;
+
+            view.ShowDialog();
+            NpgsqlConnection c = new NpgsqlConnection(Configuration.GetConnetionString());
+            c.Open();
+            TransportCollection = GetCollection(c,Queries.Dictionaries.SelectAllTransport);
+            TransportSelectedItem =
+                TransportCollection.SingleOrDefault(i => i.GetId() == simpleRecordCopy.GetId());
+        }
+        
         #endregion
     }
 }

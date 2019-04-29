@@ -8,11 +8,11 @@
         public string Transport { get; set; }
         public double Cost { get; set; }
 
-        public Ticket(int ticketId, string @from, string to, string transport,
+        public Ticket(int ticketId, string from, string to, string transport,
             double cost)
         {
             _ticketId = ticketId;
-            From = @from;
+            From = from;
             To = to;
             Transport = transport;
             Cost = cost;

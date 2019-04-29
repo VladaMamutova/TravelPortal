@@ -22,10 +22,10 @@ namespace TravelPortal.ViewModels
             {
                 connection.Open();
 
-                HotelCollection =
-                    GetCollection(connection, Queries.SelectAllHotels);
-                TransportCollection = GetCollection(connection,
-                    Queries.SelectAllTransport);
+                //HotelCollection =
+                //    GetCollection(connection, Queries.SelectAllHotels);
+                //TransportCollection = GetCollection(connection,
+                //    Queries.SelectAllTransport);
             }
         }
 

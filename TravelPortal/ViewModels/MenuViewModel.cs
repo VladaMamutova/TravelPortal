@@ -64,18 +64,18 @@ namespace TravelPortal.ViewModels
                 // Для возвращения объекта команды используем оператор ??,
                 // который называется оператором null - объединения. Если левый
                 // операнд равен null "??" вернёт правый операнд, иначе - левый.
-               _navigateCommand = _navigateCommand ??
-                       // Создаём объект команды: 1 параметр - CommandParameter
-                       // (передавали объект кнопки меню RadioButton),
-                       // 2 параметр - условие выполнения команды.
-                       (_navigateCommand = new RelayCommand(obj =>
-                       { 
-                           if (obj is RadioButton page)
-                           {
-                               SelectedPageName = page.Content.ToString();
-                               SelectedPage = Pages[SelectedPageName];
-                           }
-                       }, obj => Pages.Count > 0));
+                _navigateCommand = _navigateCommand ??
+                        // Создаём объект команды: 1 параметр - CommandParameter
+                        // (передавали объект кнопки меню RadioButton),
+                        // 2 параметр - условие выполнения команды.
+                        (_navigateCommand = new RelayCommand(obj =>
+                        {
+                            if (obj is RadioButton page)
+                            {
+                                SelectedPageName = page.Content.ToString();
+                                SelectedPage = Pages[SelectedPageName];
+                            }
+                        }, obj => Pages.Count > 0));
                 return _navigateCommand;
             }
         }
@@ -96,7 +96,7 @@ namespace TravelPortal.ViewModels
                 case Configuration.Roles.Employee:
                 {
                     pages.Add("Маршруты".ToUpper(), new RoutesPage());
-                    pages.Add("Путёвки".ToUpper(), new VouchersPage());
+                    //pages.Add("Путёвки".ToUpper(), new VouchersPage());
                     return pages;
                 }
                 // Меню администратора БД.

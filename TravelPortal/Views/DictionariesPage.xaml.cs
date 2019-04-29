@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
 using NpgsqlTypes;
@@ -27,6 +28,7 @@ namespace TravelPortal.Views
 
             // Меню рядового сотрудника туристического портала.
             DictionaryViewModel dictionaryViewModel = new DictionaryViewModel();
+            //DictionaryCommands commands = new DictionaryCommands();
             Dictionaries.AddToSource(CreateDictionaryTabItem("Агенства",
                 PackIconKind.OfficeBuilding, nameof(dictionaryViewModel.Agencies), Command(),
                 Command1(), Agency.GenerateTitle));
@@ -36,7 +38,7 @@ namespace TravelPortal.Views
             Dictionaries.AddToSource(CreateDictionaryTabItem("Вид транспорта",
                 PackIconKind.Aeroplane,
                 nameof(dictionaryViewModel.TransportCollection),
-                Command(), Command1(), SimpleRecord.GenerateTitle));
+                dictionaryViewModel.AddTransportCommand, dictionaryViewModel.ModifyTransportCommand, SimpleRecord.GenerateTitle));
             Dictionaries.AddToSource(CreateDictionaryTabItem("Города",
                 PackIconKind.City, nameof(dictionaryViewModel.Cities), Command(),
                 Command1(), SimpleRecord.GenerateTitle));
@@ -114,16 +116,16 @@ namespace TravelPortal.Views
             controls.Children.Add(new Button
             {
                 Content = "Добавить", Margin = new Thickness(0, 10, 10, 0),
-                Command = addCommand
+                Command = addCommand,
             });
-            controls.Children.Add(new Button
+
+            Button button = new Button
             {
                 Content = "Изменить",
                 Margin = new Thickness(0, 10, 10, 0),
-                Command = modifyCommand
-            });
-            controls.SetValue(Grid.RowProperty, 0);
-
+                Command = modifyCommand,
+            };
+      
             // Таблица с данными.
             DataGrid table = new DataGrid {Margin = new Thickness(10), HorizontalAlignment = HorizontalAlignment.Stretch};
             if (generateTitleFunc != null)
@@ -134,7 +136,21 @@ namespace TravelPortal.Views
                 };
             table.SetBinding(ItemsControl.ItemsSourceProperty,
                 new Binding(dataGridBinding));
+            table.SetBinding(Selector.SelectedItemProperty,
+                new Binding("TransportSelectedItem")
+                {
+                    //UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                    //Mode = BindingMode.TwoWay
+                });
             table.SetValue(Grid.RowProperty, 1);
+            //button.SetBinding(ButtonBase.CommandParameterProperty,
+            //    new Binding("TransportSelectedItem")
+            //    {
+            //        UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+            //        Mode = BindingMode.TwoWay
+            //    });
+            controls.Children.Add(button);
+            controls.SetValue(Grid.RowProperty, 0);
 
             content.Children.Add(controls);
             content.Children.Add(table);

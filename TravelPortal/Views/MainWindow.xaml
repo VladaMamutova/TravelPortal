@@ -6,7 +6,6 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontSize="14"
         TextElement.Foreground="#0D47A1"
         Height="600" Width="1224" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="MainWindow_OnLoaded">
     <Grid>

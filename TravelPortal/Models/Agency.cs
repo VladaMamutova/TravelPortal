@@ -1,4 +1,5 @@
-﻿using NpgsqlTypes;
+﻿using System.Collections.Generic;
+using NpgsqlTypes;
 
 namespace TravelPortal.Models
 {
@@ -46,6 +47,21 @@ namespace TravelPortal.Models
                 case nameof(Date): return "Дата основания";
                 default: return propertyName;
             }
+        }
+
+        public static List<string> GenerateAllTitles()
+        {
+            List<string> titles = new List<string>
+            {
+                "Регистрационный номер",
+                "Название",
+                "Город",
+                "Адрес",
+                "Тип собственности",
+                "Телефон",
+                "Дата основания"
+            };
+            return titles;
         }
     }
 }

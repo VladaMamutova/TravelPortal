@@ -6,6 +6,9 @@ namespace TravelPortal.Database
     {
         public static class Routes
         {
+            public const string selectAllFunction =
+                "select * from select_all_from_routes()";
+
             public const string SelectAll =
                 "select route_id, (select name from city where city_id = routes.from_id), " +
                 "(select name from city where city_id = routes.to_id), cost, date, duration, " +
@@ -68,7 +71,8 @@ namespace TravelPortal.Database
                 "cost from tickets ";
 
             public static string SelectAllCities =
-                "select city_id, name from city ";
+                "select * from select_all_from_city()";
+            //"select city_id, name from city ";
 
             public static string SelectAllOwnership =
                 "select ownership_id, name from ownership ";
@@ -77,7 +81,11 @@ namespace TravelPortal.Database
                 "select status_id, name from status ";
 
             public static string SelectAllTransport =
-                "select transport_id, name from transport ";
+                "select * from select_all_from_transport()";
+                //"select transport_id, name from transport ";
+
+            public static string Insert(string name) => $"select insert_transport('{name}')";
+            public static string Update(int id, string name) => $"select update_transport({id}, '{name}')";
         }
     }
 }
