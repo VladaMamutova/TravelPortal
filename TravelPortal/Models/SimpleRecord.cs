@@ -6,7 +6,7 @@ namespace TravelPortal.Models
 {
     public class SimpleRecord : INotifyPropertyChanged
     {
-        private int _id;
+        protected int Id;
         private string _name;
 
         public string Name
@@ -19,8 +19,8 @@ namespace TravelPortal.Models
             }
         }
 
-        public int GetId() => _id;
-        public void SetId(int id) => _id = id;
+        public int GetId() => Id;
+        public void SetId(int id) => Id = id;
 
         public static readonly SimpleRecord Empty;
 
@@ -28,13 +28,13 @@ namespace TravelPortal.Models
         
         public SimpleRecord(int id, string name)
         {
-            _id = id;
+            Id = id;
             Name = name;
         }
 
         public SimpleRecord(SimpleRecord newRecord)
         {
-            _id = newRecord._id;
+            Id = newRecord.Id;
             Name = newRecord.Name;
         }
 
@@ -48,17 +48,20 @@ namespace TravelPortal.Models
             if (other == null)
                 return false;
 
-            return Name == other.Name && _id == other._id;
+            if (ReferenceEquals(this, other))
+                return true;
+
+            return Name == other.Name && Id == other.Id;
         }
 
         public override int GetHashCode()
         {
-            return (_id + Name).GetHashCode();
+            return (Id + Name).GetHashCode();
         }
 
         public override string ToString()
         {
-            return $"id={_id}, Name=\"{Name}\"";
+            return $"id={Id}, Name=\"{Name}\"";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

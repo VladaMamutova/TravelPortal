@@ -15,12 +15,12 @@ namespace TravelPortal.ViewModels
                 new ObservableCollection<DictionaryViewModel>
                 {
                     //new DictionaryViewModel(DictionaryModels.Agency),
-                    //new DictionaryViewModel(DictionaryModels.Hotel),
+                    new DictionaryViewModel(DictionaryKind.Hotel),
                     //new DictionaryViewModel(DictionaryModels.Ticket),
-                    new DictionaryViewModel(DictionaryModels.Transport),
-                    new DictionaryViewModel(DictionaryModels.City),
-                    new DictionaryViewModel(DictionaryModels.Ownership),
-                    new DictionaryViewModel(DictionaryModels.Status)
+                    new DictionaryViewModel(DictionaryKind.Transport),
+                    new DictionaryViewModel(DictionaryKind.City),
+                    new DictionaryViewModel(DictionaryKind.Ownership),
+                    new DictionaryViewModel(DictionaryKind.Status)
                 };
         }
     }

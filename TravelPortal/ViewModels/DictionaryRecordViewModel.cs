@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,9 +14,9 @@ namespace TravelPortal.ViewModels
 {
     public class DictionaryRecordViewModel :INotifyPropertyChanged
     {
-        private object _record;
-        private readonly object _sourceRecord;
-        public object Record
+        private SimpleRecord _record;
+        private readonly SimpleRecord _sourceRecord;
+        public SimpleRecord Record
         {
             get => _record;
             set
@@ -26,73 +27,141 @@ namespace TravelPortal.ViewModels
         }
 
         public string Title { get; }
-        public TextBox[] InputBoxes { get; }
+        public UIElement[] InputBoxes { get; }
         public string CommandText { get; }
         public RelayCommand Command { get; }
 
-        public DictionaryRecordViewModel(DictionaryModels dictionary, Window window, [NotNull]object record)
+        public DictionaryRecordViewModel(DictionaryKind dictionary,
+            Window window, [NotNull] SimpleRecord record)
         {
-            
-            CommandText = ((SimpleRecord)record).Equals(SimpleRecord.Empty) ? "ДОБАВИТЬ" : "ИЗМЕНИТЬ";
-            Record = new SimpleRecord((SimpleRecord)record);
+
+            CommandText = record.Equals(SimpleRecord.Empty)
+                ? "ДОБАВИТЬ"
+                : "ИЗМЕНИТЬ";
             _sourceRecord = record;
             switch (dictionary)
             {
-                case DictionaryModels.Transport:
+                case DictionaryKind.Transport:
                 {
                     Title = "Вид транспорта";
-                    InputBoxes = GenerateInputBoxes();
+                    Record = new SimpleRecord(record);
                     break;
                 }
-                case DictionaryModels.City:
+                case DictionaryKind.City:
                 {
                     Title = "Город";
-                    InputBoxes = GenerateInputBoxes();
+                    Record = new SimpleRecord(record);
                     break;
                 }
-                case DictionaryModels.Ownership:
+                case DictionaryKind.Ownership:
                 {
                     Title = "Тип собственности";
-                    InputBoxes = GenerateInputBoxes();
+                    Record = new SimpleRecord(record);
                     break;
                 }
-                case DictionaryModels.Status:
+                case DictionaryKind.Status:
                 {
                     Title = "Социальное положение";
-                    InputBoxes = GenerateInputBoxes();
+                    Record = new SimpleRecord(record);
                     break;
                 }
-                default: throw new InvalidEnumArgumentException(nameof(dictionary));
+                case DictionaryKind.Hotel:
+                {
+                    Title = "Отель";
+                    Record =
+                        new Hotel((Hotel) record);
+                    break;
+                }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(dictionary));
             }
 
-            if (((SimpleRecord)record).Equals(SimpleRecord.Empty))
+            InputBoxes = GenerateInputBoxes(dictionary);
+            if (record.Equals(SimpleRecord.Empty))
                 Command = new RelayCommand(
                     o => Execute(
-                        Queries.Dictionaries.Insert(dictionary,
-                            ((SimpleRecord)Record).Name), window),
-                    o => !string.IsNullOrEmpty(((SimpleRecord)Record).Name));
+                        Queries.Dictionaries.Insert(dictionary, Record.Name),
+                        window), o => !string.IsNullOrEmpty(Record.Name));
             else
             {
-                Command = new RelayCommand(
-                    o => Execute(
-                        Queries.Dictionaries.Update(dictionary, ((SimpleRecord)Record).GetId(),
-                            ((SimpleRecord)Record).Name), window),
-                    o => !string.IsNullOrEmpty(((SimpleRecord)Record)
-                             .Name) && !((SimpleRecord)Record).Equals((SimpleRecord)_sourceRecord));
+                switch (dictionary)
+                {
+                    case DictionaryKind.Hotel:
+                        Command = new RelayCommand(
+                            o => Execute(
+                                Queries.Dictionaries.Update(dictionary,
+                                    Record.GetId(),
+                                    Record.Name), window),
+                            o => !string.IsNullOrEmpty(Record.Name) &&
+                                 !((Hotel) Record).Equals(
+                                     (Hotel) _sourceRecord));
+                        break;
+                    default:
+                        Command = new RelayCommand(
+                            o => Execute(
+                                Queries.Dictionaries.Update(dictionary,
+                                    Record.GetId(),
+                                    Record.Name), window),
+                            o => !string.IsNullOrEmpty(Record.Name) &&
+                                 !Record.Equals(_sourceRecord));
+                        break;
+                }
             }
         }
-        
-        private TextBox[] GenerateInputBoxes()
-        {
-            TextBox textBox = new TextBox();
-            textBox.SetBinding(TextBox.TextProperty,
-                new Binding("Record.Name") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged, Mode = BindingMode.TwoWay });
-            HintAssist.SetHint(textBox, SimpleRecord.GenerateTitle());
 
-            return new[]
+        private UIElement[] GenerateInputBoxes(DictionaryKind dictionary)
+        {
+            List<UIElement> controls = new List<UIElement>();
+            TextBox textBox;
+            switch (dictionary)
             {
-                textBox
-            };
+                case DictionaryKind.Hotel:
+                    textBox = new TextBox();
+                    textBox.SetBinding(TextBox.TextProperty,
+                        new Binding(nameof(Record) + '.' + nameof(Hotel.Name))
+                        {
+                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                            Mode = BindingMode.TwoWay
+                        });
+                    HintAssist.SetHint(textBox, Hotel.GenerateTitle(nameof(Record.Name)));
+                    controls.Add(textBox);
+
+                    StackPanel stackPanel = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(0, 10, 0, 0)
+                    };
+                    stackPanel.Children.Add(new TextBlock
+                    {
+                        Text = Hotel.GenerateTitle(nameof(Hotel.Type)) + ":",
+                        Margin = new Thickness(0, 0, 10, 0)
+                    });
+                    RatingBar ratingBar = new RatingBar {Max = 5};
+                    ratingBar.SetBinding(RatingBar.ValueProperty,
+                        new Binding(nameof(Record) + '.' + nameof(Hotel.Type))
+                        {
+                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                            Mode = BindingMode.TwoWay
+                        });
+                    stackPanel.Children.Add(ratingBar);
+                    controls.Add(stackPanel);
+                    break;
+                default:
+                {
+                    textBox = new TextBox();
+                    textBox.SetBinding(TextBox.TextProperty,
+                        new Binding(nameof(Record) + '.' + nameof(Record.Name))
+                        {
+                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                            Mode = BindingMode.TwoWay
+                        });
+                    HintAssist.SetHint(textBox, SimpleRecord.GenerateTitle());
+                    controls.Add(textBox);
+                    break;
+                }
+            }
+
+            return controls.ToArray();
         }
 
         private void Execute(object query, Window window)
@@ -104,9 +173,9 @@ namespace TravelPortal.ViewModels
                 using (var command = new NpgsqlCommand((string)query, connection))
                 {
                     object result = command.ExecuteScalar(); // проверка на длину поля и его уникальности
-                    ((SimpleRecord)_sourceRecord).Name = ((SimpleRecord)Record).Name;
+                    _sourceRecord.Name = Record.Name;
                     if (int.TryParse(result?.ToString(), out var id))
-                        ((SimpleRecord)_sourceRecord).SetId(id);
+                        _sourceRecord.SetId(id);
                     window.Close();
                 }
             }

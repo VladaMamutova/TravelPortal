@@ -87,11 +87,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Database\Configuration.cs" />
+    <Compile Include="Database\Dictionaries.cs" />
     <Compile Include="Database\Queries.cs" />
     <Compile Include="Database\Vouchers.cs" />
     <Compile Include="Models\Agency.cs" />
     <Compile Include="Models\Hotel.cs" />
-    <Compile Include="Models\DictionaryModels.cs" />
+    <Compile Include="Models\DictionaryKind.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Database\Routes.cs" />
     <Compile Include="Models\SimpleRecord.cs" />

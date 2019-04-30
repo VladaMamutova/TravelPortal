@@ -54,6 +54,8 @@
                         <StackPanel Grid.Row="2" Margin="10 0" Orientation="Horizontal">
                             <TextBlock Text="Всего: " FontSize="12" Foreground="{StaticResource PrimaryHueLightForegroundBrush}"></TextBlock>
                             <TextBlock Text="{Binding Count}" FontSize="12" Foreground="{StaticResource PrimaryHueLightForegroundBrush}"/>
+                            <TextBlock Text="Всего: " FontSize="12" Foreground="{StaticResource PrimaryHueLightForegroundBrush}"></TextBlock>
+                            <TextBlock Text="{Binding Current}" FontSize="12" Foreground="{StaticResource PrimaryHueLightForegroundBrush}"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

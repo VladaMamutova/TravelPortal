@@ -3,7 +3,7 @@
     /// <summary>
     /// Перечсиление всех словарей базы данных.
     /// </summary>
-    public enum DictionaryModels
+    public enum DictionaryKind
     {
         Agency,
         City,

@@ -61,9 +61,7 @@ namespace TravelPortal.Database
                 "(select name from city where city_id = agencies.city_id), address, " +
                 "(select name from ownership where ownership_id = agencies.ownership_id), " +
                 "phone, date from agencies";
-
-            public static string SelectAllHotels = "select hotel_id, name, type from hotel ";
-
+            
             public static string SelectAllTickets =
                 "select ticket_id, " +
                 "(select name from city where city_id = tickets.from_id), " +
@@ -71,20 +69,9 @@ namespace TravelPortal.Database
                 "(select name from transport where transport_id = tickets.transport_id), " +
                 "cost from tickets ";
 
-            public static string SelectAllCities =
-                "select * from select_all_from_city()";
-            
-            public static string SelectAllOwnership =
-                "select * from select_all_from_ownership()";
-
-            public static string SelectAllStatus =
-                "select* from select_all_from_status()";
-
-            public static string SelectAllTransport =
-                "select * from select_all_from_transport()";
-
-            public static string Insert(DictionaryModels dictionary, string name) => $"select insert_{dictionary}('{name}')";
-            public static string Update(DictionaryModels dictionary, int id, string name) => $"select update_{dictionary}({id}, '{name}')";
+            public static string SelectAll(DictionaryKind dictionary) => $"select * from select_all_from_{dictionary}()";
+            public static string Insert(DictionaryKind dictionary, string name) => $"select insert_{dictionary}('{name}')";
+            public static string Update(DictionaryKind dictionary, int id, string name) => $"select update_{dictionary}({id}, '{name}')";
         }
     }
 }
