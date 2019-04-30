@@ -98,6 +98,7 @@
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Voucher.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\DictionariesViewModel.cs" />
     <Compile Include="ViewModels\DictionaryRecordViewModel.cs" />
     <Compile Include="ViewModels\DictionaryViewModel.cs" />
     <Compile Include="ViewModels\IntegerValidationRule.cs" />

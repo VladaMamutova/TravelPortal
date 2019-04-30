@@ -7,6 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="#0D47A1"
+        FontSize="14"
         Height="600" Width="1224" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="MainWindow_OnLoaded">
     <Grid>
         <Grid.RowDefinitions>

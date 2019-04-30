@@ -30,20 +30,19 @@ namespace TravelPortal.ViewModels
         public string CommandText { get; }
         public RelayCommand Command { get; }
 
-        public DictionaryRecordViewModel(DictionaryModels dictionary, Window window, object record = null)
+        public DictionaryRecordViewModel(DictionaryModels dictionary, Window window, [NotNull]object record)
         {
             
-            CommandText = record == null ? "ДОБАВИТЬ" : "ИЗМЕНИТЬ";
-            Record = new SimpleRecord((SimpleRecord)record ?? new SimpleRecord());
-            _sourceRecord = record ?? new SimpleRecord();
+            CommandText = ((SimpleRecord)record).Equals(SimpleRecord.Empty) ? "ДОБАВИТЬ" : "ИЗМЕНИТЬ";
+            Record = new SimpleRecord((SimpleRecord)record);
+            _sourceRecord = record;
             switch (dictionary)
             {
                 case DictionaryModels.Transport:
                 {
-                    //InitializeTransportViewModel(); break;
                     Title = "Вид транспорта";
                     InputBoxes = GenerateInputBoxes();
-                    if (record == null)
+                    if (((SimpleRecord)record).Equals(SimpleRecord.Empty))
                         Command = new RelayCommand(
                             o => Add(
                                 Queries.Dictionaries.Insert(
@@ -87,8 +86,10 @@ namespace TravelPortal.ViewModels
                 connection.Open();
                 using (var command = new NpgsqlCommand((string)query, connection))
                 {
-                    command.ExecuteNonQuery(); // проверка на длину поля и его уникальности
+                    object result = command.ExecuteScalar(); // проверка на длину поля и его уникальности
                     ((SimpleRecord)_sourceRecord).Name = ((SimpleRecord)Record).Name;
+                    if (int.TryParse(result?.ToString(), out var id))
+                        ((SimpleRecord)_sourceRecord).SetId(id);
                     window.Close();
                 }
             }

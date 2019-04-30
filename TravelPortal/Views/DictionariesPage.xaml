@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+      xmlns:viewModels="clr-namespace:TravelPortal.ViewModels"
       mc:Ignorable="d" 
       FontSize="14"
       d:DesignHeight="450" d:DesignWidth="800">
@@ -14,23 +15,45 @@
         </DataTemplate>
     </Page.Resources>
     <Grid>
-        <dragablz:TabablzControl TabStripPlacement="Left" BorderThickness="0" x:Name="Dictionaries">
+        <dragablz:TabablzControl ItemsSource="{Binding DictionariesTabs}" TabStripPlacement="Left" BorderThickness="0" x:Name="Dictionaries">
             <dragablz:TabablzControl.ItemContainerStyle>
                 <Style TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemVerticalStyle}">
                     <Setter Property="Width" Value="230" />
                     <Setter Property="Height" Value="50"></Setter>
-                    <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <!-- TabItem Header Template -->
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="{Binding Path=IconKind}" Width="30" Height="30" Margin="10 0"/>
+                                    <TextBlock Text="{Binding Title}" VerticalAlignment="Center"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </dragablz:TabablzControl.ItemContainerStyle>
-            <dragablz:TabablzControl.Resources>
-                <Style TargetType="TabItem">
-                    <Setter Property="Foreground" Value="WhiteSmoke"/>
-                </Style>
-            </dragablz:TabablzControl.Resources>
             <!--Для вынесения вкладки в отдельное окно!-->
             <!--<dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController/>
             </dragablz:TabablzControl.InterTabController>-->
+            <TabControl.ContentTemplate>
+                <!-- TabItem Content Template -->
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="Добавить" Margin="0 10 10 0" Command="{Binding AddCommand}"></Button>
+                            <Button Content="Изменить" Margin="0 10 10 0" Command="{Binding ModifyCommand}"></Button>
+                        </StackPanel>
+                        <DataGrid Grid.Row="1" Margin="10" ItemsSource="{Binding Collection}" SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"></DataGrid>
+                    </Grid>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
         </dragablz:TabablzControl>
     </Grid>
 </Page>

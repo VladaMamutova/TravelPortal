@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
+using MaterialDesignThemes.Wpf;
 using Npgsql;
 using NpgsqlTypes;
 using TravelPortal.Annotations;
@@ -11,133 +14,81 @@ using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
-    // Для полной поддержки передачи значений данных от объектов источника
-    // для целевых объектов, каждый объект в коллекции, который поддерживает
-    // свойства связывания должен также реализовывать INotifyPropertyChanged
-    // интерфейс. 
-    // Необходимо будет реализовать этот интерфейс, если нужно будет
-    // гарантировать изменение и перерисовку таблицы после изменения
-    // свойства одного элемента коллекции (т.е. изменить таблицу с Agencies
-    // на форме после изменения Agencies[0].Name, например. Если Agencies[0]
-    // заменить на новый объект (Agencies[0] = new Agency()), интерфейс
-    // реализовывать не надо).
     public class DictionaryViewModel : INotifyPropertyChanged
     {
-        private SimpleRecord _transportSelectedItem;
-        public SimpleRecord TransportSelectedItem {
-            get => _transportSelectedItem;
-            set
-            {
-                _transportSelectedItem = value;
-                OnPropertyChanged(nameof(TransportSelectedItem));
-            }
-        }
-        #region private ObservableCollection properties for dictionaries
+        public string Title { get; }
+       public PackIconKind IconKind { get; }
 
-        private ObservableCollection<Agency> _agencies;
-        private ObservableCollection<SimpleRecord> _cities;
-        private ObservableCollection<Hotel> _hotels;
-        private ObservableCollection<SimpleRecord> _ownership;
-        private ObservableCollection<SimpleRecord> _statusCollection;
-        private ObservableCollection<Ticket> _tickets;
-        private ObservableCollection<SimpleRecord> _transportCollection;
+        private readonly DictionaryModels _dictionary;
 
-        #endregion
-
-        #region public ObservableCollection properties for dictionaries
-
-        public ObservableCollection<Agency> Agencies {
-            get => _agencies;
-            set
-            {
-                _agencies = value;
-                OnPropertyChanged(nameof(Agencies));
-            }
-        }
-
-        public ObservableCollection<SimpleRecord> Cities
+        public DictionaryViewModel(DictionaryModels dictionary)
         {
-            get => _cities;
+            _dictionary = dictionary;
+            switch (_dictionary)
+            {
+                case DictionaryModels.Transport:
+                    Title = "Вид транспорта";
+                    IconKind = PackIconKind.Aeroplane;
+                    GenerateTitleFunc = SimpleRecord.GenerateTitle;
+                    UpdateCollection();
+                    break;
+                case DictionaryModels.City:
+                    Title = "Города";
+                    IconKind = PackIconKind.City;
+                    GenerateTitleFunc = SimpleRecord.GenerateTitle;
+                    break;
+
+            }
+
+            //UpdateCollection();
+        }
+
+        private SimpleRecord _selectedItem;
+        public SimpleRecord SelectedItem {
+            get => _selectedItem;
             set
             {
-                _cities = value;
-                OnPropertyChanged(nameof(Cities));
+                _selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
             }
         }
 
-        public ObservableCollection<Hotel> Hotels
+        private ObservableCollection<SimpleRecord> _collection;
+        public ObservableCollection<SimpleRecord> Collection
         {
-            get => _hotels;
+            get => _collection;
             set
             {
-                _hotels = value;
-                OnPropertyChanged(nameof(Hotels));
+                _collection = value;
+                OnPropertyChanged(nameof(Collection));
             }
         }
 
-        public ObservableCollection<SimpleRecord> Ownership
-        {
-            get => _ownership;
-            set
-            {
-                _ownership = value;
-                OnPropertyChanged(nameof(Ownership));
-            }
-        }
+        #region Commands
 
-        public ObservableCollection<SimpleRecord> Status
-        {
-            get => _statusCollection;
-            set
-            {
-                _statusCollection = value;
-                OnPropertyChanged(nameof(Status));
-            }
-        }
+        public RelayCommand AddCommand =>
+            new RelayCommand(e => ShowDialog(null));
 
-        public ObservableCollection<Ticket> Tickets
-        {
-            get => _tickets;
-            set
-            {
-                _tickets = value;
-                OnPropertyChanged(nameof(Tickets));
-            }
-        }
+        public RelayCommand ModifyCommand => new RelayCommand(
+            e => ShowDialog(_selectedItem), o => SelectedItem != null);
 
-        public ObservableCollection<SimpleRecord> TransportCollection
+        private void ShowDialog(object o)
         {
-            get => _transportCollection;
-            set
-            {
-                _transportCollection = value;
-                OnPropertyChanged(nameof(TransportCollection));
-            }
+            var view = new DictionaryRecordDialog();
+            SimpleRecord recordCopy = new SimpleRecord(o != null ? (SimpleRecord) o : SimpleRecord.Empty);
+            DictionaryRecordViewModel viewModel =
+                new DictionaryRecordViewModel(_dictionary, view, recordCopy);
+            view.DataContext = viewModel;
+
+            view.ShowDialog();
+            UpdateCollection();
+            SelectedItem = Collection.SingleOrDefault(i => 
+                    i.GetId() == recordCopy.GetId());
         }
 
         #endregion
 
-        public DictionaryViewModel()
-        {
-            using (var connection =
-                new NpgsqlConnection(Configuration.GetConnetionString()))
-            {
-                connection.Open();
-
-                //Agencies = GetAgencies(connection);
-                Cities = GetCollection(connection,
-                    Queries.Dictionaries.SelectAllCities);
-                //Hotels = GetHotels(connection);
-                //Ownership = GetCollection(connection,
-                //    Queries.Dictionaries.SelectAllOwnership);
-                //Status = GetCollection(connection,
-                //    Queries.Dictionaries.SelectAllStatus);
-                //Tickets = GetTickets(connection);
-                TransportCollection = GetCollection(connection,
-                    Queries.Dictionaries.SelectAllTransport);
-                //if (TransportCollection.Count > 0)TransportSelectedItem = TransportCollection[0];
-            }
-        }
+        public Func<string, string> GenerateTitleFunc { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -150,6 +101,24 @@ namespace TravelPortal.ViewModels
         }
 
         #region Methods for getting data from dictionaries to ObservableCollections
+
+        private void UpdateCollection()
+        {
+            string query = "";
+            switch (_dictionary)
+            {
+                case DictionaryModels.Transport:
+                    query = Queries.Dictionaries.SelectAllTransport;
+                    break;
+            }
+
+            using (var connection =
+                new NpgsqlConnection(Configuration.GetConnetionString()))
+            {
+                connection.Open();
+                Collection = GetSimpleDictionary(connection, query);
+            }
+        }
 
         private static ObservableCollection<Agency> GetAgencies(NpgsqlConnection npgsqlConnection)
         {
@@ -228,7 +197,7 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        private static ObservableCollection<SimpleRecord> GetCollection(NpgsqlConnection npgsqlConnection, string query)
+        private static ObservableCollection<SimpleRecord> GetSimpleDictionary(NpgsqlConnection npgsqlConnection, string query)
         {
             using (var command = new NpgsqlCommand(query, npgsqlConnection))
             {
@@ -249,29 +218,6 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        #endregion
-
-        #region Commands
-
-        public RelayCommand AddTransportCommand => new RelayCommand(e => ExecuteRunDialog(null));
-        public RelayCommand ModifyTransportCommand => new RelayCommand(e => ExecuteRunDialog(_transportSelectedItem), o => _transportSelectedItem != null);
-        
-        private void ExecuteRunDialog(object o)
-        {
-            var view = new DictionaryRecordDialog();
-            SimpleRecord simpleRecordCopy = new SimpleRecord((SimpleRecord)o);
-            DictionaryRecordViewModel viewModel =
-                new DictionaryRecordViewModel(DictionaryModels.Transport, view, simpleRecordCopy);
-            view.DataContext = viewModel;
-
-            view.ShowDialog();
-            NpgsqlConnection c = new NpgsqlConnection(Configuration.GetConnetionString());
-            c.Open();
-            TransportCollection = GetCollection(c,Queries.Dictionaries.SelectAllTransport);
-            TransportSelectedItem =
-                TransportCollection.SingleOrDefault(i => i.GetId() == simpleRecordCopy.GetId());
-        }
-        
         #endregion
     }
 }

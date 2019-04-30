@@ -6,7 +6,7 @@ namespace TravelPortal.Models
 {
     public class SimpleRecord : INotifyPropertyChanged
     {
-        private readonly int _id;
+        private int _id;
         private string _name;
 
         public string Name
@@ -20,8 +20,12 @@ namespace TravelPortal.Models
         }
 
         public int GetId() => _id;
-        public SimpleRecord() { }
+        public void SetId(int id) => _id = id;
 
+        public static readonly SimpleRecord Empty;
+
+        static SimpleRecord() { Empty = new SimpleRecord(-1, ""); }
+        
         public SimpleRecord(int id, string name)
         {
             _id = id;
@@ -54,7 +58,7 @@ namespace TravelPortal.Models
 
         public override string ToString()
         {
-            return $"id={_id}, Name={Name}";
+            return $"id={_id}, Name=\"{Name}\"";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
