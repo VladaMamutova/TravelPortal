@@ -14,8 +14,13 @@ namespace TravelPortal.ViewModels
             DictionariesTabs =
                 new ObservableCollection<DictionaryViewModel>
                 {
+                    //new DictionaryViewModel(DictionaryModels.Agency),
+                    //new DictionaryViewModel(DictionaryModels.Hotel),
+                    //new DictionaryViewModel(DictionaryModels.Ticket),
                     new DictionaryViewModel(DictionaryModels.Transport),
-                    new DictionaryViewModel(DictionaryModels.City)
+                    new DictionaryViewModel(DictionaryModels.City),
+                    new DictionaryViewModel(DictionaryModels.Ownership),
+                    new DictionaryViewModel(DictionaryModels.Status)
                 };
         }
     }

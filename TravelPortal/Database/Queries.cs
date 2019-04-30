@@ -1,4 +1,5 @@
 ﻿using NpgsqlTypes;
+using TravelPortal.Models;
 
 namespace TravelPortal.Database
 {
@@ -72,20 +73,18 @@ namespace TravelPortal.Database
 
             public static string SelectAllCities =
                 "select * from select_all_from_city()";
-            //"select city_id, name from city ";
-
+            
             public static string SelectAllOwnership =
-                "select ownership_id, name from ownership ";
+                "select * from select_all_from_ownership()";
 
             public static string SelectAllStatus =
-                "select status_id, name from status ";
+                "select* from select_all_from_status()";
 
             public static string SelectAllTransport =
                 "select * from select_all_from_transport()";
-                //"select transport_id, name from transport ";
 
-            public static string Insert(string name) => $"select insert_transport('{name}')";
-            public static string Update(int id, string name) => $"select update_transport({id}, '{name}')";
+            public static string Insert(DictionaryModels dictionary, string name) => $"select insert_{dictionary}('{name}')";
+            public static string Update(DictionaryModels dictionary, int id, string name) => $"select update_{dictionary}({id}, '{name}')";
         }
     }
 }

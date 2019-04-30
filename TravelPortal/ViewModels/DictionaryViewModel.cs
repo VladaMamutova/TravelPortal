@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
 using Npgsql;
 using NpgsqlTypes;
@@ -17,7 +16,7 @@ namespace TravelPortal.ViewModels
     public class DictionaryViewModel : INotifyPropertyChanged
     {
         public string Title { get; }
-       public PackIconKind IconKind { get; }
+        public PackIconKind IconKind { get; }
 
         private readonly DictionaryModels _dictionary;
 
@@ -30,17 +29,25 @@ namespace TravelPortal.ViewModels
                     Title = "Вид транспорта";
                     IconKind = PackIconKind.Aeroplane;
                     GenerateTitleFunc = SimpleRecord.GenerateTitle;
-                    UpdateCollection();
                     break;
                 case DictionaryModels.City:
                     Title = "Города";
                     IconKind = PackIconKind.City;
                     GenerateTitleFunc = SimpleRecord.GenerateTitle;
                     break;
-
+                case DictionaryModels.Ownership:
+                    Title = "Тип собственности";
+                    IconKind = PackIconKind.SecurityHome;
+                    GenerateTitleFunc = SimpleRecord.GenerateTitle;
+                    break;
+                case DictionaryModels.Status:
+                    Title = "Социнальное положение";
+                    IconKind = PackIconKind.TicketUser;
+                    GenerateTitleFunc = SimpleRecord.GenerateTitle;
+                    break;
             }
 
-            //UpdateCollection();
+            UpdateCollection();
         }
 
         private SimpleRecord _selectedItem;
@@ -63,6 +70,8 @@ namespace TravelPortal.ViewModels
                 OnPropertyChanged(nameof(Collection));
             }
         }
+
+        public int Count => Collection.Count;
 
         #region Commands
 
@@ -109,6 +118,15 @@ namespace TravelPortal.ViewModels
             {
                 case DictionaryModels.Transport:
                     query = Queries.Dictionaries.SelectAllTransport;
+                    break;
+                case DictionaryModels.City:
+                    query = Queries.Dictionaries.SelectAllCities;
+                    break;
+                case DictionaryModels.Ownership:
+                    query = Queries.Dictionaries.SelectAllOwnership;
+                    break;
+                case DictionaryModels.Status:
+                    query = Queries.Dictionaries.SelectAllStatus;
                     break;
             }
 

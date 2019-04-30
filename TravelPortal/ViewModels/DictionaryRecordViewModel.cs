@@ -42,26 +42,43 @@ namespace TravelPortal.ViewModels
                 {
                     Title = "Вид транспорта";
                     InputBoxes = GenerateInputBoxes();
-                    if (((SimpleRecord)record).Equals(SimpleRecord.Empty))
-                        Command = new RelayCommand(
-                            o => Add(
-                                Queries.Dictionaries.Insert(
-                                    ((SimpleRecord)Record).Name), window),
-                            o => !string.IsNullOrEmpty(((SimpleRecord) Record).Name));
-                    else
-                    {
-                        Command = new RelayCommand(
-                            o => Add(
-                                Queries.Dictionaries.Update(((SimpleRecord)Record).GetId(),
-                                    ((SimpleRecord)Record).Name), window),
-                            o => !string.IsNullOrEmpty(((SimpleRecord)Record)
-                                .Name) && !((SimpleRecord)Record).Equals((SimpleRecord)_sourceRecord));
-                        }
+                    break;
+                }
+                case DictionaryModels.City:
+                {
+                    Title = "Город";
+                    InputBoxes = GenerateInputBoxes();
+                    break;
+                }
+                case DictionaryModels.Ownership:
+                {
+                    Title = "Тип собственности";
+                    InputBoxes = GenerateInputBoxes();
+                    break;
+                }
+                case DictionaryModels.Status:
+                {
+                    Title = "Социальное положение";
+                    InputBoxes = GenerateInputBoxes();
                     break;
                 }
                 default: throw new InvalidEnumArgumentException(nameof(dictionary));
+            }
 
-
+            if (((SimpleRecord)record).Equals(SimpleRecord.Empty))
+                Command = new RelayCommand(
+                    o => Execute(
+                        Queries.Dictionaries.Insert(dictionary,
+                            ((SimpleRecord)Record).Name), window),
+                    o => !string.IsNullOrEmpty(((SimpleRecord)Record).Name));
+            else
+            {
+                Command = new RelayCommand(
+                    o => Execute(
+                        Queries.Dictionaries.Update(dictionary, ((SimpleRecord)Record).GetId(),
+                            ((SimpleRecord)Record).Name), window),
+                    o => !string.IsNullOrEmpty(((SimpleRecord)Record)
+                             .Name) && !((SimpleRecord)Record).Equals((SimpleRecord)_sourceRecord));
             }
         }
         
@@ -78,7 +95,7 @@ namespace TravelPortal.ViewModels
             };
         }
 
-        private void Add(object query, Window window)
+        private void Execute(object query, Window window)
         {
             using (var connection =
                 new NpgsqlConnection(Configuration.GetConnetionString()))
