@@ -47,9 +47,7 @@ namespace TravelPortal.Database
             public static string FilterStatus(string status)=>
                 SelectAll + $"where status_id = (select status_id from status where lower(name) like lower('{status}'))";
         }
-
-        public static string SelectAllHotels = "select name from hotel ";
-
+        
         public static string SelectAllTransport = "select name from transport ";
 
         public static string SelectAllStatus = "select name from status ";
@@ -69,9 +67,25 @@ namespace TravelPortal.Database
                 "(select name from transport where transport_id = tickets.transport_id), " +
                 "cost from tickets ";
 
-            public static string SelectAll(DictionaryKind dictionary) => $"select * from select_all_from_{dictionary}()";
-            public static string Insert(DictionaryKind dictionary, string name) => $"select insert_{dictionary}('{name}')";
-            public static string Update(DictionaryKind dictionary, int id, string name) => $"select update_{dictionary}({id}, '{name}')";
+            public static string SelectNameList(DictionaryKind dictionary) =>
+                $"select * from select_name_from_{dictionary}()";
+
+            public static string SelectAll(DictionaryKind dictionary) =>
+                $"select * from select_all_from_{dictionary}()";
+
+            public static string Insert(DictionaryKind dictionary,
+                SimpleRecord record)
+            {
+                return $"select insert_{dictionary}" +
+                       $"({record.GetParameterList()})";
+            }
+
+            public static string Update(DictionaryKind dictionary,
+                SimpleRecord record)
+            {
+                return $"select update_{dictionary}" +
+                       $"({record.GetIdentifiedParameterList()})";
+            }
         }
     }
 }

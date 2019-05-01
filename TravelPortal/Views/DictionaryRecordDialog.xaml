@@ -15,7 +15,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Padding="10" Text="{Binding Path=Title}" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Background="{StaticResource PrimaryHueMidBrush}"/>
+        <TextBlock Padding="10" Text="{Binding Path=Title}" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Move"/>
         <StackPanel Margin="10" Grid.Row="1">
             <ItemsControl ItemsSource="{Binding InputBoxes}"/>
             <!--<TextBox wpf:HintAssist.Hint="Наименование">
@@ -39,7 +39,7 @@
                 </TextBox.Text>
         </TextBox>-->
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10 20 10 10" HorizontalAlignment="Right">
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10" HorizontalAlignment="Right">
             <Button Content="{Binding Path=CommandText}" IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}"
                     Command="{Binding Command}">
             </Button>

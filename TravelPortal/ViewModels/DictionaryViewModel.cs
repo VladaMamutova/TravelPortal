@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -60,8 +59,8 @@ namespace TravelPortal.ViewModels
             UpdateCollection();
         }
 
-        private SimpleRecord _selectedItem;
-        public SimpleRecord SelectedItem {
+        private object _selectedItem;
+        public object SelectedItem {
             get => _selectedItem;
             set
             {
@@ -70,8 +69,8 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        private ObservableCollection<SimpleRecord> _collection;
-        public ObservableCollection<SimpleRecord> Collection
+        private ObservableCollection<object> _collection;
+        public ObservableCollection<object> Collection
         {
             get => _collection;
             set
@@ -117,7 +116,7 @@ namespace TravelPortal.ViewModels
             view.ShowDialog();
             UpdateCollection();
             SelectedItem = Collection.SingleOrDefault(i => 
-                    i.GetId() == recordCopy.GetId());
+                    ((SimpleRecord)i).GetId() == recordCopy.GetId());
         }
 
         #endregion
@@ -136,7 +135,20 @@ namespace TravelPortal.ViewModels
 
         private void UpdateCollection()
         {
-            Collection = Dictionaries.GetDictionary(_dictionary);
+            Collection = new ObservableCollection<object>();
+            ObservableCollection<SimpleRecord> collection = Dictionaries.GetDictionary(_dictionary);
+            // Вывод сообщений при исключениях.
+            switch (_dictionary)
+            {
+                case DictionaryKind.Hotel:
+                    foreach (var item in collection)
+                        Collection.Add((Hotel)item);
+                    break;
+                default:
+                    foreach (var item in collection)
+                        Collection.Add(item);
+                    break;
+            }
         }
     }
 }

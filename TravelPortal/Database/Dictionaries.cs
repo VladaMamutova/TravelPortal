@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Npgsql;
 using NpgsqlTypes;
 using TravelPortal.Models;
@@ -14,6 +15,30 @@ namespace TravelPortal.Database
             {
                 case DictionaryKind.Hotel: return GetHotels();
                 default: return GetSimpleDictionary(dictionary);
+            }
+        }
+
+        public static List<string> GetNameList(
+            DictionaryKind dictionary)
+        {
+            using (var connection =
+                new NpgsqlConnection(Configuration.GetConnetionString()))
+            {
+                connection.Open();
+                using (var command = new NpgsqlCommand(
+                    Queries.Dictionaries.SelectNameList(dictionary),
+                    connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.HasRows) return null;
+                        List<string> collection = new List<string>();
+                        while (reader.Read())
+                            collection.Add(reader.GetString(0).TrimEnd(' '));
+
+                        return collection;
+                    }
+                }
             }
         }
 
@@ -95,9 +120,10 @@ namespace TravelPortal.Database
                         {
                             int hotelId = reader.GetInt32(0);
                             string name = reader.GetString(1).TrimEnd();
-                            int type = reader.GetInt32(2);
+                            string city = reader.GetString(2).TrimEnd();
+                            int type = reader.GetInt32(3);
 
-                            collection.Add(new Hotel(hotelId, name, type));
+                            collection.Add(new Hotel(hotelId, name, city, type));
                         }
 
                         return collection;

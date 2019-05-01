@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using TravelPortal.Annotations;
 
@@ -42,21 +43,37 @@ namespace TravelPortal.Models
         {
             return "Наименование";
         }
-
-        public bool Equals(SimpleRecord other)
+        
+        public virtual bool IsReadyToInsert()
         {
-            if (other == null)
+            return !string.IsNullOrWhiteSpace(Name);
+        }
+
+        public virtual string GetParameterList()
+        {
+            return $"'{Name}'";
+        }
+        
+        public virtual string GetIdentifiedParameterList()
+        {
+            return $"{Id}, {GetParameterList()}";
+        }
+
+        public virtual bool Equals(SimpleRecord record)
+        {
+            if (record == null)
                 return false;
 
-            if (ReferenceEquals(this, other))
+            if (ReferenceEquals(this, record))
                 return true;
 
-            return Name == other.Name && Id == other.Id;
+            return string.Compare(Name, record.Name,
+                       StringComparison.CurrentCulture) == 0 && Id == record.Id;
         }
 
         public override int GetHashCode()
         {
-            return (Id + Name).GetHashCode();
+            return Name.GetHashCode();
         }
 
         public override string ToString()

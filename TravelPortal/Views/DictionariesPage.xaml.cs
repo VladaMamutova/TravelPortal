@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using TravelPortal.Models;
 using TravelPortal.ViewModels;
 
 namespace TravelPortal.Views
@@ -16,9 +18,16 @@ namespace TravelPortal.Views
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
+            if (e.PropertyName == nameof(Hotel.Type))
+                e.Column = new DataGridTemplateColumn
+                { CellTemplate = (DataTemplate)Resources["RatingBarDataTemplate"] };
+            
             e.Column.Header =
                 ((DictionaryViewModel)Dictionaries.SelectedItem).GenerateTitleFunc
                 .Invoke(e.PropertyName);
+
+            if (e.PropertyName == nameof(SimpleRecord.Name))
+                e.Column.DisplayIndex = 0;
         }
 
         public void InitializeMenu()

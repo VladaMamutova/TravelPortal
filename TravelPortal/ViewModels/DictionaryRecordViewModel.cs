@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
 using Npgsql;
@@ -35,7 +36,7 @@ namespace TravelPortal.ViewModels
             Window window, [NotNull] SimpleRecord record)
         {
 
-            CommandText = record.Equals(SimpleRecord.Empty)
+            CommandText = SimpleRecord.Empty.Equals(record)
                 ? "ДОБАВИТЬ"
                 : "ИЗМЕНИТЬ";
             _sourceRecord = record;
@@ -77,11 +78,11 @@ namespace TravelPortal.ViewModels
             }
 
             InputBoxes = GenerateInputBoxes(dictionary);
-            if (record.Equals(SimpleRecord.Empty))
+            if (SimpleRecord.Empty.Equals(record))
                 Command = new RelayCommand(
                     o => Execute(
-                        Queries.Dictionaries.Insert(dictionary, Record.Name),
-                        window), o => !string.IsNullOrEmpty(Record.Name));
+                        Queries.Dictionaries.Insert(dictionary, Record),
+                        window), o => Record.IsReadyToInsert());
             else
             {
                 switch (dictionary)
@@ -90,9 +91,8 @@ namespace TravelPortal.ViewModels
                         Command = new RelayCommand(
                             o => Execute(
                                 Queries.Dictionaries.Update(dictionary,
-                                    Record.GetId(),
-                                    Record.Name), window),
-                            o => !string.IsNullOrEmpty(Record.Name) &&
+                                    Record), window),
+                            o => Record.IsReadyToInsert() &&
                                  !((Hotel) Record).Equals(
                                      (Hotel) _sourceRecord));
                         break;
@@ -100,10 +100,9 @@ namespace TravelPortal.ViewModels
                         Command = new RelayCommand(
                             o => Execute(
                                 Queries.Dictionaries.Update(dictionary,
-                                    Record.GetId(),
-                                    Record.Name), window),
-                            o => !string.IsNullOrEmpty(Record.Name) &&
-                                 !Record.Equals(_sourceRecord));
+                                    Record), window),
+                            o => Record.IsReadyToInsert() &&
+                                 Record.Equals(_sourceRecord));
                         break;
                 }
             }
@@ -126,10 +125,22 @@ namespace TravelPortal.ViewModels
                     HintAssist.SetHint(textBox, Hotel.GenerateTitle(nameof(Record.Name)));
                     controls.Add(textBox);
 
+                    ComboBox comboBox = new ComboBox {Margin = new Thickness(0, 10, 0, 0)};
+                    
+                    comboBox.SetBinding(Selector.SelectedItemProperty,
+                        new Binding(nameof(Record) + '.' + nameof(Hotel.City))
+                        {
+                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                            Mode = BindingMode.TwoWay
+                        });
+                    HintAssist.SetHint(comboBox, Hotel.GenerateTitle(nameof(Hotel.City)));
+                    comboBox.ItemsSource = Dictionaries.GetNameList(DictionaryKind.City);
+                    controls.Add(comboBox);
+
                     StackPanel stackPanel = new StackPanel
                     {
                         Orientation = Orientation.Horizontal,
-                        Margin = new Thickness(0, 10, 0, 0)
+                        Margin = new Thickness(0, 20, 0, 0)
                     };
                     stackPanel.Children.Add(new TextBlock
                     {
