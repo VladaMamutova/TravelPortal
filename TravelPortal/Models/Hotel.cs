@@ -47,7 +47,7 @@ namespace TravelPortal.Models
         {
             switch (propertyName)
             {
-                case nameof(Name): return "Название";
+                case nameof(Name): return "Отель";
                 case nameof(City): return "Город";
                 case nameof(Type): return "Категория";
                 default: return propertyName;

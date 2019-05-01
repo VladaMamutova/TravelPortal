@@ -14,6 +14,7 @@ namespace TravelPortal.Database
             switch (dictionary)
             {
                 case DictionaryKind.Hotel: return GetHotels();
+                case DictionaryKind.Ticket: return GetTickets();
                 default: return GetSimpleDictionary(dictionary);
             }
         }
@@ -132,30 +133,33 @@ namespace TravelPortal.Database
             }
         }
 
-        private static ObservableCollection<Ticket> GetTickets(
-            NpgsqlConnection npgsqlConnection)
+        private static ObservableCollection<SimpleRecord> GetTickets()
         {
-            using (var command = new NpgsqlCommand(
-                Queries.Dictionaries.SelectAllTickets, npgsqlConnection))
+            using (var connection =
+                new NpgsqlConnection(Configuration.GetConnetionString()))
             {
-                using (var reader = command.ExecuteReader())
+                using (var command = new NpgsqlCommand(
+                    Queries.Dictionaries.SelectAllTickets, connection))
                 {
-                    if (!reader.HasRows) return null;
-                    ObservableCollection<Ticket> collection =
-                        new ObservableCollection<Ticket>();
-                    while (reader.Read())
+                    using (var reader = command.ExecuteReader())
                     {
-                        int ticketId = reader.GetInt32(0);
-                        string from = reader.GetString(1).TrimEnd();
-                        string to = reader.GetString(2).TrimEnd();
-                        string transport = reader.GetString(3).TrimEnd();
-                        double cost = reader.GetDataTypeOID(4);
+                        if (!reader.HasRows) return null;
+                        ObservableCollection<SimpleRecord> collection =
+                            new ObservableCollection<SimpleRecord>();
+                        while (reader.Read())
+                        {
+                            int ticketId = reader.GetInt32(0);
+                            string name = reader.GetString(1).TrimEnd();
+                            string from = reader.GetString(2).TrimEnd();
+                            string to = reader.GetString(3).TrimEnd();
+                            double cost = reader.GetDataTypeOID(4);
 
-                        collection.Add(new Ticket(ticketId, from, to, transport,
-                            cost));
+                            collection.Add(new Ticket(ticketId, name, from, to,
+                                cost));
+                        }
+
+                        return collection;
                     }
-
-                    return collection;
                 }
             }
         }

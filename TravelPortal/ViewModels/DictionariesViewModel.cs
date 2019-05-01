@@ -16,7 +16,7 @@ namespace TravelPortal.ViewModels
                 {
                     //new DictionaryViewModel(DictionaryModels.Agency),
                     new DictionaryViewModel(DictionaryKind.Hotel),
-                    //new DictionaryViewModel(DictionaryModels.Ticket),
+                    new DictionaryViewModel(DictionaryKind.Ticket),
                     new DictionaryViewModel(DictionaryKind.Transport),
                     new DictionaryViewModel(DictionaryKind.City),
                     new DictionaryViewModel(DictionaryKind.Ownership),

@@ -52,7 +52,7 @@ namespace TravelPortal.ViewModels
                 case DictionaryKind.Ticket:
                     Title = "Билеты на проезд";
                     IconKind = PackIconKind.Hotel;
-                    GenerateTitleFunc = Hotel.GenerateTitle;
+                    GenerateTitleFunc = Ticket.GenerateTitle;
                     break;
             }
 
