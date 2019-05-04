@@ -28,7 +28,7 @@ namespace TravelPortal.Views
             DragMove();
         }
 
-        private void SignUp_OnClick(object sender, RoutedEventArgs e)
+        private void SignIn_OnClick(object sender, RoutedEventArgs e)
         {
 
             string login = Login.Text;
@@ -68,7 +68,7 @@ namespace TravelPortal.Views
             // Если нажата клавиша "Enter" на любом поле ввода и кнопка "Подключиться" доступна,
             // то программно нажимаем на эту кнопку.
             if (e.Key == Key.Enter && SignIn.IsEnabled)
-                SignUp_OnClick(SignIn, new RoutedEventArgs());
+                SignIn_OnClick(SignIn, new RoutedEventArgs());
         }
     }
 }

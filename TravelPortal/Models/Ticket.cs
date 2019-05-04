@@ -38,6 +38,10 @@ namespace TravelPortal.Models
             }
         }
 
+        public new static readonly Ticket Empty;
+
+        static Ticket() { Empty = new Ticket(-1, "", "", "", 0); }
+
         public Ticket(int id, string transport, string from, string to,
             double cost) : base(id, transport)
         {
@@ -46,11 +50,7 @@ namespace TravelPortal.Models
             Cost = cost;
         }
 
-        public new static Ticket Empty;
-
-        static Ticket() { Empty = new Ticket(-1, "", "", "", 0); }
-
-        public Ticket(Ticket newRecord) : base(newRecord.GetId(), newRecord.Name)
+        public Ticket(Ticket newRecord) : base(newRecord.Id, newRecord.Name)
         {
             From = newRecord.From;
             To = newRecord.To;
@@ -107,7 +107,8 @@ namespace TravelPortal.Models
 
         public override string ToString()
         {
-            return $"id={Id}, Name=\"{Name}\", From=\"{From}\", To=\"{To}\", Cost={Cost}";
+            return base.ToString() +
+                   $", From=\"{From}\", To=\"{To}\", Cost={Cost}";
         }
     }
 }

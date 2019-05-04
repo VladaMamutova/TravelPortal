@@ -54,19 +54,6 @@ namespace TravelPortal.Database
 
         public static class Dictionaries
         {
-            public const string SelectAllAgencies =
-                "select agency_id, regnumber, name, " +
-                "(select name from city where city_id = agencies.city_id), address, " +
-                "(select name from ownership where ownership_id = agencies.ownership_id), " +
-                "phone, date from agencies";
-            
-            public static string SelectAllTickets =
-                "select ticket_id, " +
-                "(select name from city where city_id = tickets.from_id), " +
-                "(select name from city where city_id = tickets.to_id), " +
-                "(select name from transport where transport_id = tickets.transport_id), " +
-                "cost from tickets ";
-
             public static string SelectNameList(DictionaryKind dictionary) =>
                 $"select * from select_name_from_{dictionary}()";
 

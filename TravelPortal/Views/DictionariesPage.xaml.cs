@@ -21,7 +21,11 @@ namespace TravelPortal.Views
             if (e.PropertyName == nameof(Hotel.Type))
                 e.Column = new DataGridTemplateColumn
                 { CellTemplate = (DataTemplate)Resources["RatingBarDataTemplate"] };
-            
+
+            if (e.PropertyType == typeof(System.DateTime) &&
+                e.Column is DataGridTextColumn dateColumn)
+                dateColumn.Binding.StringFormat = "dd.MM.yyyy";
+
             e.Column.Header =
                 ((DictionaryViewModel)Dictionaries.SelectedItem).GenerateTitleFunc
                 .Invoke(e.PropertyName);

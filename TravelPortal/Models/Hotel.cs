@@ -27,7 +27,7 @@ namespace TravelPortal.Models
             }
         }
 
-        public new static Hotel Empty;
+        public new static readonly Hotel Empty;
 
         static Hotel() { Empty = new Hotel(-1, "", "", 0); }
 
@@ -89,7 +89,7 @@ namespace TravelPortal.Models
 
         public override string ToString()
         {
-            return $"id={Id}, Name=\"{Name}\", City=\"{City}\", Type=\"{Type}\"";
+            return base.ToString() + $", City=\"{City}\", Type=\"{Type}\"";
         }
     }
 }

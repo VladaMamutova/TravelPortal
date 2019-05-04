@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using MaterialDesignThemes.Wpf;
-using Npgsql;
 using TravelPortal.Annotations;
 using TravelPortal.Database;
 using TravelPortal.Models;
@@ -51,8 +50,13 @@ namespace TravelPortal.ViewModels
                     break;
                 case DictionaryKind.Ticket:
                     Title = "Билеты на проезд";
-                    IconKind = PackIconKind.Hotel;
+                    IconKind = PackIconKind.Cards;
                     GenerateTitleFunc = Ticket.GenerateTitle;
+                    break;
+                case DictionaryKind.Agency:
+                    Title = "Агенства";
+                    IconKind = PackIconKind.OfficeBuilding;
+                    GenerateTitleFunc = Agency.GenerateTitle;
                     break;
             }
 
@@ -97,9 +101,15 @@ namespace TravelPortal.ViewModels
             switch (_dictionary)
             {
                 case DictionaryKind.Hotel:
-                    recordCopy = new Hotel(o != null
-                        ? (Hotel) o
-                        : Hotel.Empty);
+                    recordCopy = new Hotel(o != null ? (Hotel) o : Hotel.Empty);
+                    break;
+                case DictionaryKind.Ticket:
+                    recordCopy =
+                        new Ticket(o != null ? (Ticket) o : Ticket.Empty);
+                    break;
+                case DictionaryKind.Agency:
+                    recordCopy =
+                        new Agency(o != null ? (Agency) o : Agency.Empty);
                     break;
                 default:
                     recordCopy = new SimpleRecord(o != null
@@ -143,6 +153,14 @@ namespace TravelPortal.ViewModels
                 case DictionaryKind.Hotel:
                     foreach (var item in collection)
                         Collection.Add((Hotel)item);
+                    break;
+                case DictionaryKind.Ticket:
+                    foreach (var item in collection)
+                        Collection.Add((Ticket)item);
+                    break;
+                case DictionaryKind.Agency:
+                    foreach (var item in collection)
+                        Collection.Add((Agency)item);
                     break;
                 default:
                     foreach (var item in collection)

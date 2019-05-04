@@ -14,7 +14,7 @@ namespace TravelPortal.ViewModels
             DictionariesTabs =
                 new ObservableCollection<DictionaryViewModel>
                 {
-                    //new DictionaryViewModel(DictionaryModels.Agency),
+                    new DictionaryViewModel(DictionaryKind.Agency),
                     new DictionaryViewModel(DictionaryKind.Hotel),
                     new DictionaryViewModel(DictionaryKind.Ticket),
                     new DictionaryViewModel(DictionaryKind.Transport),
