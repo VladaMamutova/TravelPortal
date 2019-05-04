@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Npgsql;
 using TravelPortal.Database;
+using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
@@ -17,7 +18,7 @@ namespace TravelPortal.ViewModels
                 connection.Open();
 
                 StatusCollection =
-                    GetCollection(connection, Queries.SelectAllStatus);
+                    GetCollection(connection, Queries.Dictionaries.SelectNameList(DictionaryKind.Status));
             }
         }
 

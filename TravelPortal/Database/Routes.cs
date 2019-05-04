@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using Npgsql;
 using NpgsqlTypes;
 using TravelPortal.Models;
@@ -13,7 +12,7 @@ namespace TravelPortal.Database
         {
             try
             {
-                return ExecuteQuery(Queries.Routes.selectAllFunction);
+                return ExecuteQuery(Queries.Routes.SelectAllFunction);
             }
             catch (Exception e)
             {
@@ -93,18 +92,18 @@ namespace TravelPortal.Database
                         while (reader.Read())
                         {
                             int routeId = reader.GetInt32(0);
-                            string from = reader.GetString(1).TrimEnd();
-                            string to = reader.GetString(2).TrimEnd();
-                            double cost = reader.GetDouble(3);
-                            NpgsqlDate date = reader.GetDate(4);
-                            int duration = reader.GetInt32(5);
-                            string residence = reader.GetString(6).TrimEnd();
+                            string hotel = reader.GetString(1).TrimEnd();
+                            string from = reader.GetString(2).TrimEnd();
+                            string to = reader.GetString(3).TrimEnd();
+                            double cost = reader.GetDouble(4);
+                            NpgsqlDate date = reader.GetDate(5);
+                            int duration = reader.GetInt32(6);
                             bool meels = reader.GetBoolean(7);
                             string transport = reader.GetString(8).TrimEnd();
                             double transportCost = reader.GetDouble(9);
 
                             routes.Add(new Route(routeId, from, to, date,
-                                duration, cost, residence, meels, transport,
+                                duration, cost, hotel, meels, transport,
                                 transportCost));
                         }
 

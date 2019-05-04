@@ -12,7 +12,7 @@ namespace TravelPortal.Database
         {
             try
             {
-                return ExecuteQuery(Queries.Vouchers.SelectAll);
+                return ExecuteQuery(Queries.Vouchers.SelectAllFunction);
             }
             catch (Exception e)
             {
@@ -60,9 +60,9 @@ namespace TravelPortal.Database
                         {
                             int voucherId = reader.GetInt32(0);
                             string fio = reader.GetString(1).TrimEnd();
-                            string from = reader.GetString(2).TrimEnd();
-                            string to = reader.GetString(3).TrimEnd();
-                            string hotel = reader.GetString(4).TrimEnd();
+                            string hotel = reader.GetString(2).TrimEnd();
+                            string from = reader.GetString(3).TrimEnd();
+                            string to = reader.GetString(4).TrimEnd();
                             string phone = reader.GetString(5).TrimEnd();
                             string address = reader.GetString(6).TrimEnd();
                             NpgsqlDate birthday = reader.GetDate(7);

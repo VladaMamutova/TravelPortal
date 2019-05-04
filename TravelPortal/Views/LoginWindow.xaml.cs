@@ -15,6 +15,9 @@ namespace TravelPortal.Views
         public LoginWindow()
         {
             InitializeComponent();
+            //Login.Text = "vlada";
+            //Password.Password = "admin";
+            //SignIn_OnClick(SignIn, new RoutedEventArgs());
         }
 
         private void Power_MouseDown(object sender, MouseButtonEventArgs e)

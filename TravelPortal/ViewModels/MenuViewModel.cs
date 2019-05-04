@@ -96,7 +96,7 @@ namespace TravelPortal.ViewModels
                 case Configuration.Roles.Employee:
                 {
                     pages.Add("Маршруты".ToUpper(), new RoutesPage());
-                    //pages.Add("Путёвки".ToUpper(), new VouchersPage());
+                    pages.Add("Путёвки".ToUpper(), new VouchersPage());
                     return pages;
                 }
                 // Меню администратора БД.

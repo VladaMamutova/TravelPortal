@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Npgsql;
 using TravelPortal.Database;
+using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
@@ -22,10 +23,10 @@ namespace TravelPortal.ViewModels
             {
                 connection.Open();
 
-                //HotelCollection =
-                //    GetCollection(connection, Queries.SelectAllHotels);
-                //TransportCollection = GetCollection(connection,
-                //    Queries.SelectAllTransport);
+                HotelCollection =
+                    GetCollection(connection, Queries.Dictionaries.SelectNameList(DictionaryKind.Hotel));
+                TransportCollection = GetCollection(connection,
+                    Queries.Dictionaries.SelectNameList(DictionaryKind.Transport));
             }
         }
 
