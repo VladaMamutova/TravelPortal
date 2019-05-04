@@ -10,10 +10,10 @@ namespace TravelPortal.Views
     /// </summary>
     public partial class DictionariesPage : Page
     {
-        public DictionariesPage()
+        public DictionariesPage(Window owner)
         {
             InitializeComponent();
-            DataContext = new DictionariesViewModel();
+            DataContext = new DictionariesViewModel(owner);
         }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using TravelPortal.Annotations;
 using TravelPortal.Database;
@@ -80,14 +81,14 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public MenuViewModel(Configuration.Roles role)
+        public MenuViewModel(Configuration.Roles role, Window owner)
         {
-            Pages = GeneratePages(role);
+            Pages = GeneratePages(role, owner);
             if(Pages.Count == 0) throw new ArgumentException(nameof(role));
             SelectedPageName = Pages.Keys.ElementAt(0);
         }
 
-        private Dictionary<string, Page> GeneratePages(Configuration.Roles role)
+        private Dictionary<string, Page> GeneratePages(Configuration.Roles role, Window owner)
         {
             Dictionary<string, Page> pages = new Dictionary<string, Page>();
             switch (role)
@@ -102,7 +103,7 @@ namespace TravelPortal.ViewModels
                 // Меню администратора БД.
                 case Configuration.Roles.Admin:
                 {
-                    pages.Add("Cправочные таблицы".ToUpper(), new DictionariesPage());
+                    pages.Add("Cправочные таблицы".ToUpper(), new DictionariesPage(owner));
                     return pages;
                 }
                 default: return pages;

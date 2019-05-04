@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using MaterialDesignThemes.Wpf;
 using TravelPortal.Annotations;
 using TravelPortal.Database;
@@ -17,10 +18,12 @@ namespace TravelPortal.ViewModels
         public PackIconKind IconKind { get; }
 
         private readonly DictionaryKind _dictionary;
+        private Window _owner;
 
-        public DictionaryViewModel(DictionaryKind dictionary)
+        public DictionaryViewModel(DictionaryKind dictionary, Window owner)
         {
             _dictionary = dictionary;
+            _owner = owner;
             switch (_dictionary)
             {
                 case DictionaryKind.Transport:
@@ -96,7 +99,6 @@ namespace TravelPortal.ViewModels
 
         private void ShowDialog(object o)
         {
-            var view = new DictionaryRecordDialog();
             SimpleRecord recordCopy;
             switch (_dictionary)
             {
@@ -118,12 +120,9 @@ namespace TravelPortal.ViewModels
                     break;
             }
 
-
-            DictionaryRecordViewModel viewModel =
-                new DictionaryRecordViewModel(_dictionary, view, recordCopy);
-            view.DataContext = viewModel;
-
+            var view = new DictionaryRecordDialog(_dictionary, recordCopy) {Owner = _owner};
             view.ShowDialog();
+
             UpdateCollection();
             SelectedItem = Collection.SingleOrDefault(i => 
                     ((SimpleRecord)i).GetId() == recordCopy.GetId());
@@ -146,8 +145,17 @@ namespace TravelPortal.ViewModels
         private void UpdateCollection()
         {
             Collection = new ObservableCollection<object>();
-            ObservableCollection<SimpleRecord> collection = Dictionaries.GetDictionary(_dictionary);
-            // Вывод сообщений при исключениях.
+            ObservableCollection<SimpleRecord> collection;
+            try
+            {
+                collection = Dictionaries.GetDictionary(_dictionary);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ошибка получения данных");
+                return;
+            }
+          
             switch (_dictionary)
             {
                 case DictionaryKind.Hotel:

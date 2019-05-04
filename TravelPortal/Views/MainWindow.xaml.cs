@@ -24,7 +24,7 @@ namespace TravelPortal.Views
             // В зависимости от роли пользователя
             // генерируем соответствующие пункты меню.
 
-            MenuViewModel menu = new MenuViewModel(Configuration.Role);
+            MenuViewModel menu = new MenuViewModel(Configuration.Role, this);
             RadioButton[] menuItems = new RadioButton[menu.Pages.Count];
             for (int i = 0; i < menuItems.Length; i++)
             {

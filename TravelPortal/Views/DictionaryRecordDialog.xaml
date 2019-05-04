@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <TextBlock Padding="10" Text="{Binding Path=Title}" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Move"/>
         <StackPanel Margin="10" Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding InputBoxes}"/>
+            <ItemsControl x:Name="InputBoxes"/>
             <!--<TextBox wpf:HintAssist.Hint="Наименование">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
