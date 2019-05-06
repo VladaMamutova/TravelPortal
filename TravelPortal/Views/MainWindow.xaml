@@ -5,12 +5,80 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         Background="{DynamicResource MaterialDesignPaper}"
-        TextElement.Foreground="#0D47A1"
+          
         FontSize="14"
         Height="600" Width="1224" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="MainWindow_OnLoaded">
+    
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <materialDesign:ColorZone Grid.Row="0" Mode="PrimaryMid" MouseLeftButtonDown="Move">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0" MouseLeftButtonDown="Move">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <materialDesign:PackIcon Kind="User" Width="20" Height="20"/>
+                </Button>
+                <TextBlock Text="Мамутова В.А." Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+                <Button x:Name="ButtonClose" Margin="20 0 0 0" Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click">
+                    <materialDesign:PackIcon Kind="Power" Width="25" Height="25"/>
+                </Button>
+            </StackPanel>
+        </materialDesign:ColorZone>
+        <dragablz:TabablzControl Grid.Row="1" ItemsSource="{Binding Tabs}" BorderThickness="0" x:Name="TabMenu" MouseLeftButtonDown="Move">
+            <dragablz:TabablzControl.ItemContainerStyle>
+                <Style TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}">
+                    <Setter Property="Width" Value="200" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                     <!--TabItem Header Template--> 
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <!--<materialDesign:PackIcon Kind="{Binding Path=IconKind}" Width="30" Height="30" Margin="10 0"/>-->
+                                    <TextBlock Text="{Binding Header}" VerticalAlignment="Center"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </dragablz:TabablzControl.ItemContainerStyle>
+            <TabControl.ContentTemplate>
+                 <!--TabItem Content Template--> 
+                <DataTemplate>
+                    <UserControl Content="{Binding Content}" Margin="10">
+                    </UserControl>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </dragablz:TabablzControl>
+
+
+
+
+        <!--<dragablz:TabablzControl x:Name="TabMenu" ItemsSource="{Binding Tabs}" ContentTemplate="{Binding Content}" MouseLeftButtonDown="Move">
+            <dragablz:TabablzControl.ItemContainerStyle>
+                <Style TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignAlternateDragableTabItemStyle}">
+                    <Setter Property="Width" Value="230" />
+                    --><!--<Setter Property="Height" Value="50"></Setter>-->
+                    <!-- TabItem Header Template -->
+                    <!--<Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    --><!--<materialDesign:PackIcon Kind="{Binding Path=IconKind}" Width="30" Height="30" Margin="10 0"/>--><!--
+                                    <TextBlock Text="{Binding Header}" VerticalAlignment="Center"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>--><!--
+                </Style>
+            </dragablz:TabablzControl.ItemContainerStyle>
+        </dragablz:TabablzControl>-->
+
+
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -33,6 +101,6 @@
                 </StackPanel>
             </Grid>
         </materialDesign:ColorZone>
-        <Frame Grid.Row="1" Content="{Binding Path=SelectedPage}" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>
+        <Frame Grid.Row="1" Content="{Binding Path=SelectedPage}" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>-->
     </Grid>
 </Window>

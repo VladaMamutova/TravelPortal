@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using TravelPortal.Database;
+﻿using System.Windows;
 using TravelPortal.ViewModels;
 
 namespace TravelPortal.Views
@@ -18,31 +13,9 @@ namespace TravelPortal.Views
             InitializeComponent();
         }
 
-        
-        private void InitializeMenu()
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            // В зависимости от роли пользователя
-            // генерируем соответствующие пункты меню.
-
-            MenuViewModel menu = new MenuViewModel(Configuration.Role, this);
-            RadioButton[] menuItems = new RadioButton[menu.Pages.Count];
-            for (int i = 0; i < menuItems.Length; i++)
-            {
-                menuItems[i] = new RadioButton
-                {
-                    Margin = new Thickness(4),
-                    Content = menu.Pages.Keys.ElementAt(i),
-                    Command = menu.NavigateCommand,
-                    CommandParameter =  RelativeSource.Self
-                };
-                menuItems[i].CommandParameter = menuItems[i];
-            }
-            menuItems.ElementAt(0).IsChecked = true;
-
-            foreach (var menuItem in menuItems)
-                TabMenu.Children.Add(menuItem);
-
-            DataContext = menu;
+            DataContext = new MainViewModel(this);
         }
 
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
@@ -53,11 +26,6 @@ namespace TravelPortal.Views
         private void Move(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             DragMove();
-        }
-
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            InitializeMenu();
         }
     }
 }

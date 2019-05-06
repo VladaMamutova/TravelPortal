@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="TravelPortal.Views.VouchersControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TravelPortal.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <WrapPanel Grid.Column="0">
+                <StackPanel Margin="10 0" Height="40" Orientation="Horizontal">
+                    <materialDesign:PackIcon Margin="0 5 5 0" Kind="Search" VerticalAlignment="Center" Foreground="#FF2196F3"/>
+                    <TextBox x:Name="ClientFio" materialDesign:HintAssist.Hint="Введите ФИО клиента" Width="300" TextChanged="ClientFio_Changed"/>
+                </StackPanel>
+                <ComboBox x:Name="StatusBox" Width="200" ItemsSource="{Binding StatusCollection}"  SelectedValue="{Binding SelectedStatus}" Margin="0" materialDesign:HintAssist.Hint="Все социальные положения" SelectionChanged="StatusBox_SelectionChanged"/>
+            </WrapPanel>
+            <Button Grid.Column="1" Content="Добавить" Width="100" Height="30" Margin="10"></Button>
+        </Grid>
+        <DataGrid x:Name="VouchersDataGrid" Style="{StaticResource MaterialDesignDataGrid}" Grid.Row="1" FontSize="14" HeadersVisibility="Column" CanUserResizeRows="False" HorizontalGridLinesBrush="LightGray" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly ="True" Header="ФИО клиента" Binding="{Binding Path=ClientFio}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Откуда" Binding="{Binding Path=From}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Куда" Binding="{Binding Path=To}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Отель" Binding="{Binding Path=Hotel}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Домашний адрес" Binding="{Binding Path=Address}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Телефон" Binding="{Binding Path=Phone}"/>
+                <DataGridTextColumn IsReadOnly ="True" Header="Дата рождения" Binding="{Binding Path=Birthday}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Height="30">
+            <TextBlock Margin="10,0,7,0" Text="Пользователей:" VerticalAlignment="Center" ></TextBlock>
+            <TextBlock Text="0" VerticalAlignment="Center" ></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

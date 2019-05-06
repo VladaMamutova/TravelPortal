@@ -18,7 +18,7 @@ namespace TravelPortal.ViewModels
         public PackIconKind IconKind { get; }
 
         private readonly DictionaryKind _dictionary;
-        private Window _owner;
+        private readonly Window _owner;
 
         public DictionaryViewModel(DictionaryKind dictionary, Window owner)
         {
@@ -34,7 +34,7 @@ namespace TravelPortal.ViewModels
                 case DictionaryKind.City:
                     Title = "Города";
                     IconKind = PackIconKind.City;
-                    GenerateTitleFunc = SimpleRecord.GenerateTitle;
+                    //GenerateTitleFunc = SimpleRecord.GenerateTitle;
                     break;
                 case DictionaryKind.Ownership:
                     Title = "Тип собственности";

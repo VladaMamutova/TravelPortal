@@ -2,25 +2,22 @@
 using System.Windows;
 using System.Windows.Controls;
 using TravelPortal.Database;
-using TravelPortal.ViewModels;
 
 namespace TravelPortal.Views
 {
     /// <summary>
-    /// Логика взаимодействия для RoutesPage.xaml
+    /// Логика взаимодействия для RoutesControl.xaml
     /// </summary>
-    public partial class RoutesPage : Page
+    public partial class RoutesControl : UserControl
     {
-        public RoutesPage()
+        public RoutesControl(Window owner)
         {
             InitializeComponent();
-            DataContext = new RouteViewModel();
-            RoutesDataGrid.ItemsSource = Routes.GetAll();
         }
 
         private void RouteName_Changed(object sender, TextChangedEventArgs e)
         {
-            
+
         }
 
         private void StartDate_Changed(object sender, SelectionChangedEventArgs e)

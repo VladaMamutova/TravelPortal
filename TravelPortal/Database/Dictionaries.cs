@@ -51,9 +51,13 @@ namespace TravelPortal.Database
             using (var connection =
                 new NpgsqlConnection(Configuration.GetConnetionString()))
             {
+                string query;
+                if (dictionary == DictionaryKind.City)
+                    query = Queries.Dictionaries.CityView;
+                else query = Queries.Dictionaries.SelectAll(dictionary);
                 connection.Open();
                 using (var command = new NpgsqlCommand(
-                    Queries.Dictionaries.SelectAll(dictionary), connection))
+                    query, connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {

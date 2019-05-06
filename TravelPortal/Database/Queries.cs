@@ -39,6 +39,8 @@ namespace TravelPortal.Database
 
         public static class Dictionaries
         {
+            public static string CityView => "select * from cities";
+
             public static string SelectNameList(DictionaryKind dictionary) =>
                 $"select * from select_name_from_{dictionary}()";
 

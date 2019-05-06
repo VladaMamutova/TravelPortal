@@ -103,19 +103,23 @@
     <Compile Include="ViewModels\DictionaryRecordViewModel.cs" />
     <Compile Include="ViewModels\DictionaryViewModel.cs" />
     <Compile Include="ViewModels\IntegerValidationRule.cs" />
-    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\RouteViewModel.cs" />
     <Compile Include="ViewModels\NotEmptyValidationRule.cs" />
+    <Compile Include="ViewModels\TabViewModel.cs" />
     <Compile Include="ViewModels\VoucherViewModel.cs" />
-    <Compile Include="Views\DictionariesPage.xaml.cs">
-      <DependentUpon>DictionariesPage.xaml</DependentUpon>
+    <Compile Include="Views\DictionariesControl.xaml.cs">
+      <DependentUpon>DictionariesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DictionaryRecordDialog.xaml.cs">
       <DependentUpon>DictionaryRecordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RoutesPage.xaml.cs">
-      <DependentUpon>RoutesPage.xaml</DependentUpon>
+    <Compile Include="Views\RoutesControl.xaml.cs">
+      <DependentUpon>RoutesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VouchersControl.xaml.cs">
+      <DependentUpon>VouchersControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VouchersPage.xaml.cs">
       <DependentUpon>VouchersPage.xaml</DependentUpon>
@@ -126,7 +130,7 @@
     <Compile Include="Views\RouteWindow.xaml.cs">
       <DependentUpon>RouteWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\DictionariesPage.xaml">
+    <Page Include="Views\DictionariesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,7 +157,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\RoutesPage.xaml">
+    <Page Include="Views\RoutesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VouchersControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
