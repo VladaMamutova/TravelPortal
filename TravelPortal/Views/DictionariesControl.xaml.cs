@@ -19,21 +19,20 @@ namespace TravelPortal.Views
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            //if (e.PropertyName == nameof(Hotel.Type))
-            //    e.Column = new DataGridTemplateColumn
-            //        { CellTemplate = (DataTemplate)Resources["RatingBarDataTemplate"] };
+            if (e.PropertyName == nameof(Hotel.Type))
+                e.Column = new DataGridTemplateColumn
+                    { CellTemplate = (DataTemplate)Resources["RatingBarDataTemplate"] };
 
-            //if (e.PropertyType == typeof(DateTime) &&
-            //    e.Column is DataGridTextColumn dateColumn)
-            //    dateColumn.Binding.StringFormat = "dd.MM.yyyy";
+            if (e.PropertyType == typeof(DateTime) &&
+                e.Column is DataGridTextColumn dateColumn)
+                dateColumn.Binding.StringFormat = "dd.MM.yyyy";
 
-            //if(((DictionaryViewModel)Dictionaries.SelectedItem).GenerateTitleFunc != null)
-            //e.Column.Header =
-            //    ((DictionaryViewModel)Dictionaries.SelectedItem).GenerateTitleFunc
-            //    .Invoke(e.PropertyName);
+            e.Column.Header =
+                ((DictionaryViewModel)Dictionaries.SelectedItem).GenerateTitleFunc
+                .Invoke(e.PropertyName);
 
-            //if (e.PropertyName == nameof(SimpleRecord.Name))
-            //    e.Column.DisplayIndex = 0;
+            if (e.PropertyName == nameof(SimpleRecord.Name))
+                e.Column.DisplayIndex = 0;
         }
     }
 }

@@ -1,23 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Npgsql;
 using TravelPortal.Annotations;
 using TravelPortal.Database;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
-    public class VoucherViewModel : INotifyPropertyChanged
+    public class CustomerViewModel : INotifyPropertyChanged
     {
-        public List<string> StatusCollection { get; }
-        public string SelectedStatus { get; set; }
-
-        private Voucher _selectedItem;
-
-        public Voucher SelectedItem
+        private Customer _selectedItem;
+        public Customer SelectedItem
         {
             get => _selectedItem;
             set
@@ -27,9 +21,8 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        private ObservableCollection<Voucher> _collection;
-
-        public ObservableCollection<Voucher> Collection
+        private ObservableCollection<Customer> _collection;
+        public ObservableCollection<Customer> Collection
         {
             get => _collection;
             set
@@ -39,16 +32,16 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public int Count => Collection?.Count ?? 0;
+        public int Count => Collection.Count;
         private Window _owner;
 
-        public VoucherViewModel(Window owner)
+        public CustomerViewModel(Window owner)
         {
             _owner = owner;
-            StatusCollection =
-                    Dictionaries.GetNameView(Queries.SelectStatusNameView);
-            Collection = Vouchers.GetVouchers();
+            Collection = Customers.GetCustomers();
         }
+
+        // commands!
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -12,19 +12,19 @@ namespace TravelPortal.Views
         public VouchersPage()
         {
             InitializeComponent();
-            DataContext = new VoucherViewModel();
+            //DataContext = new VoucherViewModel(this);
         }
 
         private void ClientFio_Changed(object sender, TextChangedEventArgs e)
         {
             VouchersDataGrid.ItemsSource = string.IsNullOrWhiteSpace(ClientFio.Text) ?
-                Vouchers.GetAll() : Vouchers.SearchByClientFio(ClientFio.Text);
+                Vouchers.GetVouchers() : Vouchers.SearchByClientFio(ClientFio.Text);
         }
 
         private void StatusBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             VouchersDataGrid.ItemsSource = StatusBox.SelectedIndex == -1
-                ? Vouchers.GetAll()
+                ? Vouchers.GetVouchers()
                 : Vouchers.SearchByStatus(StatusBox.SelectedItem.ToString());
         }
     }

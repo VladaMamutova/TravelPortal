@@ -34,7 +34,7 @@ namespace TravelPortal.ViewModels
                 case DictionaryKind.City:
                     Title = "Города";
                     IconKind = PackIconKind.City;
-                    //GenerateTitleFunc = SimpleRecord.GenerateTitle;
+                    GenerateTitleFunc = SimpleRecord.GenerateTitle;
                     break;
                 case DictionaryKind.Ownership:
                     Title = "Тип собственности";
@@ -87,7 +87,7 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public int Count => Collection.Count;
+        public int Count => Collection?.Count ?? 0;
 
         #region Commands
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Npgsql;
 using NpgsqlTypes;
 using TravelPortal.Models;
@@ -8,11 +8,11 @@ namespace TravelPortal.Database
 {
     public class Vouchers
     {
-        public static List<Voucher> GetAll()
+        public static ObservableCollection<Voucher> GetVouchers()
         {
             try
             {
-                return ExecuteQuery(Queries.Vouchers.SelectAllFunction);
+                return ExecuteQuery(Queries.SelectVoucherView);
             }
             catch (Exception e)
             {
@@ -20,7 +20,7 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Voucher> SearchByClientFio(string clientFio)
+        public static ObservableCollection<Voucher> SearchByClientFio(string clientFio)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Voucher> SearchByStatus(string status)
+        public static ObservableCollection<Voucher> SearchByStatus(string status)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace TravelPortal.Database
             }
         }
 
-        private static List<Voucher> ExecuteQuery(string query)
+        private static ObservableCollection<Voucher> ExecuteQuery(string query)
         {
             using (var connection =
                 new NpgsqlConnection(Configuration.GetConnetionString()))
@@ -54,21 +54,23 @@ namespace TravelPortal.Database
                 {
                     using (var reader = command.ExecuteReader())
                     {
-                        if (!reader.HasRows) return new List<Voucher>();
-                        List<Voucher> vouchers = new List<Voucher>();
+                        if (!reader.HasRows) return new ObservableCollection<Voucher>();
+                        ObservableCollection<Voucher> vouchers = new ObservableCollection<Voucher>();
                         while (reader.Read())
                         {
-                            int voucherId = reader.GetInt32(0);
-                            string fio = reader.GetString(1).TrimEnd();
-                            string hotel = reader.GetString(2).TrimEnd();
-                            string from = reader.GetString(3).TrimEnd();
-                            string to = reader.GetString(4).TrimEnd();
-                            string phone = reader.GetString(5).TrimEnd();
-                            string address = reader.GetString(6).TrimEnd();
-                            NpgsqlDate birthday = reader.GetDate(7);
+                            int voucherId = reader.GetInt32(0);                          
+                            string hotel = reader.GetString(1);
+                            NpgsqlDate date = reader.GetDate(2);
+                            int duration = reader.GetInt32(3);
+                            double fullPrice = reader.GetDouble(4);
+                            string fio = reader.GetString(5);
+                            string phone = reader.GetString(6);
 
-                            vouchers.Add(new Voucher(voucherId, fio, from, to, hotel,
-                                address, phone, birthday));
+
+                            vouchers.Add(new Voucher(voucherId, hotel,
+                                new DateTime(date.Year, date.Month, date.Day),
+                                duration, fullPrice,
+                                fio, phone));
                         }
 
                         return vouchers;

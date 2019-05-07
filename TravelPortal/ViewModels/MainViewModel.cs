@@ -20,10 +20,11 @@ namespace TravelPortal.ViewModels
                 // Меню рядового сотрудника туристического портала.
                 case Configuration.Roles.Employee:
                 {
-                    Tabs = new ObservableCollection<TabViewModel>()
+                    Tabs = new ObservableCollection<TabViewModel>
                     {
                         new TabViewModel("Маршруты".ToUpper(), new RoutesControl(owner)),
-                        new TabViewModel("Путёвки".ToUpper(), new VouchersControl(owner))
+                        new TabViewModel("Путёвки".ToUpper(), new VouchersControl(owner)),
+                        new TabViewModel("Клиенты".ToUpper(), new CustomersControl(owner))
                     };
                     break;
                     }
@@ -32,6 +33,7 @@ namespace TravelPortal.ViewModels
                 {
                     Tabs = new ObservableCollection<TabViewModel>()
                     {
+                        new TabViewModel("Cотрудники портала".ToUpper(), new EmployeesControl(owner)),
                         new TabViewModel("Cправочные таблицы".ToUpper(), new DictionariesControl(owner))
                     };
                     break;

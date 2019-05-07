@@ -87,10 +87,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Database\Configuration.cs" />
+    <Compile Include="Database\Customers.cs" />
     <Compile Include="Database\Dictionaries.cs" />
     <Compile Include="Database\Queries.cs" />
     <Compile Include="Database\Vouchers.cs" />
     <Compile Include="Models\Agency.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\DictionaryKind.cs" />
     <Compile Include="Models\Route.cs" />
@@ -99,9 +102,11 @@
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Voucher.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\DictionariesViewModel.cs" />
     <Compile Include="ViewModels\DictionaryRecordViewModel.cs" />
     <Compile Include="ViewModels\DictionaryViewModel.cs" />
+    <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\IntegerValidationRule.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
@@ -109,11 +114,17 @@
     <Compile Include="ViewModels\NotEmptyValidationRule.cs" />
     <Compile Include="ViewModels\TabViewModel.cs" />
     <Compile Include="ViewModels\VoucherViewModel.cs" />
+    <Compile Include="Views\CustomersControl.xaml.cs">
+      <DependentUpon>CustomersControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DictionariesControl.xaml.cs">
       <DependentUpon>DictionariesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DictionaryRecordDialog.xaml.cs">
       <DependentUpon>DictionaryRecordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmployeesControl.xaml.cs">
+      <DependentUpon>EmployeesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RoutesControl.xaml.cs">
       <DependentUpon>RoutesControl.xaml</DependentUpon>
@@ -130,11 +141,19 @@
     <Compile Include="Views\RouteWindow.xaml.cs">
       <DependentUpon>RouteWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\CustomersControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DictionariesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DictionaryRecordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EmployeesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

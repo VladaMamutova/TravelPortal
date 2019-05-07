@@ -21,6 +21,28 @@ namespace TravelPortal.Database
             }
         }
 
+        public static List<string> GetNameView(string query)
+        {
+            using (var connection =
+                new NpgsqlConnection(Configuration.GetConnetionString()))
+            {
+                connection.Open();
+                using (var command = new NpgsqlCommand(query,
+                    connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.HasRows) return null;
+                        List<string> collection = new List<string>();
+                        while (reader.Read())
+                            collection.Add(reader.GetString(0).TrimEnd(' '));
+
+                        return collection;
+                    }
+                }
+            }
+        }
+
         public static List<string> GetNameList(
             DictionaryKind dictionary)
         {
@@ -29,7 +51,7 @@ namespace TravelPortal.Database
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand(
-                    Queries.Dictionaries.SelectNameList(dictionary),
+                    Queries.Dictionaries.SelectNameView(dictionary),
                     connection))
                 {
                     using (var reader = command.ExecuteReader())
@@ -51,13 +73,9 @@ namespace TravelPortal.Database
             using (var connection =
                 new NpgsqlConnection(Configuration.GetConnetionString()))
             {
-                string query;
-                if (dictionary == DictionaryKind.City)
-                    query = Queries.Dictionaries.CityView;
-                else query = Queries.Dictionaries.SelectAll(dictionary);
                 connection.Open();
                 using (var command = new NpgsqlCommand(
-                    query, connection))
+                    Queries.Dictionaries.SelectAll(dictionary), connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {

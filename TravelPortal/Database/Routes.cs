@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Npgsql;
 using NpgsqlTypes;
 using TravelPortal.Models;
@@ -8,11 +8,11 @@ namespace TravelPortal.Database
 {
     public class Routes
     {
-        public static List<Route> GetAll()
+        public static ObservableCollection<Route> GetRoutes()
         {
             try
             {
-                return ExecuteQuery(Queries.Routes.SelectAllFunction);
+                return ExecuteQuery(Queries.SelectRouteView);
             }
             catch (Exception e)
             {
@@ -21,7 +21,7 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Route> SearchByDate(DateTime date)
+        public static ObservableCollection<Route> SearchByDate(DateTime date)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Route> SearchByDuration(int duration)
+        public static ObservableCollection<Route> SearchByDuration(int duration)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Route> FilterResidence(string residence)
+        public static ObservableCollection<Route> FilterResidence(string residence)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace TravelPortal.Database
             }
         }
 
-        public static List<Route> FilterTransport(string transport)
+        public static ObservableCollection<Route> FilterTransport(string transport)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace TravelPortal.Database
             }
         }
 
-        private static List<Route> ExecuteQuery(string query)
+        private static ObservableCollection<Route> ExecuteQuery(string query)
         {
             using (var connection =
                 new NpgsqlConnection(Configuration.GetConnetionString()))
@@ -87,24 +87,25 @@ namespace TravelPortal.Database
                 {
                     using (var reader = command.ExecuteReader())
                     {
-                        if (!reader.HasRows) return new List<Route>();
-                        List<Route> routes = new List<Route>();
+                        if (!reader.HasRows) return new ObservableCollection<Route>();
+                        ObservableCollection<Route> routes = new ObservableCollection<Route>();
                         while (reader.Read())
                         {
                             int routeId = reader.GetInt32(0);
-                            string hotel = reader.GetString(1).TrimEnd();
-                            string from = reader.GetString(2).TrimEnd();
-                            string to = reader.GetString(3).TrimEnd();
-                            double cost = reader.GetDouble(4);
+                            string hotel = reader.GetString(1);
+                            string from = reader.GetString(2);
+                            string to = reader.GetString(3);
+                            double price = reader.GetDouble(4);
                             NpgsqlDate date = reader.GetDate(5);
                             int duration = reader.GetInt32(6);
                             bool meels = reader.GetBoolean(7);
-                            string transport = reader.GetString(8).TrimEnd();
-                            double transportCost = reader.GetDouble(9);
+                            string transport = reader.GetString(8);
+                            double transportPrice = reader.GetDouble(9);
 
-                            routes.Add(new Route(routeId, from, to, date,
-                                duration, cost, hotel, meels, transport,
-                                transportCost));
+                            routes.Add(new Route(routeId, hotel, from, to,
+                                price,
+                                new DateTime(date.Year, date.Month, date.Day),
+                                duration, meels, transport, transportPrice));
                         }
 
                         return routes;

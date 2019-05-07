@@ -5,6 +5,17 @@ namespace TravelPortal.Database
 {
     public static class Queries
     {
+        public static string SelectCustomerView => "select * from customer_view";
+        public static string SelectRouteView => "select * from route_view";
+        public static string SelectVoucherView => "select * from voucher_view";
+        public static string SelectEmployeeView => "select * from employee_view";
+
+        public static string SelectHotelNameView => "select * from hotel_name_view";
+        public static string SelectStatusNameView => "select * from status_name_view";
+        public static string SelectOwnershipNameView => "select * from ownership_name_view";
+        public static string SelectCityNameView => "select * from city_name_view";
+        public static string SelectTransportNameView => "select * from transport_name_view";
+
         public static class Routes
         {
             public const string SelectAllFunction =
@@ -39,13 +50,11 @@ namespace TravelPortal.Database
 
         public static class Dictionaries
         {
-            public static string CityView => "select * from cities";
-
-            public static string SelectNameList(DictionaryKind dictionary) =>
-                $"select * from select_name_from_{dictionary}()";
+            public static string SelectNameView(DictionaryKind dictionary) =>
+                $"select * from {dictionary}_name_view";
 
             public static string SelectAll(DictionaryKind dictionary) =>
-                $"select * from select_all_from_{dictionary}()";
+                $"select * from {dictionary}_view";
 
             public static string Insert(DictionaryKind dictionary,
                 SimpleRecord record)

@@ -27,7 +27,7 @@
                 </Button>
             </StackPanel>
         </materialDesign:ColorZone>
-        <dragablz:TabablzControl Grid.Row="1" ItemsSource="{Binding Tabs}" BorderThickness="0" x:Name="TabMenu" MouseLeftButtonDown="Move">
+        <dragablz:TabablzControl Grid.Row="1" ItemsSource="{Binding Tabs}" BorderThickness="0" x:Name="TabMenu">
             <dragablz:TabablzControl.ItemContainerStyle>
                 <Style TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}">
                     <Setter Property="Width" Value="200" />
@@ -48,7 +48,7 @@
             <TabControl.ContentTemplate>
                  <!--TabItem Content Template--> 
                 <DataTemplate>
-                    <UserControl Content="{Binding Content}" Margin="10">
+                    <UserControl Content="{Binding Content}" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     </UserControl>
                 </DataTemplate>
             </TabControl.ContentTemplate>

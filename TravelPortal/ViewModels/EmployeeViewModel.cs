@@ -1,29 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Npgsql;
 using TravelPortal.Annotations;
 using TravelPortal.Database;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
-    /// <summary>
-    /// Модель представления для страницы маршрутов.
-    /// </summary>
-    class RouteViewModel : INotifyPropertyChanged
+    public class EmployeeViewModel
     {
-        public List<string> HotelCollection { get; }
-        public string SelectedHotel { get; set; }
-
-        public List<string> TransportCollection { get; }
-        public string SelectedTransport { get; set; }
-
-        private Route _selectedItem;
-
-        public Route SelectedItem
+        private Employee _selectedItem;
+        public Employee SelectedItem
         {
             get => _selectedItem;
             set
@@ -33,9 +21,8 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        private ObservableCollection<Route> _collection;
-
-        public ObservableCollection<Route> Collection
+        private ObservableCollection<Employee> _collection;
+        public ObservableCollection<Employee> Collection
         {
             get => _collection;
             set
@@ -48,6 +35,12 @@ namespace TravelPortal.ViewModels
         public int Count => Collection?.Count ?? 0;
         private Window _owner;
 
+        public EmployeeViewModel(Window owner)
+        {
+            _owner = owner;
+            Collection = Customers.GetEmployees();
+        }
+
         // commands!
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -58,16 +51,6 @@ namespace TravelPortal.ViewModels
         {
             PropertyChanged?.Invoke(this,
                 new PropertyChangedEventArgs(propertyName));
-        }
-
-        public RouteViewModel(Window owner)
-        {
-            _owner = owner;
-            HotelCollection =
-                Dictionaries.GetNameView(Queries.SelectHotelNameView);
-            TransportCollection =
-                Dictionaries.GetNameView(Queries.SelectTransportNameView);
-            Collection = Routes.GetRoutes();
         }
     }
 }
