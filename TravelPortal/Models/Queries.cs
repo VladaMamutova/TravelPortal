@@ -1,20 +1,24 @@
 ﻿using NpgsqlTypes;
-using TravelPortal.Models;
+using TravelPortal.DataAccessLayer;
 
-namespace TravelPortal.Database
+namespace TravelPortal.Models
 {
     public static class Queries
     {
-        public static string SelectCustomerView => "select * from customer_view";
-        public static string SelectRouteView => "select * from route_view";
-        public static string SelectVoucherView => "select * from voucher_view";
-        public static string SelectEmployeeView => "select * from employee_view";
+        private static Roles Role;
+        private static int _agencyId;
 
-        public static string SelectHotelNameView => "select * from hotel_name_view";
-        public static string SelectStatusNameView => "select * from status_name_view";
-        public static string SelectOwnershipNameView => "select * from ownership_name_view";
-        public static string SelectCityNameView => "select * from city_name_view";
-        public static string SelectTransportNameView => "select * from transport_name_view";
+        static Queries()
+        {
+            Role = Roles.None;
+            _agencyId = -1;
+        }
+
+        public static void SetRole(Roles role, int agencyId)
+        {
+            Role = role;
+            _agencyId = agencyId;
+        }
 
         public static class Routes
         {
@@ -70,5 +74,39 @@ namespace TravelPortal.Database
                        $"({record.GetIdentifiedParameterList()})";
             }
         }
+
+        public static string SelectUser(string login)
+        {
+            return $"select * from select_user('{login}')";
+        }
+
+        public static string GetRoutes()
+        {
+            if (Role == Roles.Admin)
+                return "select * from route_view";
+            return $"select * from get_routes_from_agency({_agencyId})";
+        }
+
+        public static string GetVouchers()
+        {
+            if (Role == Roles.Admin)
+                return "select * from voucher_view";
+            return $"select * from get_vouchers_from_agency({_agencyId})";
+        }
+
+        public static string GetCustomers()
+        {
+            if (Role == Roles.Admin)
+                return "select * from customer_view";
+            return $"select * from get_customers_from_agency({_agencyId})";
+        }
+        
+        public static string SelectUserView => "select * from user_view";
+
+        public static string SelectHotelNameView => "select * from hotel_name_view";
+        public static string SelectStatusNameView => "select * from status_name_view";
+        public static string SelectOwnershipNameView => "select * from ownership_name_view";
+        public static string SelectCityNameView => "select * from city_name_view";
+        public static string SelectTransportNameView => "select * from transport_name_view";
     }
 }

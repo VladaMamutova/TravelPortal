@@ -3,15 +3,15 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using TravelPortal.Annotations;
-using TravelPortal.Database;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
     public class EmployeeViewModel
     {
-        private Employee _selectedItem;
-        public Employee SelectedItem
+        private User _selectedItem;
+        public User SelectedItem
         {
             get => _selectedItem;
             set
@@ -21,8 +21,8 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        private ObservableCollection<Employee> _collection;
-        public ObservableCollection<Employee> Collection
+        private ObservableCollection<User> _collection;
+        public ObservableCollection<User> Collection
         {
             get => _collection;
             set
@@ -38,7 +38,7 @@ namespace TravelPortal.ViewModels
         public EmployeeViewModel(Window owner)
         {
             _owner = owner;
-            Collection = Customers.GetEmployees();
+            Collection = MainTables.GetUsers();
         }
 
         // commands!

@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.ViewModels;
 
 namespace TravelPortal.Views
@@ -30,7 +32,10 @@ namespace TravelPortal.Views
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-
+            e.Column.Header = Voucher.GenerateTitle(e.PropertyName);
+            if (e.PropertyType == typeof(DateTime) &&
+                e.Column is DataGridTextColumn dateColumn)
+                dateColumn.Binding.StringFormat = "dd.MM.yyyy";
         }
     }
 }

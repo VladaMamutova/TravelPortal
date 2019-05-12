@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using MaterialDesignThemes.Wpf;
 using TravelPortal.Annotations;
-using TravelPortal.Database;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 using TravelPortal.Views;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NpgsqlTypes;
 
-namespace TravelPortal.Models
+namespace TravelPortal.DataAccessLayer
 {
     public class Agency : SimpleRecord
     {

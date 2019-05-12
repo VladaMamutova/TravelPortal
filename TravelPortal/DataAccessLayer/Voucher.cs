@@ -1,7 +1,7 @@
 ﻿using System;
 using NpgsqlTypes;
 
-namespace TravelPortal.Models
+namespace TravelPortal.DataAccessLayer
 {
     public class Voucher
     {
@@ -24,6 +24,20 @@ namespace TravelPortal.Models
             FullPrice = fullPrice;
             CustomerFio = customerFio;
             Phone = phone;
+        }
+
+        public static string GenerateTitle(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(Hotel): return "Отель";
+                case nameof(Date): return "Дата начала";
+                case nameof(Duration): return "Длительность";
+                case nameof(FullPrice): return "Полная стоимость";
+                case nameof(CustomerFio): return "ФИО клиента";
+                case nameof(Phone): return "Телефон";
+                default: return propertyName;
+            }
         }
     }
 }

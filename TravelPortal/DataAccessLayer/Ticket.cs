@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TravelPortal.Models
+namespace TravelPortal.DataAccessLayer
 {
     public class Ticket : SimpleRecord
     {

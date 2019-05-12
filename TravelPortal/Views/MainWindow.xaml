@@ -18,12 +18,13 @@
         </Grid.RowDefinitions>
         <materialDesign:ColorZone Grid.Row="0" Mode="PrimaryMid" MouseLeftButtonDown="Move">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0" MouseLeftButtonDown="Move">
-                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <materialDesign:PackIcon Kind="User" Width="20" Height="20"/>
-                </Button>
-                <TextBlock Text="Мамутова В.А." Foreground="WhiteSmoke" VerticalAlignment="Center"/>
-                <Button x:Name="ButtonClose" Margin="20 0 0 0" Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click">
-                    <materialDesign:PackIcon Kind="Power" Width="25" Height="25"/>
+                <!--<Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">-->
+                <materialDesign:PackIcon Kind="MapMarkerRadius" Margin="0 0 5 0" Width="24" Height="24" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentAgency}" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+                <materialDesign:PackIcon Kind="User" Margin="20 0 5 0" Width="24" Height="24" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentUserName}" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+                <Button x:Name="ButtonClose" Margin="15 0 0 0" Width="30" Height="30" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click">
+                    <materialDesign:PackIcon Kind="Power" Margin="0 1 0 0" Width="25" Height="25"/>
                 </Button>
             </StackPanel>
         </materialDesign:ColorZone>

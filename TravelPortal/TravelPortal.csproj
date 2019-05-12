@@ -86,21 +86,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Database\Configuration.cs" />
-    <Compile Include="Database\Customers.cs" />
-    <Compile Include="Database\Dictionaries.cs" />
-    <Compile Include="Database\Queries.cs" />
-    <Compile Include="Database\Vouchers.cs" />
-    <Compile Include="Models\Agency.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\Hotel.cs" />
-    <Compile Include="Models\DictionaryKind.cs" />
-    <Compile Include="Models\Route.cs" />
-    <Compile Include="Database\Routes.cs" />
-    <Compile Include="Models\SimpleRecord.cs" />
-    <Compile Include="Models\Ticket.cs" />
-    <Compile Include="Models\Voucher.cs" />
+    <Compile Include="Models\Configuration.cs" />
+    <Compile Include="Models\Dictionaries.cs" />
+    <Compile Include="Models\MainTables.cs" />
+    <Compile Include="Models\Queries.cs" />
+    <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\Vouchers.cs" />
+    <Compile Include="DataAccessLayer\Agency.cs" />
+    <Compile Include="DataAccessLayer\Customer.cs" />
+    <Compile Include="DataAccessLayer\User.cs" />
+    <Compile Include="DataAccessLayer\Hotel.cs" />
+    <Compile Include="DataAccessLayer\DictionaryKind.cs" />
+    <Compile Include="DataAccessLayer\Route.cs" />
+    <Compile Include="Models\Routes.cs" />
+    <Compile Include="DataAccessLayer\SimpleRecord.cs" />
+    <Compile Include="DataAccessLayer\Ticket.cs" />
+    <Compile Include="DataAccessLayer\Voucher.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\DictionariesViewModel.cs" />

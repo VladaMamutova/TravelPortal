@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
-using TravelPortal.Database;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 using TravelPortal.ViewModels;
 

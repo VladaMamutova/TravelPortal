@@ -25,7 +25,11 @@ namespace TravelPortal.Views
 
         private void Move(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            DragMove();
+            try
+            {
+                DragMove();
+            }
+            catch { }
         }
     }
 }

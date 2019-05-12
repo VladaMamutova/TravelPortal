@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using TravelPortal.Models;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.ViewModels;
 
 namespace TravelPortal.Views

@@ -1,7 +1,6 @@
 ﻿using System;
-using NpgsqlTypes;
 
-namespace TravelPortal.Models
+namespace TravelPortal.DataAccessLayer
 {
     public class Route
     {
@@ -33,6 +32,23 @@ namespace TravelPortal.Models
             Meels = meels;
             Transport = transport;
             TransportPrice = transportPrice;
+        }
+
+        public static string GenerateTitle(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(Hotel): return "Отель";
+                case nameof(From): return "Откуда";
+                case nameof(To): return "Куда";
+                case nameof(Date): return "Дата начала";
+                case nameof(Duration): return "Длительность";
+                case nameof(Price): return "Стоимость маршрута";
+                case nameof(Meels): return "Питание";
+                case nameof(Transport): return "Транспорт";
+                case nameof(TransportPrice): return "Стоимость проезда";
+                default: return propertyName;
+            }
         }
     }
 }

@@ -3,9 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Npgsql;
 using TravelPortal.Annotations;
-using TravelPortal.Database;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
@@ -67,7 +66,7 @@ namespace TravelPortal.ViewModels
                 Dictionaries.GetNameView(Queries.SelectHotelNameView);
             TransportCollection =
                 Dictionaries.GetNameView(Queries.SelectTransportNameView);
-            Collection = Routes.GetRoutes();
+            Collection = Routes.GetAll();
         }
     }
 }

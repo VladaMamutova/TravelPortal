@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using TravelPortal.Annotations;
-using TravelPortal.Database;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
@@ -38,7 +38,7 @@ namespace TravelPortal.ViewModels
         public CustomerViewModel(Window owner)
         {
             _owner = owner;
-            Collection = Customers.GetCustomers();
+            Collection = MainTables.GetCustomers();
         }
 
         // commands!

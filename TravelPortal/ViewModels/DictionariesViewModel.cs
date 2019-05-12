@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
-using TravelPortal.Models;
+using TravelPortal.DataAccessLayer;
 
 namespace TravelPortal.ViewModels
 {

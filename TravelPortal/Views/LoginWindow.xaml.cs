@@ -3,7 +3,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using TravelPortal.Database;
+using TravelPortal.Models;
 
 namespace TravelPortal.Views
 {
@@ -40,7 +40,7 @@ namespace TravelPortal.Views
                 {
                     try
                     {
-                        Configuration.SetUser(login, password);
+                        Configuration.GetConfiguration().SetUser(login, password);
                         Dispatcher.Invoke(() =>
                         {
                             MessageBox.Show("Вы успешно вошли в систему!");

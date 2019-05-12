@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using TravelPortal.Annotations;
 
-namespace TravelPortal.Models
+namespace TravelPortal.DataAccessLayer
 {
     public class SimpleRecord : INotifyPropertyChanged
     {

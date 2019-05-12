@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using MaterialDesignThemes.Wpf;
-using Npgsql;
 using TravelPortal.Annotations;
-using TravelPortal.Database;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
@@ -136,26 +130,15 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        private void Execute(object query, Window window)
+        private void Execute(string query, Window window)
         {
             try
             {
-                using (var connection =
-                    new NpgsqlConnection(Configuration.GetConnetionString()))
-                {
-                    connection.Open();
-                    using (var command =
-                        new NpgsqlCommand((string) query, connection))
-                    {
-                        object result =
-                            command
-                                .ExecuteScalar();
-                        _sourceRecord.Name = Record.Name;
-                        if (int.TryParse(result?.ToString(), out var id))
-                            _sourceRecord.SetId(id);
-                        window.Close();
-                    }
-                }
+                object result = Dictionaries.ExecuteAddUpdateQuery(query);
+                _sourceRecord.Name = Record.Name;
+                if (int.TryParse(result?.ToString(), out var id))
+                    _sourceRecord.SetId(id);
+                window.Close();
             }
             catch (Exception e)
             {

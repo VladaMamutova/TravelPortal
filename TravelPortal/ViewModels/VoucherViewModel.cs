@@ -3,9 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Npgsql;
 using TravelPortal.Annotations;
-using TravelPortal.Database;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
@@ -47,7 +46,7 @@ namespace TravelPortal.ViewModels
             _owner = owner;
             StatusCollection =
                     Dictionaries.GetNameView(Queries.SelectStatusNameView);
-            Collection = Vouchers.GetVouchers();
+            Collection = Vouchers.GetAll();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

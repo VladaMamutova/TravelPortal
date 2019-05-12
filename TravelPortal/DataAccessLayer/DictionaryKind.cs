@@ -1,4 +1,4 @@
-﻿namespace TravelPortal.Models
+﻿namespace TravelPortal.DataAccessLayer
 {
     /// <summary>
     /// Перечсиление всех словарей базы данных.
