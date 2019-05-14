@@ -101,12 +101,33 @@ namespace TravelPortal.Models
             return $"select * from get_customers_from_agency({_agencyId})";
         }
         
-        public static string SelectUserView => "select * from user_view";
+        public static string SelectAgenciesWithStaff => "select * from get_agencies_with_staff()"; // user_view
 
+        public static string RankByPopularity =>
+            "select * from rank_agencies_by_popularity()"; 
+        public static string RankByNumberOfRoutes =>
+            "select * from rank_agencies_by_the_number_of_routes()";
+
+        public static string RankByGrossProfit(string ownership, string agency)
+        {
+            if(string.IsNullOrEmpty(agency) && string.IsNullOrEmpty(ownership))
+                return "select * from rank_agencies_by_gross_profit()";
+            if (!string.IsNullOrEmpty(agency) &&
+                !string.IsNullOrEmpty(ownership))
+                return "select * from rank_agencies_by_gross_profit_with_ownership_begins" +
+                       $"_with('{ownership}', '{agency}')";
+            if (!string.IsNullOrEmpty(agency))
+                return $"select * from rank_agencies_by_gross_profit_begins_with('{agency}')";
+            return $"select * from rank_agencies_by_gross_profit_with_ownership('{ownership}')";
+        }
+
+        public static string SelectUserView => "select * from user_view"; 
         public static string SelectHotelNameView => "select * from hotel_name_view";
         public static string SelectStatusNameView => "select * from status_name_view";
         public static string SelectOwnershipNameView => "select * from ownership_name_view";
         public static string SelectCityNameView => "select * from city_name_view";
         public static string SelectTransportNameView => "select * from transport_name_view";
+
+        public static string GetUser(string login) => $"select * from get_user('{login}')";
     }
 }

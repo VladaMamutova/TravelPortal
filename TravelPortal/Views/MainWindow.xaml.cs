@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using TravelPortal.ViewModels;
 
 namespace TravelPortal.Views
@@ -30,6 +31,22 @@ namespace TravelPortal.Views
                 DragMove();
             }
             catch { }
+        }
+
+        private void ButtonExpand_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                ((Button)sender).ToolTip = "Развернуть";
+                WindowHeader.Margin = new Thickness(0);
+            }
+            else
+            {
+                WindowState = WindowState.Maximized;
+                ((Button)sender).ToolTip = "Свернуть";
+                WindowHeader.Margin = new Thickness(10);
+            }
         }
     }
 }

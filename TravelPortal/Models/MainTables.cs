@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Xml.Schema;
 using Npgsql;
 using NpgsqlTypes;
 using TravelPortal.DataAccessLayer;
+using TravelPortal.ViewModels;
 
 namespace TravelPortal.Models
 {
@@ -27,17 +28,16 @@ namespace TravelPortal.Models
                             string hotel = reader.GetString(1);
                             string from = reader.GetString(2);
                             string to = reader.GetString(3);
-                            double price = reader.GetDouble(4);
-                            NpgsqlDate date = reader.GetDate(5);
-                            int duration = reader.GetInt32(6);
-                            bool meels = reader.GetBoolean(7);
-                            string transport = reader.GetString(8);
+                            NpgsqlDate date = reader.GetDate(4);
+                            int duration = reader.GetInt32(5);
+                            bool meels = reader.GetBoolean(6);
+                            string transport = reader.GetString(7);
+                            double hotelPrice = reader.GetDouble(8);
                             double transportPrice = reader.GetDouble(9);
 
                             routes.Add(new Route(routeId, hotel, from, to,
-                                price,
                                 new DateTime(date.Year, date.Month, date.Day),
-                                duration, meels, transport, transportPrice));
+                                duration, meels, transport, hotelPrice, transportPrice));
                         }
 
                         return routes;
@@ -156,7 +156,7 @@ namespace TravelPortal.Models
                 new NpgsqlConnection(Configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
-                    Queries.SelectUser(login), connection))
+                    Queries.GetUser(login), connection))
                 {
                     connection.Open();
                     using (var reader = command.ExecuteReader())
@@ -180,5 +180,58 @@ namespace TravelPortal.Models
                 }
             }
         }
+
+        public static IList<RowDataItem> GetRatingCollection(string query, ref IList<string> headers)
+        {
+            using (var connection =
+                new NpgsqlConnection(Configuration.ConnectionString))
+            {
+                using (var command = new NpgsqlCommand(query, connection))
+                {
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.HasRows) return new List<RowDataItem>();
+
+                        headers.Clear();
+                        List<RowDataItem> rowDataItems = new List<RowDataItem>();
+
+                        for (int i = 0; i < reader.FieldCount; i++)
+                            headers.Add(reader.GetName(i));
+
+                        while (reader.Read())
+                        {
+                            List<string> rowFields = new List<string>();
+                  
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                object value = reader.GetValue(i);
+                                switch (value)
+                                {
+                                    case int intValue:
+                                        rowFields.Add(intValue.ToString("N0"));
+                                        break;
+                                    case long longValue:
+                                        rowFields.Add(longValue.ToString("N0"));
+                                        break;
+                                    case decimal decimalValue:
+                                        rowFields.Add(decimalValue.ToString("N2"));
+                                        break;
+                                    case DateTime dateTimeValue:
+                                        rowFields.Add(dateTimeValue.ToShortDateString());
+                                        break;
+                                    default: rowFields.Add(value.ToString()); break;
+                                }
+                            }
+                            
+                            rowDataItems.Add(new RowDataItem(rowFields));
+                        }
+
+                        return rowDataItems;
+                    }
+                }
+            }
+        }
+
     }
 }

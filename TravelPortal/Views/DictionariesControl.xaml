@@ -28,7 +28,7 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="{Binding Path=IconKind}" Width="30" Height="30" Margin="10 0"/>
-                                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock FontSize="14" Text="{Binding Title}" VerticalAlignment="Center"></TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </Setter.Value>
