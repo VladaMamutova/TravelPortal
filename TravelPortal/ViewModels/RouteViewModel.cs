@@ -6,6 +6,7 @@ using System.Windows;
 using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
+using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
@@ -47,7 +48,14 @@ namespace TravelPortal.ViewModels
         public int Count => Collection?.Count ?? 0;
         private Window _owner;
 
-        // commands!
+        //public RelayCommand AddVoucher => new RelayCommand(
+        //    e => ShowDialog(_selectedItem), o => true);
+
+        //private void ShowDialog(object o)
+        //{
+        //    var view = new AddVoucherWindow(SelectedItem) { Owner = _owner };
+        //    view.ShowDialog();
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

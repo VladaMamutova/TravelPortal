@@ -1,0 +1,75 @@
+﻿<Window x:Class="TravelPortal.Views.AddVoucherDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelPortal.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        FontSize="14"
+        SizeToContent="WidthAndHeight" Width="370" ResizeMode="NoResize" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterOwner">
+    <Border>
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.8" Color="{StaticResource Accent100Foreground}" />
+        </Border.Effect>
+        <Grid Background="White" Margin="20">
+            <Border BorderThickness="1" BorderBrush="{StaticResource PrimaryHueDarkBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Move">
+                            <TextBlock Text="Оформление путёвки" Padding="5" TextAlignment="Center" Foreground="WhiteSmoke" FontSize="20" materialDesign:ShadowAssist.ShadowDepth="Depth0" />
+                        </Grid>
+                        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
+                        <WrapPanel Margin="0 0 10 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Отель: "></TextBlock>
+                                <TextBlock x:Name="HotelName"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                                <TextBlock Text="Дата: "></TextBlock>
+                                <TextBlock x:Name="Date"></TextBlock>
+                            </StackPanel>
+                        </WrapPanel>
+                        <TextBox materialDesign:HintAssist.Hint="ФИО клиента" Text="{Binding Customer.Fio, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" TextWrapping="NoWrap" Margin="0 10 0 5"/>
+                        <TextBox materialDesign:HintAssist.Hint="Телефон " Text="{Binding Customer.Phone, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" MaxLength="12" HorizontalAlignment="Stretch"/>
+                        <Button Visibility="Collapsed"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            materialDesign:ButtonProgressAssist.Value="-1"
+                            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                            materialDesign:ButtonProgressAssist.IsIndeterminate="{Binding IsInProgress, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}"
+                            Background="{StaticResource PrimaryHueDarkBrush}" Command="{Binding CheckCustomer}"
+                            Margin="0 10" ToolTip="Введите ФИО или номер телефона для проверки">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="UserAlert" Margin="0 2 7 0"></materialDesign:PackIcon>
+                                <TextBlock Text="Проверить клиента по базе"></TextBlock>
+                            </StackPanel>
+                        </Button>
+                        <TextBox materialDesign:HintAssist.Hint="Адрес" Text="{Binding Customer.Address, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 0 0"/>
+                        <Grid Height="Auto" Margin="0 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <DatePicker Width="120" Grid.Column="0" materialDesign:HintAssist.Hint="Дата рождения" SelectedDate="{Binding Customer.Birthday, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}" HorizontalAlignment="Stretch" />
+                            <ComboBox Grid.Column="2" materialDesign:HintAssist.Hint="Социальное положение" ItemsSource="{Binding StatusCollection}" SelectedItem="{Binding Customer.Status, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 5"/>
+                        </Grid>
+                        <Grid Height="Auto" Margin="0 15 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="ОТМЕНА" Grid.Column="0" IsCancel="True" Style="{DynamicResource MaterialDesignFlatButton}"/>
+                            <Button Content="ОФОРМИТЬ" Grid.Column="2" Command="{Binding AddVoucher}"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

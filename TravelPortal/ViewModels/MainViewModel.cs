@@ -48,21 +48,31 @@ namespace TravelPortal.ViewModels
                 {
                     Tabs = new ObservableCollection<TabViewModel>
                     {
-                        new TabViewModel("Статистика".ToUpper(),
-                            new EmployeesControl(owner)),
                         new TabViewModel("Cотрудники агенства".ToUpper(),
                             new EmployeesControl(owner)),
-                        new TabViewModel("Cправочные таблицы".ToUpper(),
-                            new DictionariesControl(owner))
+                        new TabViewModel("Маршруты".ToUpper(),
+                            new RoutesControl(owner))
                     };
                     break;
                 }
+                // Меню супервайзера.
+                case Roles.Supervisor:
+                {
+                    Tabs = new ObservableCollection<TabViewModel>
+                    {
+                        new TabViewModel("Рейтинг агенств".ToUpper(),
+                            new AgencyRatingControl()),
+                        new TabViewModel("Рейтинг отелей".ToUpper(),
+                            new HotelRatingControl()),
+                    };
+                    break;
+                }
+
                 // Меню администратора БД.
                 case Roles.Admin:
                 {
                     Tabs = new ObservableCollection<TabViewModel>
                     {
-                        new TabViewModel("Рейтинг агенств".ToUpper(), new RatingControl()),
                         new TabViewModel("Пользователи портала".ToUpper(), new EmployeesControl(owner)),
                         new TabViewModel("Cправочные таблицы".ToUpper(), new DictionariesControl(owner))
                     };

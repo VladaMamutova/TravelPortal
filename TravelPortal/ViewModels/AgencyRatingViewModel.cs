@@ -5,16 +5,16 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using MaterialDesignThemes.Wpf;
 using TravelPortal.Annotations;
+using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
-    public class RatingViewModel : ViewModelBase, INotifyPropertyChanged
+    public class AgencyRatingViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private IList<string> _headers;
 
         private IList<RowDataItem> _collection;
-
         public IList<RowDataItem> Collection
         {
             get => _collection;
@@ -27,10 +27,12 @@ namespace TravelPortal.ViewModels
 
         public int Count => Collection.Count;
 
-        public ObservableCollection<Filter> Filters { get; }
+        public List<string> OwnershipCollection { get; }
+
+        public ObservableCollection<RatingFilter> Filters { get; }
         
-        private Filter _selectedFilter;
-        public Filter SelectedFilter
+        private RatingFilter _selectedFilter;
+        public RatingFilter SelectedFilter
         {
             get => _selectedFilter;
             set
@@ -39,11 +41,16 @@ namespace TravelPortal.ViewModels
                 OnPropertyChanged(nameof(SelectedFilter));
                 if (_selectedFilter == null) return;
 
-                ControlsVisibility =
-                    SelectedFilter.Query == Queries.RankByGrossProfit("", "")
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-                UpdateCollection(_selectedFilter.Query);
+                if (SelectedFilter.Query == Queries.RankByGrossProfit("", ""))
+                {
+                    ControlsVisibility = Visibility.Visible;
+                    UpdateCollection(Queries.RankByGrossProfit(Ownership, AgencyName));
+                }
+                else
+                {
+                    ControlsVisibility = Visibility.Collapsed;
+                    UpdateCollection(_selectedFilter.Query);
+                }
             }
         }
 
@@ -88,15 +95,17 @@ namespace TravelPortal.ViewModels
              OnAutoGeneratingColumns(_headers);
         }
 
-        public RatingViewModel()
+        public AgencyRatingViewModel()
         {
             _headers = new List<string>();
-            Filters = new ObservableCollection<Filter>
+            Filters = new ObservableCollection<RatingFilter>
             {
-                new Filter("По популярности", PackIconKind.Star, Queries.RankByPopularity),
-                new Filter("По валовому доходу", PackIconKind.CashUsd, Queries.RankByGrossProfit("", "")),
-                new Filter("По количеству маршрутов", PackIconKind.MapMarkerDistance, Queries.RankByNumberOfRoutes)
+                new RatingFilter("По популярности", PackIconKind.Star, Queries.RankByPopularity),
+                new RatingFilter("По валовому доходу", PackIconKind.CashUsd, Queries.RankByGrossProfit("", "")),
+                new RatingFilter("По количеству маршрутов", PackIconKind.MapMarkerDistance, Queries.RankByNumberOfRoutes)
             };
+            OwnershipCollection =
+                Dictionaries.GetNameList(DictionaryKind.Ownership);
         }
 
         

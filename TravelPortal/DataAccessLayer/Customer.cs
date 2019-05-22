@@ -1,4 +1,5 @@
 ﻿using System;
+using NpgsqlTypes;
 
 namespace TravelPortal.DataAccessLayer
 {
@@ -10,6 +11,8 @@ namespace TravelPortal.DataAccessLayer
         public string Address { get; set; }
         public DateTime Birthday { get; set; }
         public string Status { get; set; }
+
+        public Customer() {  Birthday = new DateTime(DateTime.Today.Year - 16, DateTime.Today.Month, DateTime.Today.Day);}
 
         public Customer(int voucherCount, string fio, string phone, string address, DateTime birthday, string status)
         {
@@ -33,6 +36,18 @@ namespace TravelPortal.DataAccessLayer
                 case nameof(Status): return "Социальное положение";
                 default: return propertyName;
             }
+        }
+
+        public bool IsReadyToInsert()
+        {
+            return !string.IsNullOrWhiteSpace(Fio) && !string.IsNullOrWhiteSpace(Phone) &&
+                   !string.IsNullOrWhiteSpace(Address) && !string.IsNullOrWhiteSpace(Status) &&
+                   Birthday.Year <= DateTime.Today.Year - 16;
+        }
+
+        public string GetParameterList()
+        {
+            return $"'{Fio}', '{Phone}', '{Address}', '{Status}', '{new NpgsqlDate(Birthday)}'";
         }
     }
 }

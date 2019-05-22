@@ -36,24 +36,38 @@ namespace TravelPortal.Views
 
             string login = Login.Text;
             string password = Password.Password;
+            IsEnabled = false;
+            LoadingWindow loadingWindow = new LoadingWindow
+            {
+                Owner = this, Width = Width, Height = Height
+            };
+            loadingWindow.Show();
+
             Thread connectThread = new Thread(() =>
+            {
+                try
                 {
-                    try
+                    Configuration.GetConfiguration().SetUser(login, password);
+                    Dispatcher.Invoke(() =>
                     {
-                        Configuration.GetConfiguration().SetUser(login, password);
-                        Dispatcher.Invoke(() =>
-                        {
-                            MessageBox.Show("Вы успешно вошли в систему!");
-                            DialogResult = true;
-                        });
-                    }
-                    catch (Exception ex)
+                        DialogResult = true;
+                        loadingWindow.Hide();
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.Invoke(() =>
                     {
+                        loadingWindow.Hide();
+                        IsEnabled = true;
                         MessageBox.Show(ex.Message + ex.InnerException?.Message,
                             "Ошибка входа");
-                    }
-                });
+                    });
+                }
+            });
             connectThread.Start();
+
+            //IsEnabled = true;
         }
 
         private void Login_OnTextChanged(object sender, TextChangedEventArgs e)

@@ -7,9 +7,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         Background="{DynamicResource MaterialDesignPaper}"
-          
         FontSize="14"
-        Height="600" Width="1200" MinWidth="700" MinHeight="400" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True" WindowStartupLocation="CenterScreen" Loaded="MainWindow_OnLoaded">
+        Height="600" Width="1200" MinWidth="800" MinHeight="520" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True" WindowStartupLocation="CenterScreen" Loaded="MainWindow_OnLoaded">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -35,13 +34,13 @@
                 <Style TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}">
                     <Setter Property="Width" Value="200" />
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                     <!--TabItem Header Template--> 
+                    <!--TabItem Header Template-->
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <!--<materialDesign:PackIcon Kind="{Binding Path=IconKind}" Width="30" Height="30" Margin="10 0"/>-->
-                                    <TextBlock Text="{Binding Header}" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock x:Name="header" Text="{Binding Header}" VerticalAlignment="Center"></TextBlock>
                                 </StackPanel>
                             </DataTemplate>
                         </Setter.Value>

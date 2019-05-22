@@ -129,5 +129,12 @@ namespace TravelPortal.Models
         public static string SelectTransportNameView => "select * from transport_name_view";
 
         public static string GetUser(string login) => $"select * from get_user('{login}')";
+
+        public static string InsertVoucher(int _routeId, Customer customer)
+        {
+            return $"select insert_voucher({_routeId}, {customer.GetParameterList()})";
+        }
+
+        public static string RankHotels() => "select * from rank_hotels()";
     }
 }

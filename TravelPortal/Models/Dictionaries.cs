@@ -81,7 +81,7 @@ namespace TravelPortal.Models
             {
                 connection.Open();
                 using (var command =
-                    new NpgsqlCommand((string)query, connection))
+                    new NpgsqlCommand(query, connection))
                 {
                     return command.ExecuteScalar();
                 }

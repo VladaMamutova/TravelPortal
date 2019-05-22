@@ -6,6 +6,7 @@ namespace TravelPortal.DataAccessLayer
     public class Voucher
     {
         private int _voucherId;
+        private int _routeId;
 
         public string Hotel { get; set; }
         public DateTime Date { get; set; }
@@ -14,10 +15,19 @@ namespace TravelPortal.DataAccessLayer
         public string CustomerFio { get; set; }
         public string Phone { get; set; }
 
-        public Voucher(int voucherId, string hotel, DateTime date, int duration,
+        public int GetRouteId() => _routeId;
+        public void SetRouteId(int routeId)
+        {
+            _routeId = routeId;
+        }
+
+        public Voucher() { }
+
+        public Voucher(int voucherId, int routeId, string hotel, DateTime date, int duration,
             double fullPrice, string customerFio, string phone)
         {
             _voucherId = voucherId;
+            _routeId = routeId;
             Hotel = hotel;
             Date = date;
             Duration = duration;

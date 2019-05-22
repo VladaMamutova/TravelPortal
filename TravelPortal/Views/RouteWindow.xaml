@@ -5,7 +5,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontSize="14"
         TextElement.Foreground="#0D47A1"
-        SizeToContent="Height" Width="300" Height="370" ResizeMode="NoResize" BorderBrush="Gray" BorderThickness="1" WindowStyle="None" WindowStartupLocation="CenterOwner">
+        SizeToContent="Height" Width="300" Height="370" ResizeMode="NoResize" BorderBrush="Gray" BorderThickness="1" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
