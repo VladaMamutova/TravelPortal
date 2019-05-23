@@ -34,5 +34,11 @@ namespace TravelPortal.Views
             if (e.PropertyName == nameof(SimpleRecord.Name))
                 e.Column.DisplayIndex = 0;
         }
+
+        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(((DataGrid)sender).SelectedItem != null)
+                ((DataGrid)sender).ScrollIntoView(((DataGrid)sender).SelectedItem);
+        }
     }
 }

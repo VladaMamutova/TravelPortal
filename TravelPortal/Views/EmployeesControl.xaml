@@ -12,21 +12,14 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <WrapPanel Grid.Column="0">
-                <StackPanel Orientation="Horizontal">
-                </StackPanel>
-            </WrapPanel>
-            <Button Grid.Column="1" Content="Изменить" Width="100" Height="30" Margin="10"></Button>
-        </Grid>
-        <DataGrid Grid.Row="1" Margin="10" ItemsSource="{Binding Collection}" SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"></DataGrid>
+        <WrapPanel Grid.Row="0" HorizontalAlignment="Right">
+            <Button Content="Добавить" Command="{Binding AddCommand}" Width="100" Margin="10"></Button>
+            <Button Content="Удалить" Command="{Binding DeleteCommand}" Width="100" Margin="10"></Button>
+        </WrapPanel>
+        <DataGrid Grid.Row="1" Margin="10" ItemsSource="{Binding Collection}" SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectionChanged="Selector_OnSelectionChanged" IsReadOnly="True" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"></DataGrid>
         <StackPanel Grid.Row="2" Margin="10 0" Orientation="Horizontal">
             <TextBlock Text="Всего: " FontSize="14" Foreground="{StaticResource PrimaryHueLightForegroundBrush}"></TextBlock>
-            <TextBlock Text="{Binding Count}" FontSize="14" Foreground="{StaticResource PrimaryHueLightForegroundBrush}"/>
+            <TextBlock Text="{Binding Collection.Count}" FontSize="14" Foreground="{StaticResource PrimaryHueLightForegroundBrush}"/>
         </StackPanel>
     </Grid>
 </UserControl>

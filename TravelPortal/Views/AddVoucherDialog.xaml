@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TravelPortal.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         FontSize="14"
         SizeToContent="WidthAndHeight" Width="370" ResizeMode="NoResize" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterOwner">
@@ -48,14 +47,14 @@
                                 <TextBlock Text="Проверить клиента по базе"></TextBlock>
                             </StackPanel>
                         </Button>
-                        <TextBox materialDesign:HintAssist.Hint="Адрес" Text="{Binding Customer.Address, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 0 0"/>
+                        <TextBox materialDesign:HintAssist.Hint="Адрес" Text="{Binding Customer.Address, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 5 0 0"/>
                         <Grid Height="Auto" Margin="0 0 0 0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="10"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <DatePicker Width="120" Grid.Column="0" materialDesign:HintAssist.Hint="Дата рождения" SelectedDate="{Binding Customer.Birthday, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}" HorizontalAlignment="Stretch" />
+                            <DatePicker Width="120" Grid.Column="0" materialDesign:HintAssist.Hint="Дата рождения" SelectedDate="{Binding Customer.Birthday, Mode=TwoWay, TargetNullValue={x:Static system:DateTime.Now}}" HorizontalAlignment="Stretch" />
                             <ComboBox Grid.Column="2" materialDesign:HintAssist.Hint="Социальное положение" ItemsSource="{Binding StatusCollection}" SelectedItem="{Binding Customer.Status, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 5"/>
                         </Grid>
                         <Grid Height="Auto" Margin="0 15 0 0">

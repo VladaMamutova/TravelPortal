@@ -27,29 +27,7 @@ namespace TravelPortal.Models
                 default: return GetSimpleDictionary(dictionary);
             }
         }
-
-        public static List<string> GetNameView(string query)
-        {
-            using (var connection =
-                new NpgsqlConnection(Configuration.ConnectionString))
-            {
-                connection.Open();
-                using (var command = new NpgsqlCommand(query,
-                    connection))
-                {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        if (!reader.HasRows) return null;
-                        List<string> collection = new List<string>();
-                        while (reader.Read())
-                            collection.Add(reader.GetString(0).TrimEnd(' '));
-
-                        return collection;
-                    }
-                }
-            }
-        }
-
+        
         public static List<string> GetNameList(
             DictionaryKind dictionary)
         {

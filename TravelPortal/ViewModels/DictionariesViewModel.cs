@@ -10,8 +10,6 @@ namespace TravelPortal.ViewModels
 
         public DictionariesViewModel(Window owner)
         {
-            //if (Configuration.Role == Configuration.Roles.Admin){}
-          
             DictionariesTabs =
                 new ObservableCollection<DictionaryViewModel>
                 {

@@ -3,9 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:viewModels="clr-namespace:TravelPortal.ViewModels"
         mc:Ignorable="d"
         FontSize="14"
         SizeToContent="Height" ResizeMode="NoResize" Width="300" WindowStyle="None" WindowStartupLocation="CenterScreen">
@@ -18,26 +15,6 @@
         <TextBlock Padding="10" Text="{Binding Path=Title}" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Move"/>
         <StackPanel Margin="10" Grid.Row="1">
             <ItemsControl x:Name="InputBoxes"/>
-            <!--<TextBox wpf:HintAssist.Hint="Наименование">
-            <TextBox.Text>
-                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
-                    --><!--<Binding.ValidationRules>
-                        <viewModels:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>--><!--
-                </Binding>
-            </TextBox.Text>
-        </TextBox>-->
-        <!--<TextBox wpf:HintAssist.Hint="Number"
-                 Margin="0 8 0 0"
-                 FontSize="16" Grid.Row="2">
-            <TextBox.Text>
-                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <viewModels:IntegerValidationRule ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-                </TextBox.Text>
-        </TextBox>-->
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10" HorizontalAlignment="Right">
             <Button Content="{Binding Path=CommandText}" IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}"

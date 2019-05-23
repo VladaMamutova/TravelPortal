@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-namespace TravelPortal.ViewModels
+﻿namespace TravelPortal.DataAccessLayer
 {
     public class HotelRank
     {

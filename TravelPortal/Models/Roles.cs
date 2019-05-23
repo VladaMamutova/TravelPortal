@@ -5,7 +5,6 @@
         None,
         Admin,
         Supervisor,
-        Manager,
         Employee
     }
 }

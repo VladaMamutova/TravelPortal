@@ -7,10 +7,10 @@
         xmlns:local="clr-namespace:TravelPortal.Views"
         mc:Ignorable="d"
         Title="LoadingWindow" WindowStartupLocation="CenterOwner" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Background="#50ffffff">
-    <Grid Background="#FFE4E4E4"  Width="200" Height="130">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Image gif:ImageBehavior.AnimatedSource="../Assets/progressing.gif" Width="120" Height="120"></Image>
-            <TextBlock Text="Выполняется вход..." FontSize="14" Opacity="1"  Foreground="{StaticResource PrimaryHueMidBrush}" Margin="0 -20 0 0"/>
+    <Grid Background="#FFE4E4E4"  Width="160" Height="110">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 10 0 0" >
+            <Image gif:ImageBehavior.AnimatedSource="../Assets/progressing.gif" Width="70" Height="70"></Image>
+            <TextBlock Text="Выполняется вход..." FontSize="14" Foreground="{StaticResource PrimaryHueMidBrush}" Margin="0 0 0 0"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -44,17 +44,6 @@ namespace TravelPortal.ViewModels
                     };
                     break;
                 }
-                case Roles.Manager:
-                {
-                    Tabs = new ObservableCollection<TabViewModel>
-                    {
-                        new TabViewModel("Cотрудники агенства".ToUpper(),
-                            new EmployeesControl(owner)),
-                        new TabViewModel("Маршруты".ToUpper(),
-                            new RoutesControl(owner))
-                    };
-                    break;
-                }
                 // Меню супервайзера.
                 case Roles.Supervisor:
                 {
@@ -73,7 +62,7 @@ namespace TravelPortal.ViewModels
                 {
                     Tabs = new ObservableCollection<TabViewModel>
                     {
-                        new TabViewModel("Пользователи портала".ToUpper(), new EmployeesControl(owner)),
+                        new TabViewModel("Сотрудники портала".ToUpper(), new EmployeesControl(owner)),
                         new TabViewModel("Cправочные таблицы".ToUpper(), new DictionariesControl(owner))
                     };
                     break;

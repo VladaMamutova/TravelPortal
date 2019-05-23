@@ -1,4 +1,5 @@
-﻿using NpgsqlTypes;
+﻿using System;
+using NpgsqlTypes;
 using TravelPortal.DataAccessLayer;
 
 namespace TravelPortal.Models
@@ -121,20 +122,28 @@ namespace TravelPortal.Models
             return $"select * from rank_agencies_by_gross_profit_with_ownership('{ownership}')";
         }
 
-        public static string SelectUserView => "select * from user_view"; 
-        public static string SelectHotelNameView => "select * from hotel_name_view";
-        public static string SelectStatusNameView => "select * from status_name_view";
-        public static string SelectOwnershipNameView => "select * from ownership_name_view";
-        public static string SelectCityNameView => "select * from city_name_view";
-        public static string SelectTransportNameView => "select * from transport_name_view";
-
         public static string GetUser(string login) => $"select * from get_user('{login}')";
 
-        public static string InsertVoucher(int _routeId, Customer customer)
+        public static string InsertVoucher(int routeId, Customer customer)
         {
-            return $"select insert_voucher({_routeId}, {customer.GetParameterList()})";
+            return $"select insert_voucher({routeId}, {customer.GetParameterList()})";
         }
 
         public static string RankHotels() => "select * from rank_hotels()";
+
+        public static string AddUser(User user, string password)
+        {
+            switch (user.Role)
+            {
+                case Roles.Employee:
+                    return $"select add_employee({user.GetParameterList()}, '{password}')";
+                case Roles.Supervisor:
+                    return $"select add_supervisor({user.GetParameterList()}, '{password}')";
+                default: throw new ArgumentException(nameof(user.Role));
+            }
+        }
+
+        public static string DeleteUser(int userId) =>
+            $"select delete_user({userId})";
     }
 }

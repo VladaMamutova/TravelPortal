@@ -87,8 +87,6 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public int Count => Collection?.Count ?? 0;
-
         #region Commands
 
         public RelayCommand AddCommand =>

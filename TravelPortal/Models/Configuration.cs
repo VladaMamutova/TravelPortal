@@ -62,9 +62,9 @@ namespace TravelPortal.Models
 
                     try
                     {
-                        new NpgsqlCommand("set role " + Roles.Manager,
+                        new NpgsqlCommand("set role " + Roles.Supervisor,
                             connection).ExecuteNonQuery();
-                        currentRole = Roles.Manager;
+                        currentRole = Roles.Supervisor;
                     }
                     catch { }
 

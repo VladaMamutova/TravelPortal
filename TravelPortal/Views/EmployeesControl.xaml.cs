@@ -15,6 +15,13 @@ namespace TravelPortal.Views
         {
             InitializeComponent();
             DataContext = new EmployeeViewModel(owner);
+            ((EmployeeViewModel) DataContext).DialogDisplayRequested +=
+                (sender, e) =>
+                {
+                    new AddUserDialog(e.Record) {Owner = owner}.ShowDialog();
+                };
+            ((EmployeeViewModel)DataContext).MessageBoxDisplayRequested +=
+                (sender, e) => { MessageBox.Show(e.Text, e.Title); };
         }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -23,6 +30,12 @@ namespace TravelPortal.Views
             if (e.PropertyType == typeof(DateTime) &&
                 e.Column is DataGridTextColumn dateColumn)
                 dateColumn.Binding.StringFormat = "dd.MM.yyyy";
+        }
+
+        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((DataGrid)sender).SelectedItem != null)
+                ((DataGrid)sender).ScrollIntoView(((DataGrid)sender).SelectedItem);
         }
     }
 }

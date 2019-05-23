@@ -71,9 +71,9 @@ namespace TravelPortal.ViewModels
         {
             _owner = owner;
             HotelCollection =
-                Dictionaries.GetNameView(Queries.SelectHotelNameView);
+                Dictionaries.GetNameList(DictionaryKind.Hotel);
             TransportCollection =
-                Dictionaries.GetNameView(Queries.SelectTransportNameView);
+                Dictionaries.GetNameList(DictionaryKind.Transport);
             Collection = Routes.GetAll();
         }
     }

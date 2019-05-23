@@ -29,10 +29,10 @@ namespace TravelPortal.ViewModels
 
         public List<string> OwnershipCollection { get; }
 
-        public ObservableCollection<RatingFilter> Filters { get; }
+        public ObservableCollection<FilterListItem> Filters { get; }
         
-        private RatingFilter _selectedFilter;
-        public RatingFilter SelectedFilter
+        private FilterListItem _selectedFilter;
+        public FilterListItem SelectedFilter
         {
             get => _selectedFilter;
             set
@@ -98,11 +98,11 @@ namespace TravelPortal.ViewModels
         public AgencyRatingViewModel()
         {
             _headers = new List<string>();
-            Filters = new ObservableCollection<RatingFilter>
+            Filters = new ObservableCollection<FilterListItem>
             {
-                new RatingFilter("По популярности", PackIconKind.Star, Queries.RankByPopularity),
-                new RatingFilter("По валовому доходу", PackIconKind.CashUsd, Queries.RankByGrossProfit("", "")),
-                new RatingFilter("По количеству маршрутов", PackIconKind.MapMarkerDistance, Queries.RankByNumberOfRoutes)
+                new FilterListItem("По популярности", PackIconKind.Star, Queries.RankByPopularity),
+                new FilterListItem("По валовому доходу", PackIconKind.CashUsd, Queries.RankByGrossProfit("", "")),
+                new FilterListItem("По количеству маршрутов", PackIconKind.MapMarkerDistance, Queries.RankByNumberOfRoutes)
             };
             OwnershipCollection =
                 Dictionaries.GetNameList(DictionaryKind.Ownership);

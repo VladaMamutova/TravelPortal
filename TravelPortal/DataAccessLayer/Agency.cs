@@ -151,7 +151,7 @@ namespace TravelPortal.DataAccessLayer
             return $"{Id}, {GetParameterList()}";
         }
 
-        public override bool Equals(SimpleRecord record)
+        public override bool Equals(ITableEntry record)
         {
             if (!base.Equals(record))
                 return false;

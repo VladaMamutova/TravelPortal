@@ -26,6 +26,20 @@ namespace TravelPortal.Models
             }
         }
 
+        public static object ExecuteAddUpdateQuery(string query)
+        {
+            using (var connection =
+                new NpgsqlConnection(Configuration.ConnectionString))
+            {
+                connection.Open();
+                using (var command =
+                    new NpgsqlCommand(query, connection))
+                {
+                    return command.ExecuteScalar();
+                }
+            }
+        }
+
         public static ObservableCollection<Route> GetRoutes(string query)
         {
             using (var connection =
@@ -145,7 +159,7 @@ namespace TravelPortal.Models
                 new NpgsqlConnection(Configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
-                    Queries.SelectUserView, connection))
+                    Queries.Dictionaries.SelectAll(DictionaryKind.User), connection))
                 {
                     connection.Open();
                     using (var reader = command.ExecuteReader())

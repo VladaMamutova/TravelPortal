@@ -16,6 +16,10 @@ namespace TravelPortal.Views
             HotelName.Text = route.Hotel;
             Date.Text = route.Date.ToShortDateString();
             DataContext = new VoucherRecordViewModel(route.GetId(), this);
+            ((VoucherRecordViewModel)DataContext).MessageBoxDisplayRequested += (sender, e) =>
+            {
+                MessageBox.Show(e.Text, e.Title);
+            };
         }
 
         private void Move(object sender, MouseButtonEventArgs e)

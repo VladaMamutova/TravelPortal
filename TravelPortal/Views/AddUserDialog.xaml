@@ -1,0 +1,45 @@
+﻿<Window x:Class="TravelPortal.Views.AddUserDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+          FontSize="14"
+        SizeToContent="WidthAndHeight" Width="350" MinWidth="340" ResizeMode="NoResize" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterOwner">
+    <Border>
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.8" Color="{StaticResource Accent100Foreground}" />
+        </Border.Effect>
+        <Grid Background="White" Margin="20">
+            <Border BorderThickness="1" BorderBrush="{StaticResource PrimaryHueDarkBrush}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Move">
+                        <TextBlock Text="Добавление сотрудника" Padding="5" TextAlignment="Center" Foreground="WhiteSmoke" FontSize="20" materialDesign:ShadowAssist.ShadowDepth="Depth0" />
+                    </Grid>
+                    <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
+                        <ComboBox materialDesign:HintAssist.Hint="Роль" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 0 10" SelectionChanged="Selector_OnSelectionChanged"/>
+                        <ComboBox materialDesign:HintAssist.Hint="Агенство" Visibility="{Binding AgencyVisibility}" ItemsSource="{Binding AgencyCollection}" SelectedItem="{Binding User.Agency, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 0 10" SelectionChanged="Selector_OnSelectionChanged"/>
+                        <TextBox materialDesign:HintAssist.Hint="ФИО сотрудника" Text="{Binding User.Name, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" TextWrapping="NoWrap" Margin="0 0 0 10" TextChanged="TextBoxBase_OnTextChanged"/>
+                        <TextBox materialDesign:HintAssist.Hint="Логин" Text="{Binding User.Login, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" TextChanged="TextBoxBase_OnTextChanged"/>
+                        <PasswordBox x:Name="PasswordBox" materialDesign:HintAssist.Hint="Пароль" Height="40" Margin="0 10 0 10" PasswordChanged="PasswordConfirmationBox_OnPasswordChanged"/>
+                        <PasswordBox x:Name="PasswordConfirmationBox" materialDesign:HintAssist.Hint="Подтверждение пароля" Height="40" PasswordChanged="PasswordConfirmationBox_OnPasswordChanged"/>
+                        <Grid Height="Auto" Margin="0 15 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="ОТМЕНА" Grid.Column="0" IsCancel="True" Style="{DynamicResource MaterialDesignFlatButton}"/>
+                            <Button x:Name="AddButton" IsDefault="True" Content="ДОБАВИТЬ" Grid.Column="2" Command="{Binding AddCommand}"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

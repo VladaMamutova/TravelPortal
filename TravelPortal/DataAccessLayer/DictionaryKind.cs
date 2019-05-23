@@ -11,6 +11,7 @@
         Ownership,
         Status,
         Ticket,
-        Transport
+        Transport,
+        User
     }
 }

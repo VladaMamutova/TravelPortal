@@ -9,10 +9,10 @@ using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
-    public class VoucherRecordViewModel:INotifyPropertyChanged
+    public class VoucherRecordViewModel: ViewModelBase, INotifyPropertyChanged
     {
-        private Window _owner;
-        private int _routeId;
+        private readonly Window _owner;
+        private readonly int _routeId;
         private Customer _customer;
         public Customer Customer
         {
@@ -20,7 +20,7 @@ namespace TravelPortal.ViewModels
             set
             {
                 _customer = value;
-                OnPropertyChanged(nameof(Voucher));
+                OnPropertyChanged(nameof(Customer));
             }
         }
 
@@ -37,8 +37,8 @@ namespace TravelPortal.ViewModels
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show(exception.Message,
-                        "Ошибка при оформлении путёвки");
+                    OnMessageBoxDisplayRequest("Ошибка при оформлении путёвки",
+                        exception.Message);
                 }
             },
             o => Customer.IsReadyToInsert());
@@ -55,7 +55,7 @@ namespace TravelPortal.ViewModels
             _routeId = routeId;
             IsInProgress = false;
             StatusCollection =
-                Dictionaries.GetNameView(Queries.SelectStatusNameView);
+                Dictionaries.GetNameList(DictionaryKind.Status);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

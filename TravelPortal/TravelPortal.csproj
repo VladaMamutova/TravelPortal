@@ -109,6 +109,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAccessLayer\TableEntry.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\Dictionaries.cs" />
     <Compile Include="Models\MainTables.cs" />
@@ -131,14 +132,18 @@
     <Compile Include="ViewModels\DictionaryRecordViewModel.cs" />
     <Compile Include="ViewModels\DictionaryViewModel.cs" />
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
-    <Compile Include="ViewModels\RatingFilter.cs" />
-    <Compile Include="ViewModels\HotelRank.cs" />
+    <Compile Include="ViewModels\FilterListItem.cs" />
+    <Compile Include="DataAccessLayer\HotelRank.cs" />
     <Compile Include="ViewModels\HotelRatingViewModel.cs" />
     <Compile Include="ViewModels\IntegerValidationRule.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RowDataItem.cs" />
+    <Compile Include="ViewModels\UserRecordViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\VoucherRecordViewModel.cs" />
+    <Compile Include="Views\AddUserDialog.xaml.cs">
+      <DependentUpon>AddUserDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddVoucherDialog.xaml.cs">
       <DependentUpon>AddVoucherDialog.xaml</DependentUpon>
     </Compile>
@@ -184,6 +189,10 @@
     <Compile Include="Views\RouteWindow.xaml.cs">
       <DependentUpon>RouteWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AddUserDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddVoucherDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -284,13 +293,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\loading.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\welcome.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\progressing.gif" />
+    <Resource Include="Assets\welcome.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
