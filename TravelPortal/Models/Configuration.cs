@@ -19,7 +19,7 @@ namespace TravelPortal.Models
 
         private static Configuration _configuration;
         private static readonly object SyncRoot = new object();
-        public static string ConnectionString { get; private set; }
+        public string ConnectionString { get; private set; }
 
         private Configuration()
         {

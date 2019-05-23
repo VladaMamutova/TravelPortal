@@ -15,6 +15,14 @@ namespace TravelPortal.Views
         {
             InitializeComponent();
             DataContext = new DictionariesViewModel(owner);
+            foreach (var tab in ((DictionariesViewModel)DataContext).DictionariesTabs)
+            {
+                tab.MessageBoxDisplayRequested += (sender, args) =>
+                {
+                    MessageBox.Show(args.Text, args.Title);
+                };
+
+            }
         }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

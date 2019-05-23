@@ -134,7 +134,7 @@ namespace TravelPortal.ViewModels
         {
             try
             {
-                object result = Dictionaries.ExecuteAddUpdateQuery(query);
+                object result = Dictionaries.ExecuteQuery(query);
                 _sourceRecord.Name = Record.Name;
                 if (int.TryParse(result?.ToString(), out var id))
                     _sourceRecord.SetId(id);

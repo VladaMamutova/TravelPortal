@@ -12,7 +12,7 @@ using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
-    public class DictionaryViewModel : INotifyPropertyChanged
+    public class DictionaryViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public string Title { get; }
         public PackIconKind IconKind { get; }
@@ -92,8 +92,25 @@ namespace TravelPortal.ViewModels
         public RelayCommand AddCommand =>
             new RelayCommand(e => ShowDialog(null));
 
-        public RelayCommand ModifyCommand => new RelayCommand(
+        public RelayCommand UpdateCommand => new RelayCommand(
             e => ShowDialog(_selectedItem), o => SelectedItem != null);
+
+        public RelayCommand DeleteCommand => new RelayCommand(
+            e =>
+            {
+                try
+                {
+                    Dictionaries.ExecuteQuery(
+                        Queries.Dictionaries.Delete(_dictionary,
+                            (SimpleRecord) _selectedItem));
+                }
+                catch (Exception ex)
+                {
+                   OnMessageBoxDisplayRequest("Ошибка удаления", ex.Message);
+                }
+
+                UpdateCollection();
+            }, o => SelectedItem != null);
 
         private void ShowDialog(object o)
         {

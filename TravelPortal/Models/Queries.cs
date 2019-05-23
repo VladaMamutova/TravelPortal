@@ -6,18 +6,18 @@ namespace TravelPortal.Models
 {
     public static class Queries
     {
-        private static Roles Role;
+        private static Roles _role;
         private static int _agencyId;
 
         static Queries()
         {
-            Role = Roles.None;
+            _role = Roles.None;
             _agencyId = -1;
         }
 
         public static void SetRole(Roles role, int agencyId)
         {
-            Role = role;
+            _role = role;
             _agencyId = agencyId;
         }
 
@@ -74,6 +74,13 @@ namespace TravelPortal.Models
                 return $"select update_{dictionary}" +
                        $"({record.GetIdentifiedParameterList()})";
             }
+
+            public static string Delete(DictionaryKind dictionary,
+                SimpleRecord record)
+            {
+                return $"select delete_{dictionary}" +
+                       $"({record.GetId()})";
+            }
         }
 
         public static string SelectUser(string login)
@@ -83,21 +90,21 @@ namespace TravelPortal.Models
 
         public static string GetRoutes()
         {
-            if (Role == Roles.Admin)
+            if (_role == Roles.Admin)
                 return "select * from route_view";
             return $"select * from get_routes_from_agency({_agencyId})";
         }
 
         public static string GetVouchers()
         {
-            if (Role == Roles.Admin)
+            if (_role == Roles.Admin)
                 return "select * from voucher_view";
             return $"select * from get_vouchers_from_agency({_agencyId})";
         }
 
         public static string GetCustomers()
         {
-            if (Role == Roles.Admin)
+            if (_role == Roles.Admin)
                 return "select * from customer_view";
             return $"select * from get_customers_from_agency({_agencyId})";
         }
@@ -111,14 +118,18 @@ namespace TravelPortal.Models
 
         public static string RankByGrossProfit(string ownership, string agency)
         {
+            //  В зависимости от передаваемых параметров, вызываем запрос на нужный фильтр.
+
             if(string.IsNullOrEmpty(agency) && string.IsNullOrEmpty(ownership))
                 return "select * from rank_agencies_by_gross_profit()";
-            if (!string.IsNullOrEmpty(agency) &&
-                !string.IsNullOrEmpty(ownership))
+
+            if (!string.IsNullOrEmpty(agency) && !string.IsNullOrEmpty(ownership))
                 return "select * from rank_agencies_by_gross_profit_with_ownership_begins" +
                        $"_with('{ownership}', '{agency}')";
+
             if (!string.IsNullOrEmpty(agency))
                 return $"select * from rank_agencies_by_gross_profit_begins_with('{agency}')";
+
             return $"select * from rank_agencies_by_gross_profit_with_ownership('{ownership}')";
         }
 
