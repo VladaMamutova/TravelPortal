@@ -46,7 +46,8 @@ namespace TravelPortal.ViewModels
             _owner = owner;
             StatusCollection =
                     Dictionaries.GetNameList(DictionaryKind.Status);
-            Collection = Vouchers.GetAll();
+            Collection =
+                MainTables.GetVouchers(Queries.MainTables.GetVouchers());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -21,36 +21,24 @@ namespace TravelPortal.Models
             _agencyId = agencyId;
         }
 
-        public static class Routes
+        public static class MainTables
         {
-            public const string SelectAllFunction =
-                "select * from select_all_from_route()";
+            public static string GetRoutes()
+            {
+                if (_role == Roles.Admin)
+                    return "select * from route_view";
+                return $"select * from get_routes_from_agency({_agencyId})";
+            }
 
-
-            public static string Search(NpgsqlDate date) =>
-                SelectAllFunction + $"where date = '{date}'";
-
-            public static string Search(int duration) =>
-                SelectAllFunction + $"where duration = '{duration}'";
-
-            public static string FilterHotel(string hotel) =>
-                SelectAllFunction + $"where hotel_id = (select hotel_id from hotel where lower(name) like lower('{hotel}'))";
-
-            public static string FilterTransport(string transport) =>
-                SelectAllFunction + $"where lower('{transport}') like " +
-                "lower((select name from transport where transport_id = (select transport_id from ticket where ticket_id = route.ticket_id)))";
-        }
-
-        public static class Vouchers
-        {
-            public const string SelectAllFunction =
-                "select * from select_all_from_voucher()";
-
-            public static string Search(string fio) =>
-                SelectAllFunction + $"where lower(fio) like lower('%{fio}%')";
-
-            public static string FilterStatus(string status)=>
-                SelectAllFunction + $"where lower(status) like lower('{status}'))";
+            public static string GetVouchers()
+            {
+                if (_role == Roles.Admin)
+                    return "select * from voucher_view";
+                return $"select * from get_vouchers_from_agency({_agencyId})";
+            }
+           
+            public static string FilterRoutes(Route example) =>
+                $"select * from filter_route({_agencyId}, {example.GetParameterListForFilter()})";
         }
 
         public static class Dictionaries
@@ -86,20 +74,6 @@ namespace TravelPortal.Models
         public static string SelectUser(string login)
         {
             return $"select * from select_user('{login}')";
-        }
-
-        public static string GetRoutes()
-        {
-            if (_role == Roles.Admin)
-                return "select * from route_view";
-            return $"select * from get_routes_from_agency({_agencyId})";
-        }
-
-        public static string GetVouchers()
-        {
-            if (_role == Roles.Admin)
-                return "select * from voucher_view";
-            return $"select * from get_vouchers_from_agency({_agencyId})";
         }
 
         public static string GetCustomers()

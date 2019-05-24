@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Windows;
-using TravelPortal.ViewModels;
-using TravelPortal.Views;
+using NpgsqlTypes;
 
 namespace TravelPortal.DataAccessLayer
 {
     public class Route
     {
         private int _routeId;
-        //private int _residenceId;
-        //private int _transportTypeId;
-        //private int _agencyId;
-
         public Visibility CanAddVoucher { get; }
 
         public string Hotel { get; set; }
@@ -28,8 +23,9 @@ namespace TravelPortal.DataAccessLayer
 
         public int GetId() => _routeId;
 
-        public Route(int routeId, string hotel, string from, string to, DateTime date, int duration,
-            bool meels, string transport, double hotelPrice, double transportPrice)
+        public Route() { }
+
+        public Route(int routeId, string hotel, string @from, string to, DateTime date, int duration, bool meels, string transport, double fullPrice, double hotelPrice, double transportPrice)
         {
             _routeId = routeId;
             Hotel = hotel;
@@ -39,12 +35,9 @@ namespace TravelPortal.DataAccessLayer
             Duration = duration;
             Meels = meels;
             Transport = transport;
-            FullPrice = hotelPrice + transportPrice;
+            FullPrice = fullPrice;
             HotelPrice = hotelPrice;
             TransportPrice = transportPrice;
-            CanAddVoucher = date - DateTime.Now > TimeSpan.FromDays(1)
-                ? Visibility.Visible
-                : Visibility.Collapsed;
         }
 
         public static string GenerateTitle(string propertyName)
@@ -63,6 +56,15 @@ namespace TravelPortal.DataAccessLayer
                 case nameof(TransportPrice): return "Стоимость проезда, руб.";
                 default: return propertyName;
             }
+        }
+
+        public string GetParameterListForFilter()
+        {
+            string hotel = string.IsNullOrWhiteSpace(Hotel) ? "%" : Hotel;
+            string cityFrom = string.IsNullOrWhiteSpace(From) ? "%" : From;
+            string cityTo = string.IsNullOrWhiteSpace(To) ? "%" : To;
+            string transport = string.IsNullOrWhiteSpace(Transport) ? "%" : Transport;
+            return $"'{hotel}', '{cityFrom}', '{cityTo}', '{new NpgsqlDate(Date)}', {Duration}, '{transport}'";
         }
     }
 }

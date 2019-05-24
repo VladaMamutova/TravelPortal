@@ -32,11 +32,8 @@ namespace TravelPortal.ViewModels
             {
                 _collection = value;
                 OnPropertyChanged(nameof(Collection));
-                OnPropertyChanged(nameof(Count));
             }
         }
-
-        public int Count => Collection?.Count ?? 0;
 
         private Window _owner;
 

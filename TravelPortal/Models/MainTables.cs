@@ -76,8 +76,8 @@ namespace TravelPortal.Models
 
                             routes.Add(new Route(routeId, hotel, from, to,
                                 new DateTime(date.Year, date.Month, date.Day),
-                                duration, meels, transport, hotelPrice,
-                                transportPrice));
+                                duration, meels, transport, hotelPrice + transportPrice,
+                                transportPrice, transportPrice));
                         }
 
                         return routes;

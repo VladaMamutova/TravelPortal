@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.ViewModels;
 
@@ -18,42 +17,8 @@ namespace TravelPortal.Views
             InitializeComponent();
             _owner = owner;
             DataContext = new RouteViewModel(_owner);
-        }
-
-        private void RouteName_Changed(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void StartDate_Changed(object sender, SelectionChangedEventArgs e)
-        {
-            //RoutesDataGrid.ItemsSource = StartDate.SelectedDate == null ?
-            //    Routes.GetAll() : Routes.SearchByDate(StartDate.SelectedDate.Value);
-        }
-
-        private void Duration_Changed(object sender, TextChangedEventArgs e)
-        {
-            //RoutesDataGrid.ItemsSource = string.IsNullOrWhiteSpace(Duration.Text) ?
-            //    Routes.GetAll() : Routes.SearchByDuration(Convert.ToInt32(Duration.Text));
-        }
-
-        private void AddRoute_OnClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //RoutesDataGrid.ItemsSource = ResidenceBox.SelectedIndex == -1
-            //    ? Routes.GetAll()
-            //    : Routes.FilterResidence(ResidenceBox.SelectedItem.ToString());
-        }
-
-        private void TransportTypeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //RoutesDataGrid.ItemsSource = TransportBox.SelectedIndex == -1
-            //    ? Routes.GetAll()
-            //    : Routes.FilterTransport(TransportBox.SelectedItem.ToString());
+            ((RouteViewModel)DataContext).MessageBoxDisplayRequested +=
+                (sender, e) => { MessageBox.Show(e.Text, e.Title); };
         }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

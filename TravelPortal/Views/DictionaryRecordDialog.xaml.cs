@@ -216,7 +216,7 @@ namespace TravelPortal.Views
                     comboBox.ItemsSource = Dictionaries.GetNameList(DictionaryKind.Ownership);
                     inputs.Add(comboBox);
 
-                    textBox = new TextBox { Margin = new Thickness(0, 10, 0, 0) };
+                    textBox = new TextBox { Margin = new Thickness(0, 10, 0, 0), MaxLength = 12};
                     textBox.SetBinding(TextBox.TextProperty,
                         new Binding(nameof(DictionaryRecordViewModel.Record) + '.' + nameof(Agency.Phone))
                         {
