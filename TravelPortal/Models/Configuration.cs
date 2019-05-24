@@ -90,5 +90,11 @@ namespace TravelPortal.Models
                 throw;
             }
         }
+
+        public string GetConnectionStringForUser(string userId, string password)
+        {
+            return $"Server = {_server}; User Id = {userId}; Database = {DATABASE_NAME}; " +
+                $"Port = {_port}; Password = {password}";
+        }
     }
 }

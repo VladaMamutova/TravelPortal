@@ -39,6 +39,9 @@ namespace TravelPortal.Models
            
             public static string FilterRoutes(Route example) =>
                 $"select * from filter_route({_agencyId}, {example.GetParameterListForFilter()})";
+
+            public static string FilterCustomers(Customer customer) =>
+                $"select * from filter_customer({_agencyId}, '{customer.Fio}', '{customer.Phone}')";
         }
 
         public static class Dictionaries
@@ -124,6 +127,18 @@ namespace TravelPortal.Models
                     return $"select add_employee({user.GetParameterList()}, '{password}')";
                 case Roles.Supervisor:
                     return $"select add_supervisor({user.GetParameterList()}, '{password}')";
+                default: throw new ArgumentException(nameof(user.Role));
+            }
+        }
+
+        public static string UpdateUser(User user, string password)
+        {
+            switch (user.Role)
+            {
+                case Roles.Employee:
+                    return $"select update_employee({user.GetIdentifiedParameterList()}, '{password}')";
+                case Roles.Supervisor:
+                    return $"select update_supervisor({user.GetIdentifiedParameterList()}, '{password}')";
                 default: throw new ArgumentException(nameof(user.Role));
             }
         }

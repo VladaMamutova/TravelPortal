@@ -19,7 +19,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Move">
-                        <TextBlock Text="Добавление сотрудника" Padding="5" TextAlignment="Center" Foreground="WhiteSmoke" FontSize="20" materialDesign:ShadowAssist.ShadowDepth="Depth0" />
+                        <TextBlock Text="{Binding CaptionText}" Padding="5" TextAlignment="Center" Foreground="WhiteSmoke" FontSize="20" materialDesign:ShadowAssist.ShadowDepth="Depth0" />
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
                         <ComboBox materialDesign:HintAssist.Hint="Роль" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 0 10" SelectionChanged="Selector_OnSelectionChanged"/>
@@ -35,7 +35,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Button Content="ОТМЕНА" Grid.Column="0" IsCancel="True" Style="{DynamicResource MaterialDesignFlatButton}"/>
-                            <Button x:Name="AddButton" IsDefault="True" Content="ДОБАВИТЬ" Grid.Column="2" Command="{Binding AddCommand}"/>
+                            <Button x:Name="AddButton" IsDefault="True" Content="{Binding CommandText}" Grid.Column="2" Command="{Binding Command}"/>
                         </Grid>
                     </StackPanel>
                 </Grid>

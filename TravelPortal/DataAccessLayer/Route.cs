@@ -38,6 +38,9 @@ namespace TravelPortal.DataAccessLayer
             FullPrice = fullPrice;
             HotelPrice = hotelPrice;
             TransportPrice = transportPrice;
+            CanAddVoucher = date - DateTime.Now > TimeSpan.FromDays(1)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
         public static string GenerateTitle(string propertyName)

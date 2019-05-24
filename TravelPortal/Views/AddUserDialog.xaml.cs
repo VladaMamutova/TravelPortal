@@ -47,7 +47,7 @@ namespace TravelPortal.Views
 
         private void UpdateAddButtonState()
         {
-            if (!((UserRecordViewModel)DataContext).AddCommand.CanExecute(null))
+            if (!((UserRecordViewModel)DataContext).Command.CanExecute(null))
                 AddButton.IsEnabled = false;
             else
             {

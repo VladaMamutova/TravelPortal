@@ -63,6 +63,25 @@ namespace TravelPortal.ViewModels
             }
         }
 
+        private RelayCommand _updateCommand;
+        public RelayCommand UpdateCommand
+        {
+            get
+            {
+                _updateCommand = _updateCommand ??
+                              (_updateCommand = new RelayCommand(obj =>
+                              {
+                                  User newUser = new User(User.Empty);
+                                  OnDialogDisplayRequest(SelectedItem);
+                                  UpdateCollection();
+                                  SelectedItem =
+                                      Collection.SingleOrDefault(
+                                          i => i.GetId() == newUser.GetId());
+                              }, o => SelectedItem != null));
+                return _updateCommand;
+            }
+        }
+
         private RelayCommand _deleteCommand;
         public RelayCommand DeleteCommand
         {
@@ -82,7 +101,7 @@ namespace TravelPortal.ViewModels
                                   }
                                   UpdateCollection();
                                   SelectedItem = null;
-                              }, o => SelectedItem != null));
+                              }, o => SelectedItem != null && SelectedItem.Role != Roles.Admin));
                 return _deleteCommand;
             }
         }

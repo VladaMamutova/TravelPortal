@@ -30,6 +30,7 @@ namespace TravelPortal.DataAccessLayer
                 OnPropertyChanged(nameof(Login));
             }
         }
+
         public string Agency
         {
             get => _agency;
@@ -96,9 +97,9 @@ namespace TravelPortal.DataAccessLayer
             if (Role == Roles.None) return false;
             if(Role == Roles.Supervisor)
                 return base.IsReadyToInsert() &&
-                       Login.Length > 3;
+                       Login.Length >= 3;
             return base.IsReadyToInsert() &&
-                   Login.Length > 3 &&
+                   Login.Length >= 3 &&
                    !string.IsNullOrWhiteSpace(Agency);
         }
 
@@ -110,8 +111,7 @@ namespace TravelPortal.DataAccessLayer
 
         public override string GetIdentifiedParameterList()
         {
-            return base.GetIdentifiedParameterList() + $", '{Login}'" +
-                   (Role == Roles.Employee ? $", '{Agency}'" : "");
+            return $"{Id}, {GetParameterList()}";
         }
 
         public override bool Equals(ITableEntry record)
@@ -120,6 +120,8 @@ namespace TravelPortal.DataAccessLayer
                 return false;
 
             if (!(record is User user)) return false;
+
+            if (Role != user.Role) return false;
 
             return string.Compare(Login, user.Login,
                        StringComparison.CurrentCulture) == 0 &&

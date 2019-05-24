@@ -27,11 +27,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <WrapPanel Grid.Column="0">
-                <ComboBox MinWidth="100" Margin="5 0" ItemsSource="{Binding HotelCollection}" SelectedValue="{Binding SelectedHotel}" materialDesign:HintAssist.Hint="Отель"/>
-                <ComboBox MinWidth="100" Margin="5 0" ItemsSource="{Binding CityCollection}" SelectedValue="{Binding SelectedCityFrom}" materialDesign:HintAssist.Hint="Откуда"/>
-                <ComboBox MinWidth="100" Margin="5 0" ItemsSource="{Binding CityCollection}" SelectedValue="{Binding SelectedCityTo}" materialDesign:HintAssist.Hint="Куда"/>
-                <DatePicker Margin="5 0" materialDesign:HintAssist.Hint="Дата начала"  SelectedDate="{Binding SelectedDate}" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+            <WrapPanel Grid.Column="0" Margin="0 5 0 0">
+                <ComboBox MinWidth="120" Margin="10 0 5 0" ItemsSource="{Binding HotelCollection}" SelectedValue="{Binding SelectedHotel}" materialDesign:HintAssist.Hint="Отель"/>
+                <ComboBox MinWidth="120" Margin="5 0" ItemsSource="{Binding CityCollection}" SelectedValue="{Binding SelectedCityFrom}" materialDesign:HintAssist.Hint="Откуда"/>
+                <ComboBox MinWidth="120" Margin="5 0" ItemsSource="{Binding CityCollection}" SelectedValue="{Binding SelectedCityTo}" materialDesign:HintAssist.Hint="Куда"/>
+                <DatePicker Margin="5 0" materialDesign:HintAssist.Hint="Дата начала" Width="90" SelectedDate="{Binding SelectedDate}" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
                 <TextBox Width="90" Margin="5 0" materialDesign:HintAssist.Hint="Длительность" Text="{Binding SelectedDuration}"></TextBox>
                 <ComboBox MinWidth="100" Margin="5 0" ItemsSource="{Binding TransportCollection}" SelectedValue="{Binding SelectedTransport}" materialDesign:HintAssist.Hint="Вид транспорта"/>
             </WrapPanel>

@@ -124,13 +124,13 @@ namespace TravelPortal.Models
             }
         }
 
-        public static ObservableCollection<Customer> GetCustomers()
+        public static ObservableCollection<Customer> GetCustomers(string query = "")
         {
             using (var connection =
                 new NpgsqlConnection(_configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
-                    Queries.GetCustomers(), connection))
+                    query == "" ? Queries.GetCustomers() : query, connection))
                 {
                     connection.Open();
                     using (var reader = command.ExecuteReader())
@@ -362,6 +362,15 @@ namespace TravelPortal.Models
 
             // Для отображения полученного результата, показываем документ.
             excelApp.Visible = true;
+        }
+
+        public static void CheckUserPassword(string userId, string password)
+        {
+            using (var connection =
+                new NpgsqlConnection(_configuration.GetConnectionStringForUser(userId, password)))
+            {
+                connection.Open();
+            }
         }
     }
 }

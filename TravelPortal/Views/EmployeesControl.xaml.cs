@@ -30,6 +30,8 @@ namespace TravelPortal.Views
             if (e.PropertyType == typeof(DateTime) &&
                 e.Column is DataGridTextColumn dateColumn)
                 dateColumn.Binding.StringFormat = "dd.MM.yyyy";
+            if (e.PropertyName == nameof(User.Name))
+                e.Column.DisplayIndex = 2;
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
