@@ -32,7 +32,7 @@ namespace TravelPortal.ViewModels
             {
                 try
                 {
-                    MainTables.Execute(Queries.InsertVoucher(_routeId, Customer));
+                    MainTables.Execute(Queries.MainTables.InsertVoucher(_routeId, Customer));
                     _owner.Hide();
                 }
                 catch (Exception exception)

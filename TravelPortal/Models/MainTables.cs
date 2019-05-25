@@ -130,7 +130,7 @@ namespace TravelPortal.Models
                 new NpgsqlConnection(_configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
-                    query == "" ? Queries.GetCustomers() : query, connection))
+                    query == "" ? Queries.MainTables.GetCustomers() : query, connection))
                 {
                     connection.Open();
                     using (var reader = command.ExecuteReader())
@@ -302,7 +302,7 @@ namespace TravelPortal.Models
                 new NpgsqlConnection(_configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
-                    Queries.RankHotels(), connection))
+                    Queries.Ratings.RankHotels(), connection))
                 {
                     connection.Open();
                     using (var reader = command.ExecuteReader())

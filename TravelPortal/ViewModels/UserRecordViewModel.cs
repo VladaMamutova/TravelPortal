@@ -91,7 +91,7 @@ namespace TravelPortal.ViewModels
             if (User.Empty.Equals(user))
                 Command = new RelayCommand(o =>
                     {
-                        Execute(Queries.AddUser(User,
+                        Execute(Queries.Users.AddUser(User,
                                 ((AddUserDialog) _owner).PasswordBox.Password));
                     },
                     o => User.IsReadyToInsert());
@@ -103,7 +103,7 @@ namespace TravelPortal.ViewModels
                     {
                         MainTables.CheckUserPassword(_initialUser.Login,
                             ((AddUserDialog) _owner).PasswordBox.Password);
-                        Execute(Queries.UpdateUser(User,
+                        Execute(Queries.Users.UpdateUser(User,
                                 ((AddUserDialog)_owner).PasswordBox.Password));
                     }
                     catch

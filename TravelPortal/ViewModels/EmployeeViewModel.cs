@@ -93,7 +93,7 @@ namespace TravelPortal.ViewModels
                                   try
                                   {
                                       MainTables.Execute(
-                                          Queries.DeleteUser(SelectedItem.GetId()));
+                                          Queries.Users.DeleteUser(SelectedItem.GetId()));
                                   }
                                   catch (Exception e)
                                   {

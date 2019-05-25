@@ -14,5 +14,11 @@ namespace TravelPortal.ViewModels
             Icon = icon;
             Query = query;
         }
+
+        public FilterListItem(string name, string query)
+        {
+            Name = name;
+            Query = query;
+        }
     }
 }

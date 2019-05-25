@@ -133,7 +133,6 @@
     <Compile Include="ViewModels\FilterListItem.cs" />
     <Compile Include="DataAccessLayer\HotelRank.cs" />
     <Compile Include="ViewModels\HotelRatingViewModel.cs" />
-    <Compile Include="ViewModels\IntegerValidationRule.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\RowDataItem.cs" />
     <Compile Include="ViewModels\UserRecordViewModel.cs" />
@@ -156,7 +155,6 @@
     </Compile>
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\RouteViewModel.cs" />
-    <Compile Include="ViewModels\NotEmptyValidationRule.cs" />
     <Compile Include="ViewModels\TabViewModel.cs" />
     <Compile Include="ViewModels\VoucherViewModel.cs" />
     <Compile Include="Views\CustomersControl.xaml.cs">
@@ -177,9 +175,6 @@
     </Compile>
     <Compile Include="Views\VouchersControl.xaml.cs">
       <DependentUpon>VouchersControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\VouchersPage.xaml.cs">
-      <DependentUpon>VouchersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VoucherWindow.xaml.cs">
       <DependentUpon>VoucherWindow.xaml</DependentUpon>
@@ -247,10 +242,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\VouchersControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\VouchersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

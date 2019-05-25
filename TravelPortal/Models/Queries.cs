@@ -21,6 +21,8 @@ namespace TravelPortal.Models
             _agencyId = agencyId;
         }
 
+        public static string GetUser(string login) => $"select * from get_user('{login}')";
+
         public static class MainTables
         {
             public static string GetRoutes()
@@ -36,7 +38,19 @@ namespace TravelPortal.Models
                     return "select * from voucher_view";
                 return $"select * from get_vouchers_from_agency({_agencyId})";
             }
-           
+
+            public static string GetCustomers()
+            {
+                if (_role == Roles.Admin)
+                    return "select * from customer_view";
+                return $"select * from get_customers_from_agency({_agencyId})";
+            }
+
+            public static string InsertVoucher(int routeId, Customer customer)
+            {
+                return $"select insert_voucher({routeId}, {customer.GetParameterList()})";
+            }
+
             public static string FilterRoutes(Route example) =>
                 $"select * from filter_route({_agencyId}, {example.GetParameterListForFilter()})";
 
@@ -74,76 +88,68 @@ namespace TravelPortal.Models
             }
         }
 
-        public static string SelectUser(string login)
+        public static class Ratings
         {
-            return $"select * from select_user('{login}')";
-        }
+            public static string RankHotels() => "select * from rank_hotels()";
 
-        public static string GetCustomers()
-        {
-            if (_role == Roles.Admin)
-                return "select * from customer_view";
-            return $"select * from get_customers_from_agency({_agencyId})";
-        }
-        
-        public static string SelectAgenciesWithStaff => "select * from get_agencies_with_staff()"; // user_view
+            public static string RankByPopularity =>
+                "select * from rank_agencies_by_popularity()";
+            public static string RankByNumberOfRoutes =>
+                "select * from rank_agencies_by_the_number_of_routes()";
 
-        public static string RankByPopularity =>
-            "select * from rank_agencies_by_popularity()"; 
-        public static string RankByNumberOfRoutes =>
-            "select * from rank_agencies_by_the_number_of_routes()";
-
-        public static string RankByGrossProfit(string ownership, string agency)
-        {
-            //  В зависимости от передаваемых параметров, вызываем запрос на нужный фильтр.
-
-            if(string.IsNullOrEmpty(agency) && string.IsNullOrEmpty(ownership))
-                return "select * from rank_agencies_by_gross_profit()";
-
-            if (!string.IsNullOrEmpty(agency) && !string.IsNullOrEmpty(ownership))
-                return "select * from rank_agencies_by_gross_profit_with_ownership_begins" +
-                       $"_with('{ownership}', '{agency}')";
-
-            if (!string.IsNullOrEmpty(agency))
-                return $"select * from rank_agencies_by_gross_profit_begins_with('{agency}')";
-
-            return $"select * from rank_agencies_by_gross_profit_with_ownership('{ownership}')";
-        }
-
-        public static string GetUser(string login) => $"select * from get_user('{login}')";
-
-        public static string InsertVoucher(int routeId, Customer customer)
-        {
-            return $"select insert_voucher({routeId}, {customer.GetParameterList()})";
-        }
-
-        public static string RankHotels() => "select * from rank_hotels()";
-
-        public static string AddUser(User user, string password)
-        {
-            switch (user.Role)
+            public static string RankByGrossProfit(string ownership, string agency)
             {
-                case Roles.Employee:
-                    return $"select add_employee({user.GetParameterList()}, '{password}')";
-                case Roles.Supervisor:
-                    return $"select add_supervisor({user.GetParameterList()}, '{password}')";
-                default: throw new ArgumentException(nameof(user.Role));
+                //  В зависимости от передаваемых параметров, вызываем запрос на нужный фильтр.
+
+                if (string.IsNullOrEmpty(agency) && string.IsNullOrEmpty(ownership))
+                    return "select * from rank_agencies_by_gross_profit()";
+
+                if (!string.IsNullOrEmpty(agency) && !string.IsNullOrEmpty(ownership))
+                    return "select * from rank_agencies_by_gross_profit_with_ownership_begins" +
+                           $"_with('{ownership}', '{agency}')";
+
+                if (!string.IsNullOrEmpty(agency))
+                    return $"select * from rank_agencies_by_gross_profit_begins_with('{agency}')";
+
+                return $"select * from rank_agencies_by_gross_profit_with_ownership('{ownership}')";
             }
         }
 
-        public static string UpdateUser(User user, string password)
+        public static class Users
         {
-            switch (user.Role)
-            {
-                case Roles.Employee:
-                    return $"select update_employee({user.GetIdentifiedParameterList()}, '{password}')";
-                case Roles.Supervisor:
-                    return $"select update_supervisor({user.GetIdentifiedParameterList()}, '{password}')";
-                default: throw new ArgumentException(nameof(user.Role));
-            }
-        }
+            public static string SelectAgenciesWithStaff =>
+                "select * from get_agencies_with_staff()"; // user_view
 
-        public static string DeleteUser(int userId) =>
-            $"select delete_user({userId})";
+            public static string AddUser(User user, string password)
+            {
+                switch (user.Role)
+                {
+                    case Roles.Employee:
+                        return
+                            $"select add_employee({user.GetParameterList()}, '{password}')";
+                    case Roles.Supervisor:
+                        return
+                            $"select add_supervisor({user.GetParameterList()}, '{password}')";
+                    default: throw new ArgumentException(nameof(user.Role));
+                }
+            }
+
+            public static string UpdateUser(User user, string password)
+            {
+                switch (user.Role)
+                {
+                    case Roles.Employee:
+                        return
+                            $"select update_employee({user.GetIdentifiedParameterList()}, '{password}')";
+                    case Roles.Supervisor:
+                        return
+                            $"select update_supervisor({user.GetIdentifiedParameterList()}, '{password}')";
+                    default: throw new ArgumentException(nameof(user.Role));
+                }
+            }
+
+            public static string DeleteUser(int userId) =>
+                $"select delete_user({userId})";
+        }
     }
 }

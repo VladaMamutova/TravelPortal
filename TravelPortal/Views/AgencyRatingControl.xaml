@@ -40,9 +40,6 @@
                     <TextBox Margin="0 10 0 0"  MinWidth = "150" MaxWidth = "300" Text="{Binding AgencyName, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" materialDesign:HintAssist.Hint="Агенство"></TextBox>
                     <ComboBox Margin="10 10 0 0" ItemsSource="{Binding OwnershipCollection}" Text="{Binding Ownership, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" materialDesign:HintAssist.Hint="Тип собственности"></ComboBox>
                 </StackPanel>
-                <StackPanel Visibility="{Binding ControlsVisibility}" VerticalAlignment="Top" Margin="20 0 0 0" Orientation="Horizontal">
-                    <TextBox Margin="0 10 0 0"  MinWidth = "150" MaxWidth = "300" Text="{Binding AgencyName, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" materialDesign:HintAssist.Hint="Агенство"></TextBox>
-                </StackPanel>
             </WrapPanel>
         </Grid>
         <DataGrid x:Name="Grid" Grid.Row="1" Margin="10" ItemsSource="{Binding Collection}" IsReadOnly="True" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" AutoGenerateColumns="False"></DataGrid>

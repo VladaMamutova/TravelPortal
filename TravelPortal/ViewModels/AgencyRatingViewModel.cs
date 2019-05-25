@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -25,8 +26,6 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public int Count => Collection.Count;
-
         public List<string> OwnershipCollection { get; }
 
         public ObservableCollection<FilterListItem> Filters { get; }
@@ -41,10 +40,10 @@ namespace TravelPortal.ViewModels
                 OnPropertyChanged(nameof(SelectedFilter));
                 if (_selectedFilter == null) return;
 
-                if (SelectedFilter.Query == Queries.RankByGrossProfit("", ""))
+                if (SelectedFilter.Query == Queries.Ratings.RankByGrossProfit("", ""))
                 {
                     ControlsVisibility = Visibility.Visible;
-                    UpdateCollection(Queries.RankByGrossProfit(Ownership, AgencyName));
+                    UpdateCollection(Queries.Ratings.RankByGrossProfit(Ownership, AgencyName));
                 }
                 else
                 {
@@ -62,7 +61,7 @@ namespace TravelPortal.ViewModels
             {
                 _agencyName = value;
                 OnPropertyChanged(nameof(AgencyName));
-                UpdateCollection(Queries.RankByGrossProfit(Ownership, AgencyName));
+                UpdateCollection(Queries.Ratings.RankByGrossProfit(Ownership, AgencyName));
             }
         }
 
@@ -74,7 +73,7 @@ namespace TravelPortal.ViewModels
             {
                 _ownership = value;
                 OnPropertyChanged(nameof(Ownership));
-                UpdateCollection(Queries.RankByGrossProfit(Ownership, AgencyName));
+                UpdateCollection(Queries.Ratings.RankByGrossProfit(Ownership, AgencyName));
             }
         }
 
@@ -89,10 +88,18 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        private void UpdateCollection(object o)
+        private void UpdateCollection(string query)
         {
-             Collection = MainTables.GetRatingCollection(o.ToString(), ref _headers);
-             OnAutoGeneratingColumns(_headers);
+            try
+            {
+                Collection =
+                    MainTables.GetRatingCollection(query, ref _headers);
+                OnAutoGeneratingColumns(_headers);
+            }
+            catch (Exception ex)
+            {
+                OnMessageBoxDisplayRequest("Ошибка получения списка путёвок", ex.Message);
+            }
         }
 
         public AgencyRatingViewModel()
@@ -100,9 +107,9 @@ namespace TravelPortal.ViewModels
             _headers = new List<string>();
             Filters = new ObservableCollection<FilterListItem>
             {
-                new FilterListItem("По популярности", PackIconKind.Star, Queries.RankByPopularity),
-                new FilterListItem("По валовому доходу", PackIconKind.CashUsd, Queries.RankByGrossProfit("", "")),
-                new FilterListItem("По количеству маршрутов", PackIconKind.MapMarkerDistance, Queries.RankByNumberOfRoutes)
+                new FilterListItem("По популярности", PackIconKind.Star, Queries.Ratings.RankByPopularity),
+                new FilterListItem("По валовому доходу", PackIconKind.CashUsd, Queries.Ratings.RankByGrossProfit("", "")),
+                new FilterListItem("По количеству маршрутов", PackIconKind.MapMarkerDistance, Queries.Ratings.RankByNumberOfRoutes)
             };
             OwnershipCollection =
                 Dictionaries.GetNameList(DictionaryKind.Ownership);
