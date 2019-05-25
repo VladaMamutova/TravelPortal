@@ -62,7 +62,7 @@ namespace TravelPortal.ViewModels
                 {
                     Tabs = new ObservableCollection<TabViewModel>
                     {
-                        new TabViewModel("Сотрудники портала".ToUpper(), new EmployeesControl(owner)),
+                        new TabViewModel("Сотрудники портала".ToUpper(), new UsersControl(owner)),
                         new TabViewModel("Cправочные таблицы".ToUpper(), new DictionariesControl(owner))
                     };
                     break;

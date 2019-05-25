@@ -10,7 +10,7 @@ namespace TravelPortal.ViewModels
     /// <summary>
     /// Модель представления для страницы маршрутов.
     /// </summary>
-    class RouteViewModel : ViewModelBase
+    class RoutesViewModel : ViewModelBase
     {
         public List<string> HotelCollection { get; }
         public List<string> CityCollection { get; }
@@ -147,7 +147,7 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public RouteViewModel()
+        public RoutesViewModel()
         {
             try
             {

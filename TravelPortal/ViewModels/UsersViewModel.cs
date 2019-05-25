@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
-    public class EmployeeViewModel : ViewModelBase
+    public class UsersViewModel : ViewModelBase
     {
         private User _selectedItem;
         public User SelectedItem
@@ -31,7 +30,7 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public EmployeeViewModel()
+        public UsersViewModel()
         {
             Collection = new ObservableCollection<User>();
             UpdateCollection();

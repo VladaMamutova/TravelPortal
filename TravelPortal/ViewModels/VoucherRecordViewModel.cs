@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
-    public class VoucherRecordViewModel: ViewModelBase, INotifyPropertyChanged
+    public class VoucherRecordViewModel: ViewModelBase
     {
         private readonly Window _owner;
         private readonly int _routeId;

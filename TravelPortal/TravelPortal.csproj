@@ -129,7 +129,7 @@
     <Compile Include="ViewModels\DictionariesViewModel.cs" />
     <Compile Include="ViewModels\DictionaryRecordViewModel.cs" />
     <Compile Include="ViewModels\DictionaryViewModel.cs" />
-    <Compile Include="ViewModels\EmployeeViewModel.cs" />
+    <Compile Include="ViewModels\UsersViewModel.cs" />
     <Compile Include="ViewModels\FilterListItem.cs" />
     <Compile Include="DataAccessLayer\HotelRank.cs" />
     <Compile Include="ViewModels\HotelRatingViewModel.cs" />
@@ -138,11 +138,11 @@
     <Compile Include="ViewModels\UserRecordViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\VoucherRecordViewModel.cs" />
-    <Compile Include="Views\AddUserDialog.xaml.cs">
-      <DependentUpon>AddUserDialog.xaml</DependentUpon>
+    <Compile Include="Views\UserRecordDialog.xaml.cs">
+      <DependentUpon>UserRecordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AddVoucherDialog.xaml.cs">
-      <DependentUpon>AddVoucherDialog.xaml</DependentUpon>
+    <Compile Include="Views\VoucherRecordDialog.xaml.cs">
+      <DependentUpon>VoucherRecordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HotelRatingControl.xaml.cs">
       <DependentUpon>HotelRatingControl.xaml</DependentUpon>
@@ -154,9 +154,9 @@
       <DependentUpon>AgencyRatingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\RelayCommand.cs" />
-    <Compile Include="ViewModels\RouteViewModel.cs" />
+    <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\TabViewModel.cs" />
-    <Compile Include="ViewModels\VoucherViewModel.cs" />
+    <Compile Include="ViewModels\VouchersViewModel.cs" />
     <Compile Include="Views\CustomersControl.xaml.cs">
       <DependentUpon>CustomersControl.xaml</DependentUpon>
     </Compile>
@@ -166,8 +166,8 @@
     <Compile Include="Views\DictionaryRecordDialog.xaml.cs">
       <DependentUpon>DictionaryRecordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EmployeesControl.xaml.cs">
-      <DependentUpon>EmployeesControl.xaml</DependentUpon>
+    <Compile Include="Views\UsersControl.xaml.cs">
+      <DependentUpon>UsersControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AgencyRatingViewModel.cs" />
     <Compile Include="Views\RoutesControl.xaml.cs">
@@ -176,17 +176,14 @@
     <Compile Include="Views\VouchersControl.xaml.cs">
       <DependentUpon>VouchersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VoucherWindow.xaml.cs">
-      <DependentUpon>VoucherWindow.xaml</DependentUpon>
+    <Compile Include="Views\RouteRecordDialog.xaml.cs">
+      <DependentUpon>RouteRecordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RouteWindow.xaml.cs">
-      <DependentUpon>RouteWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\AddUserDialog.xaml">
+    <Page Include="Views\UserRecordDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AddVoucherDialog.xaml">
+    <Page Include="Views\VoucherRecordDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,7 +211,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EmployeesControl.xaml">
+    <Page Include="Views\UsersControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,11 +242,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\VoucherWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RouteWindow.xaml">
+    <Page Include="Views\RouteRecordDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

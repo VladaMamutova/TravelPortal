@@ -15,11 +15,11 @@ namespace TravelPortal.Views
         public VouchersControl()
         {
             InitializeComponent();
-            DataContext = new VoucherViewModel();
-            ((VoucherViewModel) DataContext).MessageBoxDisplayRequested +=
+            DataContext = new VouchersViewModel();
+            ((VouchersViewModel) DataContext).MessageBoxDisplayRequested +=
                 (sender, e) => { MessageBox.Show(e.Text, e.Title); };
 
-            ((VoucherViewModel) DataContext).CollectionChanged += (sender, e) =>
+            ((VouchersViewModel) DataContext).CollectionChanged += (sender, e) =>
             {
                 if (VoucherGrid.Columns.Count > 0 && e.Collection.Count > 0 &&
                     e.Collection[0] is Voucher)
@@ -40,7 +40,7 @@ namespace TravelPortal.Views
             // для того, чтобы были подключены все события ViewModel,
             // в том числе событие открытия окна сообщения (при ошибке получения записей из БД),
             // вызов которого в конструкторе вызовет ошибку.
-            ((VoucherViewModel) DataContext).SetDefaultFilter();
+            ((VouchersViewModel) DataContext).SetDefaultFilter();
         }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender,
@@ -63,7 +63,7 @@ namespace TravelPortal.Views
 
         private void CancelVoucher_Click(object sender, RoutedEventArgs e)
         {
-            ((VoucherViewModel) DataContext).CancelCommand.Execute(null);
+            ((VouchersViewModel) DataContext).CancelCommand.Execute(null);
         }
     }
 }

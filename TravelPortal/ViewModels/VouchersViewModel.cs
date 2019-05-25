@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
-    public class VoucherViewModel : ViewModelBase, INotifyPropertyChanged
+    public class VouchersViewModel : ViewModelBase
     {
         public List<string> StatusCollection { get; }
 
@@ -71,7 +68,7 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public VoucherViewModel()
+        public VouchersViewModel()
         {
             Filters = new ObservableCollection<FilterListItem>
             {

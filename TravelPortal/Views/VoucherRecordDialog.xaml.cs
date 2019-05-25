@@ -8,9 +8,9 @@ namespace TravelPortal.Views
     /// <summary>
     /// Логика взаимодействия для AddVoucherDialog.xaml
     /// </summary>
-    public partial class AddVoucherDialog : Window
+    public partial class VoucherRecordDialog : Window
     {
-        public AddVoucherDialog(Route route)
+        public VoucherRecordDialog(Route route)
         {
             InitializeComponent();
             HotelName.Text = route.Hotel;

@@ -9,18 +9,18 @@ namespace TravelPortal.Views
     /// <summary>
     /// Логика взаимодействия для EmployeesControl.xaml
     /// </summary>
-    public partial class EmployeesControl : UserControl
+    public partial class UsersControl : UserControl
     {
-        public EmployeesControl(Window owner)
+        public UsersControl(Window owner)
         {
             InitializeComponent();
-            DataContext = new EmployeeViewModel();
-            ((EmployeeViewModel) DataContext).DialogDisplayRequested +=
+            DataContext = new UsersViewModel();
+            ((UsersViewModel) DataContext).DialogDisplayRequested +=
                 (sender, e) =>
                 {
-                    new AddUserDialog(e.Record) {Owner = owner}.ShowDialog();
+                    new UserRecordDialog(e.Record) {Owner = owner}.ShowDialog();
                 };
-            ((EmployeeViewModel)DataContext).MessageBoxDisplayRequested +=
+            ((UsersViewModel)DataContext).MessageBoxDisplayRequested +=
                 (sender, e) => { MessageBox.Show(e.Text, e.Title); };
         }
 

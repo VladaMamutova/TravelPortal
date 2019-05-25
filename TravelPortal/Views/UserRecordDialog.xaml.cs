@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TravelPortal.DataAccessLayer;
@@ -10,9 +9,9 @@ namespace TravelPortal.Views
     /// <summary>
     /// Логика взаимодействия для AddUserDialog.xaml
     /// </summary>
-    public partial class AddUserDialog : Window
+    public partial class UserRecordDialog : Window
     {
-        public AddUserDialog(ITableEntry record)
+        public UserRecordDialog(ITableEntry record)
         {
             InitializeComponent();
             if (record is User user)

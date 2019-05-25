@@ -89,7 +89,7 @@ namespace TravelPortal.ViewModels
                 Command = new RelayCommand(o =>
                     {
                         Execute(Queries.Users.AddUser(User,
-                                ((AddUserDialog) _owner).PasswordBox.Password));
+                                ((UserRecordDialog) _owner).PasswordBox.Password));
                     },
                     o => User.IsReadyToInsert());
            else Command = new RelayCommand(o =>
@@ -99,9 +99,9 @@ namespace TravelPortal.ViewModels
                     try
                     {
                         MainTables.CheckUserPassword(_initialUser.Login,
-                            ((AddUserDialog) _owner).PasswordBox.Password);
+                            ((UserRecordDialog) _owner).PasswordBox.Password);
                         Execute(Queries.Users.UpdateUser(User,
-                                ((AddUserDialog)_owner).PasswordBox.Password));
+                                ((UserRecordDialog)_owner).PasswordBox.Password));
                     }
                     catch
                     {

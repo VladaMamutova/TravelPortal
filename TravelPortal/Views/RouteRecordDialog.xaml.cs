@@ -6,9 +6,9 @@ namespace TravelPortal.Views
     /// <summary>
     /// Логика взаимодействия для RouteWindow.xaml
     /// </summary>
-    public partial class RouteWindow : Window
+    public partial class RouteRecordDialog : Window
     {
-        public RouteWindow()
+        public RouteRecordDialog()
         {
             InitializeComponent();
         }

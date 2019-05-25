@@ -16,8 +16,8 @@ namespace TravelPortal.Views
         {
             InitializeComponent();
             _owner = owner;
-            DataContext = new RouteViewModel();
-            ((RouteViewModel)DataContext).MessageBoxDisplayRequested +=
+            DataContext = new RoutesViewModel();
+            ((RoutesViewModel)DataContext).MessageBoxDisplayRequested +=
                 (sender, e) => { MessageBox.Show(e.Text, e.Title); };
         }
 
@@ -49,7 +49,7 @@ namespace TravelPortal.Views
 
         private void AddVoucher_Click(object sender, RoutedEventArgs e)
         {
-            var view = new AddVoucherDialog(((RouteViewModel)DataContext).SelectedItem){Owner = _owner};
+            var view = new VoucherRecordDialog(((RoutesViewModel)DataContext).SelectedItem){Owner = _owner};
             view.ShowDialog();
         }
     }
