@@ -28,7 +28,7 @@ namespace TravelPortal.DataAccessLayer
         {
             switch (propertyName)
             {
-                case nameof(VoucherCount): return "Количество путёвок";
+                case nameof(VoucherCount): return "Всего путёвок";
                 case nameof(Fio): return "ФИО клиента";
                 case nameof(Phone): return "Телефон";
                 case nameof(Address): return "Адрес";

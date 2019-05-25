@@ -11,10 +11,10 @@ namespace TravelPortal.Views
     /// </summary>
     public partial class CustomersControl : UserControl
     {
-        public CustomersControl(Window owner)
+        public CustomersControl()
         {
             InitializeComponent();
-            DataContext = new CustomerViewModel(owner);
+            DataContext = new CustomerViewModel();
         }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

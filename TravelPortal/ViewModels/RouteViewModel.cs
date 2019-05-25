@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
@@ -14,7 +10,7 @@ namespace TravelPortal.ViewModels
     /// <summary>
     /// Модель представления для страницы маршрутов.
     /// </summary>
-    class RouteViewModel : ViewModelBase, INotifyPropertyChanged
+    class RouteViewModel : ViewModelBase
     {
         public List<string> HotelCollection { get; }
         public List<string> CityCollection { get; }
@@ -107,8 +103,6 @@ namespace TravelPortal.ViewModels
                 OnPropertyChanged(nameof(Collection));
             }
         }
-       
-        private Window _owner;
 
         private RelayCommand _filterCommand;
         public RelayCommand FilterCommand
@@ -153,20 +147,8 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(
-            [CallerMemberName] string propertyName = null)
+        public RouteViewModel()
         {
-            PropertyChanged?.Invoke(this,
-                new PropertyChangedEventArgs(propertyName));
-        }
-
-        public RouteViewModel(Window owner)
-        {
-            _owner = owner;
-            //SelectedDate = DateTime.Today;
             try
             {
                 HotelCollection =

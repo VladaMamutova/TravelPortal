@@ -38,9 +38,9 @@ namespace TravelPortal.ViewModels
                         new TabViewModel("Маршруты".ToUpper(),
                             new RoutesControl(owner)),
                         new TabViewModel("Путёвки".ToUpper(),
-                            new VouchersControl(owner)),
+                            new VouchersControl()),
                         new TabViewModel("Клиенты".ToUpper(),
-                            new CustomersControl(owner))
+                            new CustomersControl())
                     };
                     break;
                 }

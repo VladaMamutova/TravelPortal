@@ -1,12 +1,13 @@
 ﻿using System;
-using NpgsqlTypes;
+using System.Windows;
 
 namespace TravelPortal.DataAccessLayer
 {
     public class Voucher
     {
-        private int _voucherId;
+        private readonly int _voucherId;
         private int _routeId;
+        public Visibility CanCancelVoucher { get; }
 
         public string Hotel { get; set; }
         public DateTime Date { get; set; }
@@ -15,13 +16,7 @@ namespace TravelPortal.DataAccessLayer
         public string CustomerFio { get; set; }
         public string Phone { get; set; }
 
-        public int GetRouteId() => _routeId;
-        public void SetRouteId(int routeId)
-        {
-            _routeId = routeId;
-        }
-
-        public Voucher() { }
+        public int GetId() => _voucherId;
 
         public Voucher(int voucherId, int routeId, string hotel, DateTime date, int duration,
             double fullPrice, string customerFio, string phone)
@@ -34,6 +29,9 @@ namespace TravelPortal.DataAccessLayer
             FullPrice = fullPrice;
             CustomerFio = customerFio;
             Phone = phone;
+            CanCancelVoucher = date >= DateTime.Today
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
         public static string GenerateTitle(string propertyName)

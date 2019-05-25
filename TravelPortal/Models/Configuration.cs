@@ -60,21 +60,23 @@ namespace TravelPortal.Models
                     }
                     catch { }
 
-                    try
-                    {
-                        new NpgsqlCommand("set role " + Roles.Supervisor,
-                            connection).ExecuteNonQuery();
-                        currentRole = Roles.Supervisor;
-                    }
-                    catch { }
+                    if (currentRole == Roles.None)
+                        try
+                        {
+                            new NpgsqlCommand("set role " + Roles.Supervisor,
+                                connection).ExecuteNonQuery();
+                            currentRole = Roles.Supervisor;
+                        }
+                        catch { }
 
-                    try
-                    {
-                        new NpgsqlCommand("set role " + Roles.Employee,
-                            connection).ExecuteNonQuery();
-                        currentRole = Roles.Employee;
-                    }
-                    catch { }
+                    if (currentRole == Roles.None)
+                        try
+                        {
+                            new NpgsqlCommand("set role " + Roles.Employee,
+                                connection).ExecuteNonQuery();
+                            currentRole = Roles.Employee;
+                        }
+                        catch { }
 
                     if (currentRole == Roles.None)
                         throw new Exception(

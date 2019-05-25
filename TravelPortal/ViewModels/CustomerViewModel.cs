@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
-    public class CustomerViewModel : ViewModelBase, INotifyPropertyChanged
+    public class CustomerViewModel : ViewModelBase
     {
         private Customer _selectedItem;
         public Customer SelectedItem
@@ -55,11 +51,8 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        private Window _owner;
-
-        public CustomerViewModel(Window owner)
+        public CustomerViewModel()
         {
-            _owner = owner;
             Collection = MainTables.GetCustomers();
         }
 
@@ -91,16 +84,6 @@ namespace TravelPortal.ViewModels
                               }));
                 return _filterCommand;
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(
-            [CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this,
-                new PropertyChangedEventArgs(propertyName));
         }
     }
 }

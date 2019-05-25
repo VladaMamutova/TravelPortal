@@ -32,12 +32,36 @@ namespace TravelPortal.Models
                 return $"select * from get_routes_from_agency({_agencyId})";
             }
 
-            public static string GetVouchers()
+            public static string GetVouchers =>
+                $"select * from get_vouchers_from_agency({_agencyId})";
+
+            public static string InsertVoucher(int routeId, Customer customer)
             {
-                if (_role == Roles.Admin)
-                    return "select * from voucher_view";
-                return $"select * from get_vouchers_from_agency({_agencyId})";
+                return $"select insert_voucher({routeId}, {customer.GetParameterList()})";
             }
+
+            public static string CancelVoucher(int voucherId)
+            {
+                return $"select cancel_voucher({voucherId})";
+            }
+
+            public static string GetTodayVouchers =>
+                $"select * from get_today_vouchers_from_agency({_agencyId})";
+
+            public static string GetTomorrowVouchers =>
+                $"select * from get_tomorrow_vouchers_from_agency({_agencyId})";
+
+            public static string GetPastVouchers =>
+                $"select * from get_past_vouchers_from_agency({_agencyId})";
+
+            public static string GetFutureVouchers =>
+                $"select * from get_future_vouchers_from_agency({_agencyId})";
+
+            public static string FilterRoutes(Route example) =>
+                $"select * from filter_route({_agencyId}, {example.GetParameterListForFilter()})";
+
+            public static string FilterCustomers(Customer customer) =>
+                $"select * from filter_customer({_agencyId}, '{customer.Fio}', '{customer.Phone}')";
 
             public static string GetCustomers()
             {
@@ -45,17 +69,6 @@ namespace TravelPortal.Models
                     return "select * from customer_view";
                 return $"select * from get_customers_from_agency({_agencyId})";
             }
-
-            public static string InsertVoucher(int routeId, Customer customer)
-            {
-                return $"select insert_voucher({routeId}, {customer.GetParameterList()})";
-            }
-
-            public static string FilterRoutes(Route example) =>
-                $"select * from filter_route({_agencyId}, {example.GetParameterListForFilter()})";
-
-            public static string FilterCustomers(Customer customer) =>
-                $"select * from filter_customer({_agencyId}, '{customer.Fio}', '{customer.Phone}')";
         }
 
         public static class Dictionaries

@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using MaterialDesignThemes.Wpf;
-using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
-    public class DictionaryViewModel : ViewModelBase, INotifyPropertyChanged
+    public class DictionaryViewModel : ViewModelBase
     {
         public string Title { get; }
         public PackIconKind IconKind { get; }
@@ -87,8 +84,6 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        #region Commands
-
         public RelayCommand AddCommand =>
             new RelayCommand(e => ShowDialog(null));
 
@@ -143,19 +138,7 @@ namespace TravelPortal.ViewModels
                     ((SimpleRecord)i).GetId() == recordCopy.GetId());
         }
 
-        #endregion
-
         public Func<string, string> GenerateTitleFunc { get; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(
-            [CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this,
-                new PropertyChangedEventArgs(propertyName));
-        }
 
         private void UpdateCollection()
         {

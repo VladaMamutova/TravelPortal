@@ -17,7 +17,6 @@ namespace TravelPortal.Views
             InitializeComponent();
             if (record is User user)
                 DataContext = new UserRecordViewModel(user, this);
-            else new ArgumentException(nameof(ITableEntry));
 
             ((UserRecordViewModel)DataContext).MessageBoxDisplayRequested += (sender, e) =>
             {

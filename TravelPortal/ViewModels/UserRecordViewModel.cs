@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
-    public class UserRecordViewModel : ViewModelBase, INotifyPropertyChanged
+    public class UserRecordViewModel : ViewModelBase
     {
         private readonly Window _owner;
         public List<string> Roles { get; }
@@ -133,16 +130,6 @@ namespace TravelPortal.ViewModels
                         : "Ошибка при изменении пользователя",
                     e.Message);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(
-            [CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this,
-                new PropertyChangedEventArgs(propertyName));
         }
     }
 }

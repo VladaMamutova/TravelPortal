@@ -2,15 +2,12 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
 namespace TravelPortal.ViewModels
 {
-    public class EmployeeViewModel : ViewModelBase, INotifyPropertyChanged
+    public class EmployeeViewModel : ViewModelBase
     {
         private User _selectedItem;
         public User SelectedItem
@@ -24,7 +21,6 @@ namespace TravelPortal.ViewModels
         }
 
         private ObservableCollection<User> _collection;
-
         public ObservableCollection<User> Collection
         {
             get => _collection;
@@ -35,11 +31,8 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        private Window _owner;
-
-        public EmployeeViewModel(Window owner)
+        public EmployeeViewModel()
         {
-            _owner = owner;
             Collection = new ObservableCollection<User>();
             UpdateCollection();
         }
@@ -71,13 +64,13 @@ namespace TravelPortal.ViewModels
                 _updateCommand = _updateCommand ??
                               (_updateCommand = new RelayCommand(obj =>
                               {
-                                  User newUser = new User(User.Empty);
+                                  User user = SelectedItem;
                                   OnDialogDisplayRequest(SelectedItem);
                                   UpdateCollection();
                                   SelectedItem =
                                       Collection.SingleOrDefault(
-                                          i => i.GetId() == newUser.GetId());
-                              }, o => SelectedItem != null));
+                                          i => i.GetId() == user.GetId());
+                              }, o => SelectedItem != null && SelectedItem.Role != Roles.Admin));
                 return _updateCommand;
             }
         }
@@ -119,16 +112,6 @@ namespace TravelPortal.ViewModels
             {
                 OnMessageBoxDisplayRequest("Ошибка получения данных", e.Message);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(
-            [CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this,
-                new PropertyChangedEventArgs(propertyName));
         }
     }
 }

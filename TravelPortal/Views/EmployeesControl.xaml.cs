@@ -14,7 +14,7 @@ namespace TravelPortal.Views
         public EmployeesControl(Window owner)
         {
             InitializeComponent();
-            DataContext = new EmployeeViewModel(owner);
+            DataContext = new EmployeeViewModel();
             ((EmployeeViewModel) DataContext).DialogDisplayRequested +=
                 (sender, e) =>
                 {

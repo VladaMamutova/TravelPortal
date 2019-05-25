@@ -11,12 +11,12 @@ namespace TravelPortal.Views
     /// </summary>
     public partial class RoutesControl : UserControl
     {
-        private Window _owner;
+        private readonly Window _owner;
         public RoutesControl(Window owner)
         {
             InitializeComponent();
             _owner = owner;
-            DataContext = new RouteViewModel(_owner);
+            DataContext = new RouteViewModel();
             ((RouteViewModel)DataContext).MessageBoxDisplayRequested +=
                 (sender, e) => { MessageBox.Show(e.Text, e.Title); };
         }
