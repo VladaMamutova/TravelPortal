@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
@@ -16,9 +17,6 @@ namespace TravelPortal.ViewModels
         private string _selectedCityFrom;
         private string _selectedCityTo;
         private string _selectedTransport;
-        private double _selectedTransportPrice;
-        private double _selectedHotelPrice;
-        private double _selectedFullPrice;
 
         private List<string> _hotelCollection;
         private List<string> _cityFromCollection;
@@ -26,8 +24,8 @@ namespace TravelPortal.ViewModels
         private List<string> _transportCollection;
 
         private readonly Route _sourceRoute;
-        private Route _route;
-        
+
+        private Route _route;     
         public Route Route
         {
             get => _route;
@@ -37,9 +35,6 @@ namespace TravelPortal.ViewModels
                 OnPropertyChanged(nameof(Route));
             }
         }
-
-        public string CommandText { get; }
-        public string CaptionText { get; }
 
         public string SelectedHotel
         {
@@ -107,15 +102,13 @@ namespace TravelPortal.ViewModels
                     _transportPriceDictionary.ContainsKey(value))
                 {
                     _selectedTransport = value;
-                    _selectedTransportPrice = _transportPriceDictionary[value];
-                    _selectedFullPrice =
-                        _selectedTransportPrice + _selectedHotelPrice;
+                    Route.TransportPrice = _transportPriceDictionary[value];
 
                 }
                 else
                 {
                     _selectedTransport = null;
-                    _selectedTransportPrice = 0;
+                    Route.TransportPrice = 0;
                 }
 
                 OnPropertyChanged(nameof(SelectedTransport));
@@ -126,22 +119,20 @@ namespace TravelPortal.ViewModels
 
         public double SelectedHotelPrice
         {
-            get => _selectedHotelPrice;
+            get => Route.HotelPrice;
             set
             {
-                _selectedHotelPrice = value > 0 ? value : Math.Abs(value);
-                _selectedFullPrice =
-                    _selectedTransportPrice + _selectedHotelPrice;
+                Route.HotelPrice = value > 0 ? value : Math.Abs(value);
                 OnPropertyChanged(nameof(SelectedHotelPrice));
                 OnPropertyChanged(nameof(SelectedFullPrice));
             }
         }
 
         public string SelectedTransportPrice =>
-            _selectedTransportPrice.ToString("N0") + " руб.";
+            Route.TransportPrice.ToString("N0") + " руб.";
 
         public string SelectedFullPrice =>
-            _selectedFullPrice.ToString("N0") + " руб.";
+            Route.FullPrice.ToString("N0") + " руб.";
 
         public List<string> HotelCollection
         {
@@ -183,22 +174,43 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public RouteRecordViewModel(Route route)
-        {
-            CommandText = Route.Empty.Equals(route)
-                ? "ДОБАВИТЬ"
-                : "ИЗМЕНИТЬ";
-            CaptionText = Route.Empty.Equals(route)
-                ? "Добавление маршрута"
-                : "Изменение маршрута";
-            _sourceRoute = route;
-            _hotelCityTypeDictionary = new Dictionary<string, KeyValuePair<string, int>>();
-        }
+        public RelayCommand AddCommand { get; private set; }
+        public RelayCommand UpdateCommand { get; private set; }
+        public RelayCommand DeleteCommand { get; private set; }
 
+        public string CaptionText { get; }
+        public Visibility CanAddRoute { get; }
+        public Visibility CanUpdateRoute { get; }
+
+        private readonly Window _window;
+
+        public RouteRecordViewModel(Route route, Window window)
+        {
+            _window = window;
+            if (Route.Empty.Equals(route))
+            {
+                CaptionText = "Добавление маршрута";
+                CanAddRoute = Visibility.Visible;
+                CanUpdateRoute = Visibility.Collapsed;
+            }
+            else if (route.CanAddVoucher == Visibility.Visible)
+            {
+                CaptionText = "Просмотр маршрута";
+                CanAddRoute = Visibility.Collapsed;
+                CanUpdateRoute = Visibility.Visible;
+            }
+
+            _sourceRoute = route;
+            Route = new Route(_sourceRoute);
+            _hotelCityTypeDictionary = new Dictionary<string, KeyValuePair<string, int>>();
+            _transportPriceDictionary = new Dictionary<string, double>();
+            HotelCollection = new List<string>();
+            CityFromCollection = new List<string>();
+            CityToCollection = new List<string>();
+        }
 
         public void Loaded()
         {
-            Route = new Route(_sourceRoute);
             _hotelCityTypeDictionary =
                 Dictionaries.GetHotelCityTypeCollection();
             // Получаем две статические коллекции.
@@ -208,10 +220,42 @@ namespace TravelPortal.ViewModels
             // Устанавливаем выбранные элементы.
             SelectedHotel = Route.Name; // В свойcтве также получаем и устанавливаем
                                         // CityToCollection и SelectedCityTo.
-            _selectedHotelPrice = Route.HotelPrice;
             OnPropertyChanged(nameof(SelectedHotelPrice));
             SelectedCityFrom = Route.From;
             SelectedTransport = Route.Transport;
+
+            AddCommand = new RelayCommand(o =>
+                {
+                    try
+                    {
+                        MainTables.ExecuteAddUpdateQuery(
+                            Queries.MainTables.InsertRoute(Route));
+                        _window.Hide();
+                    }
+                    catch (Exception ex)
+                    {
+                        OnMessageBoxDisplayRequest("Ошибка добавления маршрута", ex.Message);
+                    }
+                },
+                o =>
+                {
+                    Route.Name = SelectedHotel;
+                    Route.From = SelectedCityFrom;
+                    Route.To = SelectedCityTo;
+                    Route.Transport = SelectedTransport;
+                    return Route.IsReadyToInsert();
+                });
+            OnPropertyChanged(nameof(AddCommand));
+            UpdateCommand = new RelayCommand(o => { }, o =>
+            {
+                Route.Name = SelectedHotel;
+                Route.From = SelectedCityFrom;
+                Route.To = SelectedCityTo;
+                Route.Transport = SelectedTransport;
+                return Route.IsReadyToInsert() &&
+                       !Route.Equals(_sourceRoute);
+            });
+            OnPropertyChanged(nameof(UpdateCommand));
         }
 
         public void TryUpdateTransportCollection()
@@ -223,13 +267,13 @@ namespace TravelPortal.ViewModels
                     _selectedCityFrom,
                     _selectedCityTo);
                 TransportCollection = _transportPriceDictionary?.Keys.ToList();
-                if (_transportPriceDictionary == null ||
-                    _transportPriceDictionary.Count == 0)
-                    throw new Exception($"К сожалению, из г. {_selectedCityFrom}" +
-                                        $" в г. {_selectedCityTo}, где находится выбранный отель, " +
-                                        "нет доступных билетов ни на один транспорт. " +
-                                        "Выберите другой город отправления, другой отель " +
-                                        "либо обратитесь к администратору для добавления билета.");
+                //if (_transportPriceDictionary == null ||
+                //    _transportPriceDictionary.Count == 0)
+                //    throw new Exception($"К сожалению, из г. {_selectedCityFrom}" +
+                //                        $" в г. {_selectedCityTo}, где находится выбранный отель, " +
+                //                        "нет доступных билетов ни на один транспорт. " +
+                //                        "Выберите другой город отправления, другой отель " +
+                //                        "либо обратитесь к администратору для добавления билета.");
                 OnPropertyChanged(nameof(TransportCollection));
             }
             catch (Exception ex)

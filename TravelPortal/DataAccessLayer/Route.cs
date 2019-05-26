@@ -115,7 +115,7 @@ namespace TravelPortal.DataAccessLayer
         static Route()
         {
             Empty = new Route(-1, "", "", "",
-                DateTime.Today + TimeSpan.FromDays(7), 0, false, "", 0, 0, 0); }
+                DateTime.Today, 0, false, "", 0, 0, 0); }
 
         public Route(Route route) : base(route.Id, route.Name)
         {
@@ -144,7 +144,7 @@ namespace TravelPortal.DataAccessLayer
             FullPrice = fullPrice;
             HotelPrice = hotelPrice;
             TransportPrice = transportPrice;
-            CanAddVoucher = date - DateTime.Now > TimeSpan.FromDays(1)
+            CanAddVoucher = date >= DateTime.Today
                 ? Visibility.Visible
                 : Visibility.Collapsed;
         }
@@ -169,12 +169,19 @@ namespace TravelPortal.DataAccessLayer
 
         public override bool IsReadyToInsert()
         {
-            return true;
+            return base.IsReadyToInsert() &&
+                   !string.IsNullOrWhiteSpace(_from) &&
+                   !string.IsNullOrWhiteSpace(_to) &&
+                   !string.IsNullOrWhiteSpace(_transport) &&
+                   _date >= DateTime.Today && _duration > 0 &&
+                   _transportPrice > 0 && _hotelPrice > 0;
         }
 
         public override string GetParameterList()
         {
-            return "";
+            return $"'{Name}', '{From}', '{To}', '{Transport}', " +
+                   $"'{new NpgsqlDate(Date)}', {Duration}, {HotelPrice}, " +
+                   $"{Meels}";
         }
 
         public override string GetIdentifiedParameterList()

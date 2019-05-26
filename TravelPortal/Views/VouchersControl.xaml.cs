@@ -19,6 +19,9 @@ namespace TravelPortal.Views
             ((VouchersViewModel) DataContext).MessageBoxDisplayRequested +=
                 (sender, e) => { MessageBox.Show(e.Text, e.Title); };
 
+            // Настраиваем внешний вид таблицы в зависимости от выбранного фильтра.
+            // Показываем или скрываем первую колонку с кнопкой "Оформить путёвку" 
+            // в зависимости от значений в коллекции.
             ((VouchersViewModel) DataContext).CollectionChanged += (sender, e) =>
             {
                 if (VoucherGrid.Columns.Count > 0 && e.Collection.Count > 0 &&
@@ -32,15 +35,13 @@ namespace TravelPortal.Views
             };
         }
 
-
         private void VouchersControl_OnLoaded(object sender, RoutedEventArgs e)
         {
-            // Устанавливаем фильтр записей (а при его изменении загружаются данные из БД)
-            // после загрузки элемента управления, а не в конструкторе,
-            // для того, чтобы были подключены все события ViewModel,
+            // Загружаем данные из базы данных после загрузки элемента управления,
+            // а не в конструкторе, для того, чтобы были подключены все события ViewModel,
             // в том числе событие открытия окна сообщения (при ошибке получения записей из БД),
             // вызов которого в конструкторе вызовет ошибку.
-            ((VouchersViewModel) DataContext).SetDefaultFilter();
+            ((VouchersViewModel) DataContext).LoadFromDb();
         }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender,

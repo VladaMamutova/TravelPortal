@@ -19,6 +19,17 @@ namespace TravelPortal.Views
             DataContext = new RoutesViewModel();
             ((RoutesViewModel)DataContext).MessageBoxDisplayRequested +=
                 (sender, e) => { MessageBox.Show(e.Text, e.Title); };
+            ((RoutesViewModel)DataContext).DialogDisplayRequested +=
+                (sender, e) =>
+                {
+                    if(e.Record is Route route)
+                        new RouteRecordDialog(route) {Owner = owner}.ShowDialog();
+                };
+        }
+
+        private void RoutesControl_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            ((RoutesViewModel)DataContext).LoadFromDb();
         }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -35,6 +46,9 @@ namespace TravelPortal.Views
             if (e.PropertyType == typeof(DateTime) &&
                 e.Column is DataGridTextColumn dateColumn)
                 dateColumn.Binding.StringFormat = "dd.MM.yyyy";
+
+            if (e.PropertyName == nameof(Route.Name))
+                e.Column.DisplayIndex = 1;
 
             if (e.PropertyType == typeof(double) &&
                 e.Column is DataGridTextColumn textColumn)

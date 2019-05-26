@@ -8,8 +8,6 @@ namespace TravelPortal.ViewModels
 {
     public class VouchersViewModel : ViewModelBase
     {
-        public List<string> StatusCollection { get; }
-
         private Voucher _selectedItem;
         public Voucher SelectedItem
         {
@@ -18,6 +16,17 @@ namespace TravelPortal.ViewModels
             {
                 _selectedItem = value;
                 OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
+
+        private List<string> _statusCollection;
+        public List<string> StatusCollection
+        {
+            get => _statusCollection;
+            set
+            {
+                _statusCollection = value;
+                OnPropertyChanged(nameof(StatusCollection));
             }
         }
 
@@ -78,13 +87,13 @@ namespace TravelPortal.ViewModels
                 new FilterListItem("Завтра", Queries.MainTables.GetTomorrowVouchers),
                 new FilterListItem("Будущие", Queries.MainTables.GetFutureVouchers),
             };
-            StatusCollection =
-                    Dictionaries.GetNameList(DictionaryKind.Status);
         }
 
-        public void SetDefaultFilter()
+        public void LoadFromDb()
         {
             SelectedFilter = Filters[2];
+            StatusCollection =
+                Dictionaries.GetNameList(DictionaryKind.Status);
         }
 
         private void UpdateCollection()

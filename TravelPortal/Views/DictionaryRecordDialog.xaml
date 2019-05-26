@@ -27,8 +27,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="ОТМЕНА" IsCancel="True" Margin="10 0 0 0" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding Path=CloseCommand}" CommandParameter="{Binding ElementName=Window}"/>
-                        <Button Grid.Column="1" Content="{Binding Path=CommandText}" Margin="10 0 0 0" IsDefault="True" Command="{Binding Command}"/>
+                        <Button Grid.Column="0" Content="ОТМЕНА" IsCancel="True" Margin="0 0 5 0" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding Path=CloseCommand}" CommandParameter="{Binding ElementName=Window}"/>
+                        <Button Grid.Column="1" Content="{Binding Path=CommandText}" Margin="5 0 0 0" IsDefault="True" Command="{Binding Command}"/>
                     </Grid>
                 </Grid>
             </Border>

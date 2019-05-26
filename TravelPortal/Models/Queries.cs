@@ -32,6 +32,21 @@ namespace TravelPortal.Models
                 return $"select * from get_routes_from_agency({_agencyId})";
             }
 
+            public static string InsertRoute(Route route)
+            {
+                return $"select insert_route({_agencyId}, {route.GetParameterList()})";
+            }
+
+            public static string UpdateRoute(Route route)
+            {
+                return $"select update_route({route.GetIdentifiedParameterList()})";
+            }
+
+            public static string DeleteRoute(int id)
+            {
+                return $"select update_route({id})";
+            }
+
             public static string GetVouchers =>
                 $"select * from get_vouchers_from_agency({_agencyId})";
 

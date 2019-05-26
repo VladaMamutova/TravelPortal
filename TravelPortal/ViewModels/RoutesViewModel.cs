@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
@@ -12,10 +13,6 @@ namespace TravelPortal.ViewModels
     /// </summary>
     class RoutesViewModel : ViewModelBase
     {
-        public List<string> HotelCollection { get; }
-        public List<string> CityCollection { get; }
-        public List<string> TransportCollection { get; }
-
         private string _selectedHotel;
         public string SelectedHotel
         {
@@ -93,6 +90,39 @@ namespace TravelPortal.ViewModels
             }
         }
 
+        private List<string> _hotelCollection;
+        public List<string> HotelCollection
+        {
+            get => _hotelCollection;
+            set
+            {
+                _hotelCollection = value;
+                OnPropertyChanged(nameof(HotelCollection));
+            }
+        }
+
+        private List<string> _cityCollection;
+        public List<string> CityCollection
+        {
+            get => _cityCollection;
+            set
+            {
+                _cityCollection = value;
+                OnPropertyChanged(nameof(CityCollection));
+            }
+        }
+
+        private List<string> _transportCollection;
+        public List<string> TransportCollection
+        {
+            get => _transportCollection;
+            set
+            {
+                _transportCollection = value;
+                OnPropertyChanged(nameof(TransportCollection));
+            }
+        }
+
         private ObservableCollection<Route> _collection;
         public ObservableCollection<Route> Collection
         {
@@ -115,7 +145,30 @@ namespace TravelPortal.ViewModels
             }
         }
 
+        private RelayCommand _newRouteCommand;
+        public RelayCommand NewRouteCommand
+        {
+            get
+            {
+                _newRouteCommand = _newRouteCommand ??
+                                 (_newRouteCommand = new RelayCommand(o =>
+                                 {
+                                     OnDialogDisplayRequest(Route.Empty);
+                                     FilterCommand.Execute(null);
+                                 }));
+                return _newRouteCommand;
+            }
+        }
+
         public RoutesViewModel()
+        {
+            HotelCollection = new List<string>();
+            TransportCollection = new List<string>();
+            CityCollection = new List<string>();
+            Collection = new ObservableCollection<Route>();
+        }
+
+        public void LoadFromDb()
         {
             try
             {
@@ -124,12 +177,15 @@ namespace TravelPortal.ViewModels
                 TransportCollection =
                     Dictionaries.GetNameList(DictionaryKind.Transport);
                 CityCollection = Dictionaries.GetNameList(DictionaryKind.City);
+                SelectedDate = DateTime.Now.ToString(CultureInfo.InvariantCulture);
                 Collection =
-                    MainTables.GetRoutes(Queries.MainTables.GetRoutes());
+                    MainTables.GetRoutes(
+                        Queries.MainTables.FilterRoutes(new Route(Route.Empty)
+                            {Date = DateTime.Today}));
             }
             catch (Exception ex)
             {
-                OnMessageBoxDisplayRequest("Ошибка при фильтрации записей", ex.Message);
+                OnMessageBoxDisplayRequest("Ошибка загрузки данных из базы", ex.Message);
             }
         }
 
@@ -161,7 +217,7 @@ namespace TravelPortal.ViewModels
             }
             catch (Exception ex)
             {
-                OnMessageBoxDisplayRequest("Ошибка при фильтрации записей", ex.Message);
+                OnMessageBoxDisplayRequest("Ошибка при получении списка маршрутов", ex.Message);
             }
         }
     }

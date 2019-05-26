@@ -117,21 +117,6 @@ namespace TravelPortal.DataAccessLayer
             }
         }
 
-        public static List<string> GenerateAllTitles()
-        {
-            List<string> titles = new List<string>
-            {
-                "Агенство",
-                "Регистрация",
-                "Город",
-                "Адрес",
-                "Собственность",
-                "Телефон",
-                "Дата основания"
-            };
-            return titles;
-        }
-
         public override bool IsReadyToInsert()
         {
             return base.IsReadyToInsert() && !string.IsNullOrWhiteSpace(Registration) &&

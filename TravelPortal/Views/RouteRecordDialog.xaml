@@ -22,7 +22,7 @@
                         <Grid Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="135"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <ComboBox Grid.Column="0" materialDesign:HintAssist.Hint="Отель" ItemsSource="{Binding HotelCollection}" SelectedItem="{Binding SelectedHotel, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 5 0" />
                             <materialDesign:RatingBar HorizontalAlignment="Center" Grid.Column="1" Value="{Binding SelectedHotelType, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Max="5" Margin="5 0 0 0" IsReadOnly="True" VerticalAlignment="Bottom"></materialDesign:RatingBar>
@@ -30,23 +30,23 @@
                         <Grid Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <ComboBox Grid.Column="0" materialDesign:HintAssist.Hint="Откуда" ItemsSource="{Binding CityFromCollection}" SelectedItem="{Binding SelectedCityFrom, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 5 0"/>
-                            <ComboBox Grid.Column="1" Width="130" materialDesign:HintAssist.Hint="Куда" IsReadOnly="True" Foreground="{StaticResource PrimaryHueLightForegroundBrush}" ItemsSource="{Binding CityToCollection}" SelectedItem="{Binding SelectedCityTo, UpdateSourceTrigger = PropertyChanged, Mode=OneWay}" Margin="5 0 0 0"/>
+                            <ComboBox Grid.Column="1" materialDesign:HintAssist.Hint="Куда" IsReadOnly="True" Foreground="{StaticResource PrimaryHueLightForegroundBrush}" ItemsSource="{Binding CityToCollection}" SelectedItem="{Binding SelectedCityTo, UpdateSourceTrigger = PropertyChanged, Mode=OneWay}" Margin="5 0 0 0"/>
                         </Grid>
                         <Grid Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <ComboBox Grid.Column="0" materialDesign:HintAssist.Hint="Вид транспорта" ItemsSource="{Binding TransportCollection}" SelectedItem="{Binding SelectedTransport, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 5 0"/>
-                            <TextBox Grid.Column="1" MinWidth="130" Foreground="{StaticResource PrimaryHueLightForegroundBrush}" materialDesign:HintAssist.Hint="Стоимость проезда" Margin="5 0 0 0" IsReadOnly="True" Text="{Binding SelectedTransportPrice, UpdateSourceTrigger = PropertyChanged, Mode=OneWay}"/>
+                            <TextBox Grid.Column="1" Foreground="{StaticResource PrimaryHueLightForegroundBrush}" materialDesign:HintAssist.Hint="Стоимость проезда" Margin="5 0 0 0" IsReadOnly="True" Text="{Binding SelectedTransportPrice, UpdateSourceTrigger = PropertyChanged, Mode=OneWay}"/>
                         </Grid>
                         <Grid Margin="0 0 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="Дата начала" SelectedDate="{Binding Route.Date, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="0 0 5 0"/>
                             <TextBox Grid.Column="1" MinWidth="130" materialDesign:HintAssist.Hint="Количество дней" Text="{Binding Route.Duration, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
@@ -54,28 +54,30 @@
                         <CheckBox Content="Питание включено" IsChecked="{Binding Route.Meels, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 5 0 0"/>
                         <Grid Margin="0 15 0 0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Стоимость проживания" Text="{Binding SelectedHotelPrice, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 5 0"/>
-                            <TextBox Grid.Column="1" Width="130" Foreground="{StaticResource PrimaryHueDarkBrush}" materialDesign:HintAssist.Hint="Общая стоимость" Text="{Binding SelectedFullPrice, UpdateSourceTrigger = PropertyChanged, Mode=OneWay}" IsReadOnly="True" Margin="5 0 0 0"/>
+                            <TextBox Grid.Column="1" Foreground="{StaticResource PrimaryHueDarkBrush}" materialDesign:HintAssist.Hint="Общая стоимость" Text="{Binding SelectedFullPrice, UpdateSourceTrigger = PropertyChanged, Mode=OneWay}" IsReadOnly="True" Margin="5 0 0 0"/>
                         </Grid>
-                        <Grid Margin="0 15 0 0" Visibility="{Binding CanAddVoucher}">
+                        <Grid Margin="0 15 0 0" Visibility="{Binding CanUpdateRoute}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Button Content="УДАЛИТЬ" Grid.Column="0" Command="{Binding Command}" Style="{DynamicResource MaterialDesignFlatButton}"/>
-                            <Button Content="{Binding CommandText}" Grid.Column="2" Command="{Binding Command}" Style="{DynamicResource MaterialDesignFlatButton}"/>
-                        </Grid>
-                        <Grid Margin="0 15 0 0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Content="ЗАКРЫТЬ" Margin="10 0 0 0" IsCancel="True" Style="{DynamicResource MaterialDesignFlatButton}"/>
-                            <Button Grid.Column="1" Visibility="{Binding CanAddVoucher}" Content="ОФОРМИТЬ ПУТЁВКУ" Margin="10 0 0 0"/>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <Button Content="УДАЛИТЬ" Margin="0 0 5 0" Command="{Binding DeleteCommand}" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                <Button Content="ИЗМЕНИТЬ" Margin="5 0 5 0" Command="{Binding UpdateCommand}" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            </StackPanel>
+                            <Button Content="ЗАКРЫТЬ" Grid.Column="1" Margin="5 0 0 0" IsCancel="True"/>
+                        </Grid>
+                        <Grid Margin="0 15 0 0" Visibility="{Binding CanAddRoute}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="ОТМЕНА" Grid.Column="0" Margin="0 0 5 0" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Column="1" IsDefault="True" Command="{Binding AddCommand}" Content="ДОБАВИТЬ" Margin="5 0 0 0"/>
                         </Grid>
                     </StackPanel>
                 </Grid>

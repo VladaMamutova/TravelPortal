@@ -7,7 +7,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         FontSize="14"
-        SizeToContent="WidthAndHeight" Width="370" ResizeMode="NoResize" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterOwner">
+        SizeToContent="WidthAndHeight" Width="370" MinWidth="370" ResizeMode="NoResize" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterOwner">
     <Border>
         <Border.Effect>
             <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.8" Color="{StaticResource Accent100Foreground}" />
@@ -34,8 +34,8 @@
                             </StackPanel>
                         </WrapPanel>
                         <TextBox materialDesign:HintAssist.Hint="ФИО клиента" Text="{Binding Customer.Fio, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" TextWrapping="NoWrap" Margin="0 10 0 5"/>
-                        <TextBox materialDesign:HintAssist.Hint="Телефон " Text="{Binding Customer.Phone, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" MaxLength="12" HorizontalAlignment="Stretch"/>
-                        <Button Visibility="Collapsed"
+                        <TextBox materialDesign:HintAssist.Hint="Телефон " Text="{Binding Customer.Phone, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" MaxLength="12" Margin="0 5 0 5" HorizontalAlignment="Stretch"/>
+                        <!--<Button
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             materialDesign:ButtonProgressAssist.Value="-1"
                             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -46,9 +46,9 @@
                                 <materialDesign:PackIcon Kind="UserAlert" Margin="0 2 7 0"></materialDesign:PackIcon>
                                 <TextBlock Text="Проверить клиента по базе"></TextBlock>
                             </StackPanel>
-                        </Button>
+                        </Button>-->
                         <TextBox materialDesign:HintAssist.Hint="Адрес" Text="{Binding Customer.Address, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 5 0 0"/>
-                        <Grid Height="Auto" Margin="0 0 0 0">
+                        <Grid Height="Auto" Margin="0 5 0 5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="10"/>

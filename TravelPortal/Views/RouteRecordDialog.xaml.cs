@@ -13,7 +13,7 @@ namespace TravelPortal.Views
         public RouteRecordDialog(Route route)
         {
             InitializeComponent();
-            DataContext = new RouteRecordViewModel(route);
+            DataContext = new RouteRecordViewModel(route, this);
             ((RouteRecordViewModel) DataContext).MessageBoxDisplayRequested +=
                 (sender, args) => { MessageBox.Show(args.Text, args.Title); };
         }
