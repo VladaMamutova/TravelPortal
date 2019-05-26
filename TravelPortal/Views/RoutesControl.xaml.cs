@@ -52,5 +52,16 @@ namespace TravelPortal.Views
             var view = new VoucherRecordDialog(((RoutesViewModel)DataContext).SelectedItem){Owner = _owner};
             view.ShowDialog();
         }
+
+        private void RouteGrid_OnMouseClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (((RoutesViewModel) DataContext).SelectedItem != null)
+            {
+                var view =
+                    new RouteRecordDialog(((RoutesViewModel) DataContext)
+                        .SelectedItem) {Owner = _owner};
+                view.ShowDialog();
+            }
+        }
     }
 }

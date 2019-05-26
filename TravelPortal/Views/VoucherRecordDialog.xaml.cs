@@ -13,7 +13,7 @@ namespace TravelPortal.Views
         public VoucherRecordDialog(Route route)
         {
             InitializeComponent();
-            HotelName.Text = route.Hotel;
+            HotelName.Text = route.Name;
             Date.Text = route.Date.ToShortDateString();
             DataContext = new VoucherRecordViewModel(route.GetId(), this);
             ((VoucherRecordViewModel)DataContext).MessageBoxDisplayRequested += (sender, e) =>

@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using TravelPortal.DataAccessLayer;
+using TravelPortal.ViewModels;
 
 namespace TravelPortal.Views
 {
@@ -8,9 +10,12 @@ namespace TravelPortal.Views
     /// </summary>
     public partial class RouteRecordDialog : Window
     {
-        public RouteRecordDialog()
+        public RouteRecordDialog(Route route)
         {
             InitializeComponent();
+            DataContext = new RouteRecordViewModel(route);
+            ((RouteRecordViewModel) DataContext).MessageBoxDisplayRequested +=
+                (sender, args) => { MessageBox.Show(args.Text, args.Title); };
         }
 
         private void Move(object sender, MouseButtonEventArgs e)
@@ -18,10 +23,9 @@ namespace TravelPortal.Views
             DragMove();
         }
 
-        private void CloseWindow_OnClick(object sender, RoutedEventArgs e)
+        private void RouteRecordDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
-            //DialogResult = true;
-            Application.Current.Shutdown();
+            ((RouteRecordViewModel) DataContext).Loaded();
         }
     }
 }

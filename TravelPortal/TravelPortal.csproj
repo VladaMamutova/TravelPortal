@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\DictionariesViewModel.cs" />
     <Compile Include="ViewModels\DictionaryRecordViewModel.cs" />
     <Compile Include="ViewModels\DictionaryViewModel.cs" />
+    <Compile Include="ViewModels\RouteRecordViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
     <Compile Include="ViewModels\FilterListItem.cs" />
     <Compile Include="DataAccessLayer\HotelRank.cs" />

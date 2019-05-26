@@ -99,6 +99,12 @@ namespace TravelPortal.Models
                 return $"select delete_{dictionary}" +
                        $"({record.GetId()})";
             }
+
+            public static string GetHotelCityTypeCollection =>
+                "select * from get_hotel_city_type_collection()";
+
+            public static string GetFromToPossibleTransportCollection(string cityFrom, string cityTo) =>
+                $"select * from get_from_to_possible_transport_with_price('{cityFrom}', '{cityTo}')";
         }
 
         public static class Ratings

@@ -8,8 +8,7 @@
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         Background="{DynamicResource MaterialDesignPaper}"
         FontSize="14"
-        Height="600" Width="1200" MinWidth="800" MinHeight="520" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True" WindowStartupLocation="CenterScreen" Loaded="MainWindow_OnLoaded">
-    
+        Height="600" Width="1200" MinWidth="800" MinHeight="520" WindowStyle="None" BorderThickness="2" BorderBrush="{StaticResource PrimaryHueDarkBrush}" ResizeMode="CanResizeWithGrip" AllowsTransparency="True" WindowStartupLocation="CenterScreen" Loaded="MainWindow_OnLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,7 +23,7 @@
                 <Button Margin="15 0 5 0" Width="24" Height="24" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Развернуть" Click="ButtonExpand_Click">
                     <materialDesign:PackIcon Kind="ArrowExpand" Width="23" Height="23"/>
                 </Button>
-                <Button Margin="5 0 5 0" Width="24" Height="24" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Выйти" Click="ButtonClose_Click">
+                <Button Margin="5 0 10 0" Width="24" Height="24" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Выйти" Click="ButtonClose_Click">
                     <materialDesign:PackIcon Kind="Power" Width="24" Height="24"/>
                 </Button>
             </StackPanel>
@@ -48,61 +47,12 @@
                 </Style>
             </dragablz:TabablzControl.ItemContainerStyle>
             <TabControl.ContentTemplate>
-                 <!--TabItem Content Template--> 
+                <!--TabItem Content Template-->
                 <DataTemplate>
                     <UserControl Content="{Binding Content}" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     </UserControl>
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </dragablz:TabablzControl>
-
-
-
-
-        <!--<dragablz:TabablzControl x:Name="TabMenu" ItemsSource="{Binding Tabs}" ContentTemplate="{Binding Content}" MouseLeftButtonDown="Move">
-            <dragablz:TabablzControl.ItemContainerStyle>
-                <Style TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignAlternateDragableTabItemStyle}">
-                    <Setter Property="Width" Value="230" />
-                    --><!--<Setter Property="Height" Value="50"></Setter>-->
-                    <!-- TabItem Header Template -->
-                    <!--<Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    --><!--<materialDesign:PackIcon Kind="{Binding Path=IconKind}" Width="30" Height="30" Margin="10 0"/>--><!--
-                                    <TextBlock Text="{Binding Header}" VerticalAlignment="Center"></TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>--><!--
-                </Style>
-            </dragablz:TabablzControl.ItemContainerStyle>
-        </dragablz:TabablzControl>-->
-
-
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <materialDesign:ColorZone
-            Mode="PrimaryMid" MouseLeftButtonDown="Move">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" x:Name="TabMenu" Orientation="Horizontal" Margin="2"/>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Background="#FF2196F3" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0" MouseLeftButtonDown="Move">
-                    <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="35" Height="35" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
-                        <materialDesign:PackIcon Kind="User" Width="20" Height="20"/>
-                    </Button>
-                    <TextBlock Text="Мамутова В.А." Foreground="WhiteSmoke" VerticalAlignment="Center"/>
-                    <Button x:Name="ButtonClose" Margin="10 0 0 0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="ButtonClose_Click">
-                        <materialDesign:PackIcon Kind="Power" Width="25" Height="25"/>
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </materialDesign:ColorZone>
-        <Frame Grid.Row="1" Content="{Binding Path=SelectedPage}" x:Name="Main" Margin="10" NavigationUIVisibility="Hidden"></Frame>-->
     </Grid>
 </Window>

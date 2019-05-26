@@ -161,6 +161,58 @@ namespace TravelPortal.Models
             }
         }
 
+        public static Dictionary<string, KeyValuePair<string, int>> GetHotelCityTypeCollection()
+        {
+            using (var connection =
+                new NpgsqlConnection(_configuration.ConnectionString))
+            {
+                connection.Open();
+                using (var command = new NpgsqlCommand(
+                    Queries.Dictionaries.GetHotelCityTypeCollection, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.HasRows) return null;
+                        Dictionary<string, KeyValuePair<string, int>> collection
+                            = new Dictionary<string, KeyValuePair<string, int>>();
+                        while (reader.Read())
+                        {
+                            string hotel = reader.GetString(0);
+                            string city = reader.GetString(1);
+                            int type = reader.GetInt32(2);
+                            
+                            collection.Add(hotel, new KeyValuePair<string, int>(city, type));
+                        }
+
+                        return collection;
+                    }
+                }
+            }
+        }
+
+        public static Dictionary<string, double> GetTransportPriceCollection(string from, string to)
+        {
+            using (var connection =
+                new NpgsqlConnection(_configuration.ConnectionString))
+            {
+                connection.Open();
+                using (var command = new NpgsqlCommand(
+                    Queries.Dictionaries.GetFromToPossibleTransportCollection(from, to), connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.HasRows) return null;
+                        Dictionary<string, double> collection = new Dictionary<string, double>();
+
+                        while (reader.Read())
+                            collection.Add(reader.GetString(0), reader.GetDouble(1));
+
+                        return collection;
+                    }
+                }
+            }
+        }
+
         private static ObservableCollection<SimpleRecord> GetTickets()
         {
             using (var connection =

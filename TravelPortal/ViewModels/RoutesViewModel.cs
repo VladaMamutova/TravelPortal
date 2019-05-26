@@ -110,39 +110,7 @@ namespace TravelPortal.ViewModels
             get
             {
                 _filterCommand = _filterCommand ??
-                              (_filterCommand = new RelayCommand(obj =>
-                              {
-                                  DateTime date;
-                                  try
-                                  {
-                                      date = Convert.ToDateTime(SelectedDate,
-                                          new CultureInfo("en-US"));
-                                  }catch { date = new DateTime(1, 1, 1); }
-                                  
-                                  if (!int.TryParse(SelectedDuration, out int duration))
-                                      duration = 0;
-                                  try
-                                  {
-                                      Route route = new Route
-                                      {
-                                          Hotel = SelectedHotel,
-                                          From = SelectedCityFrom,
-                                          To = SelectedCityTo,
-                                          Date = date,
-                                          Duration = duration,
-                                          Transport = SelectedTransport
-                                      };
-
-                                      Collection =
-                                          MainTables.GetRoutes(
-                                              Queries.MainTables
-                                                  .FilterRoutes(route));
-                                  }
-                                  catch (Exception ex)
-                                  {
-                                      OnMessageBoxDisplayRequest("Ошибка при фильтрации записей", ex.Message);
-                                  }
-                              }));
+                              (_filterCommand = new RelayCommand(FilterRoutes));
                 return _filterCommand;
             }
         }
@@ -158,6 +126,38 @@ namespace TravelPortal.ViewModels
                 CityCollection = Dictionaries.GetNameList(DictionaryKind.City);
                 Collection =
                     MainTables.GetRoutes(Queries.MainTables.GetRoutes());
+            }
+            catch (Exception ex)
+            {
+                OnMessageBoxDisplayRequest("Ошибка при фильтрации записей", ex.Message);
+            }
+        }
+
+        public void FilterRoutes(object o)
+        {
+            DateTime date;
+            try
+            {
+                date = Convert.ToDateTime(SelectedDate,
+                    new CultureInfo("en-US"));
+            }
+            catch { date = new DateTime(1, 1, 1); }
+
+            if (!int.TryParse(SelectedDuration, out int duration))
+                duration = 0;
+            try
+            {
+                Route route = new Route(Route.Empty)
+                {
+                    Name = SelectedHotel,
+                    From = SelectedCityFrom,
+                    To = SelectedCityTo,
+                    Date = date,
+                    Duration = duration,
+                    Transport = SelectedTransport
+                };
+
+                Collection = MainTables.GetRoutes(Queries.MainTables.FilterRoutes(route));
             }
             catch (Exception ex)
             {

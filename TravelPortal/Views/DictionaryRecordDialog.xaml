@@ -5,22 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         FontSize="14"
-        SizeToContent="Height" ResizeMode="NoResize" Width="300" WindowStyle="None" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock Padding="10" Text="{Binding Path=Title}" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Move"/>
-        <StackPanel Margin="10" Grid.Row="1">
-            <ItemsControl x:Name="InputBoxes"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10" HorizontalAlignment="Right">
-            <Button Content="{Binding Path=CommandText}" IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}"
-                    Command="{Binding Command}">
-            </Button>
-            <Button Content="ОТМЕНА" IsCancel="True" Margin="10 0 0 0" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding Path=CloseCommand}" CommandParameter="{Binding ElementName=Window}"/>
-        </StackPanel>
-    </Grid>
+        SizeToContent="Height" ResizeMode="NoResize" Width="300" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen">
+    <Border>
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.8" Color="{StaticResource Accent100Foreground}" />
+        </Border.Effect>
+        <Grid Background="White" Margin="20">
+            <Border BorderThickness="1" BorderBrush="{StaticResource PrimaryHueDarkBrush}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Padding="10" Text="{Binding Path=Title}" Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Move"/>
+                    <StackPanel Margin="10" Grid.Row="1">
+                        <ItemsControl x:Name="InputBoxes"/>
+                    </StackPanel>
+                    <Grid Grid.Row="2" Height="Auto" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="ОТМЕНА" IsCancel="True" Margin="10 0 0 0" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding Path=CloseCommand}" CommandParameter="{Binding ElementName=Window}"/>
+                        <Button Grid.Column="1" Content="{Binding Path=CommandText}" Margin="10 0 0 0" IsDefault="True" Command="{Binding Command}"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
 </Window>

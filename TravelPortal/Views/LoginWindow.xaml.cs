@@ -15,9 +15,7 @@ namespace TravelPortal.Views
         public LoginWindow()
         {
             InitializeComponent();
-            //Login.Text = "vlada";
-            //Password.Password = "admin";
-            //SignIn_OnClick(SignIn, new RoutedEventArgs());
+            Login.Focus();
         }
 
         private void Power_MouseDown(object sender, MouseButtonEventArgs e)
@@ -33,13 +31,13 @@ namespace TravelPortal.Views
 
         private void SignIn_OnClick(object sender, RoutedEventArgs e)
         {
-
             string login = Login.Text;
             string password = Password.Password;
             IsEnabled = false;
             LoadingWindow loadingWindow = new LoadingWindow
             {
-                Owner = this, Width = Width, Height = Height
+                Owner = this, Width = Width - 40,
+                Height = Height - 40
             };
             loadingWindow.Show();
 
@@ -66,8 +64,6 @@ namespace TravelPortal.Views
                 }
             });
             connectThread.Start();
-
-            //IsEnabled = true;
         }
 
         private void Login_OnTextChanged(object sender, TextChangedEventArgs e)
