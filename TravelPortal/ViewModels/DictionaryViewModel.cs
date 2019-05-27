@@ -150,7 +150,7 @@ namespace TravelPortal.ViewModels
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Ошибка получения данных");
+                CustomMessageBox.Show("Ошибка получения данных", e.Message);
                 return;
             }
           

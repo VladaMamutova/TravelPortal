@@ -19,7 +19,7 @@ namespace TravelPortal.Views
             {
                 tab.MessageBoxDisplayRequested += (sender, args) =>
                 {
-                    MessageBox.Show(args.Text, args.Title);
+                    CustomMessageBox.Show(args.Title, args.Text);
                 };
 
             }

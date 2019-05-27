@@ -18,7 +18,7 @@ namespace TravelPortal.Views
             DataContext = new VoucherRecordViewModel(route.GetId(), this);
             ((VoucherRecordViewModel)DataContext).MessageBoxDisplayRequested += (sender, e) =>
             {
-                MessageBox.Show(e.Text, e.Title);
+                CustomMessageBox.Show(e.Title, e.Text);
             };
         }
 

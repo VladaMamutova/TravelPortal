@@ -18,7 +18,7 @@ namespace TravelPortal.Views
             _owner = owner;
             DataContext = new RoutesViewModel();
             ((RoutesViewModel)DataContext).MessageBoxDisplayRequested +=
-                (sender, e) => { MessageBox.Show(e.Text, e.Title); };
+                (sender, e) => { CustomMessageBox.Show(e.Title, e.Text); };
             ((RoutesViewModel)DataContext).DialogDisplayRequested +=
                 (sender, e) =>
                 {

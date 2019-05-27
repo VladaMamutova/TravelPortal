@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Npgsql;
 using TravelPortal.Models;
 
 namespace TravelPortal.Views
@@ -58,8 +59,7 @@ namespace TravelPortal.Views
                     {
                         loadingWindow.Hide();
                         IsEnabled = true;
-                        MessageBox.Show(ex.Message + ex.InnerException?.Message,
-                            "Ошибка входа");
+                        CustomMessageBox.Show("Ошибка входа", ex.Message);
                     });
                 }
             });

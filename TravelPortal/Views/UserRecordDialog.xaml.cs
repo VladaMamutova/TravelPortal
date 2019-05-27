@@ -19,7 +19,7 @@ namespace TravelPortal.Views
 
             ((UserRecordViewModel)DataContext).MessageBoxDisplayRequested += (sender, e) =>
             {
-                MessageBox.Show(e.Text, e.Title);
+                CustomMessageBox.Show(e.Title, e.Text);
             };
         }
 

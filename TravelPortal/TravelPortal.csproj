@@ -139,6 +139,9 @@
     <Compile Include="ViewModels\UserRecordViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\VoucherRecordViewModel.cs" />
+    <Compile Include="Views\CustomMessageBox.xaml.cs">
+      <DependentUpon>CustomMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserRecordDialog.xaml.cs">
       <DependentUpon>UserRecordDialog.xaml</DependentUpon>
     </Compile>
@@ -180,6 +183,10 @@
     <Compile Include="Views\RouteRecordDialog.xaml.cs">
       <DependentUpon>RouteRecordDialog.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\CustomMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserRecordDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

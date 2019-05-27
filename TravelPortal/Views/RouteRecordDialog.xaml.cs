@@ -15,7 +15,7 @@ namespace TravelPortal.Views
             InitializeComponent();
             DataContext = new RouteRecordViewModel(route, this);
             ((RouteRecordViewModel) DataContext).MessageBoxDisplayRequested +=
-                (sender, args) => { MessageBox.Show(args.Text, args.Title); };
+                (sender, args) => { CustomMessageBox.Show(args.Title, args.Text); };
         }
 
         private void Move(object sender, MouseButtonEventArgs e)

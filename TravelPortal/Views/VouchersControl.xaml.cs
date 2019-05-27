@@ -17,7 +17,7 @@ namespace TravelPortal.Views
             InitializeComponent();
             DataContext = new VouchersViewModel();
             ((VouchersViewModel) DataContext).MessageBoxDisplayRequested +=
-                (sender, e) => { MessageBox.Show(e.Text, e.Title); };
+                (sender, e) => { CustomMessageBox.Show(e.Title, e.Text); };
 
             // Настраиваем внешний вид таблицы в зависимости от выбранного фильтра.
             // Показываем или скрываем первую колонку с кнопкой "Оформить путёвку" 

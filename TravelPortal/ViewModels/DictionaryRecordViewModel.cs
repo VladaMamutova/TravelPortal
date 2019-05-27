@@ -5,6 +5,7 @@ using System.Windows;
 using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
+using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
@@ -142,7 +143,7 @@ namespace TravelPortal.ViewModels
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                CustomMessageBox.Show("Ошибка при выполнении запроса", e.Message);
             }
         }
 

@@ -21,7 +21,7 @@ namespace TravelPortal.Views
                     new UserRecordDialog(e.Record) {Owner = owner}.ShowDialog();
                 };
             ((UsersViewModel)DataContext).MessageBoxDisplayRequested +=
-                (sender, e) => { MessageBox.Show(e.Text, e.Title); };
+                (sender, e) => { CustomMessageBox.Show(e.Title, e.Text); };
         }
 
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
