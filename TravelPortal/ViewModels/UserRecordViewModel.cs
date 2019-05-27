@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using Npgsql;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 using TravelPortal.Views;
@@ -128,7 +129,9 @@ namespace TravelPortal.ViewModels
                     CommandText == "ДОБАВИТЬ"
                         ? "Ошибка при добавлении пользователя"
                         : "Ошибка при изменении пользователя",
-                    e.Message);
+                    e is PostgresException pex
+                        ? pex.MessageText
+                        : e.Message);
             }
         }
     }

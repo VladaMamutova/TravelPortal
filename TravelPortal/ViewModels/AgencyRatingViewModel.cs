@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using MaterialDesignThemes.Wpf;
+using Npgsql;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
@@ -95,7 +96,10 @@ namespace TravelPortal.ViewModels
             }
             catch (Exception ex)
             {
-                OnMessageBoxDisplayRequest("Ошибка получения списка путёвок", ex.Message);
+                OnMessageBoxDisplayRequest("Ошибка получения списка путёвок",
+                    ex is PostgresException pex
+                        ? pex.MessageText
+                        : ex.Message);
             }
         }
 

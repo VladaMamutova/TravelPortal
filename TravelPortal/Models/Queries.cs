@@ -44,7 +44,7 @@ namespace TravelPortal.Models
 
             public static string DeleteRoute(int id)
             {
-                return $"select update_route({id})";
+                return $"select delete_route({id})";
             }
 
             public static string GetVouchers =>

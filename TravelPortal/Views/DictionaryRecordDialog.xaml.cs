@@ -21,11 +21,11 @@ namespace TravelPortal.Views
 
             DictionaryRecordViewModel viewModel =
                 new DictionaryRecordViewModel(dictionary, this, record);
-            InputBoxes.ItemsSource = GenerateContent(dictionary);
+            InputBoxes.ItemsSource = GenerateContent(dictionary, record);
             DataContext = viewModel;
         }
 
-        private UIElement[] GenerateContent(DictionaryKind dictionary)
+        private UIElement[] GenerateContent(DictionaryKind dictionary, SimpleRecord record)
         {
             List<UIElement> inputs = new List<UIElement>();
             TextBox textBox;
@@ -53,7 +53,9 @@ namespace TravelPortal.Views
                             Mode = BindingMode.TwoWay
                         });
                     HintAssist.SetHint(comboBox, Hotel.GenerateTitle(nameof(Hotel.City)));
-                    comboBox.ItemsSource = Dictionaries.GetNameList(DictionaryKind.City);
+                    comboBox.ItemsSource = Hotel.Empty.Equals(record)
+                        ? Dictionaries.GetNameList(DictionaryKind.City)
+                        : new List<string> {((Hotel) record).City};
                     inputs.Add(comboBox);
 
                     var stackPanel = new StackPanel
@@ -85,7 +87,9 @@ namespace TravelPortal.Views
                             Mode = BindingMode.TwoWay
                         });
                     HintAssist.SetHint(comboBox, Ticket.GenerateTitle(nameof(Ticket.Name)));
-                    comboBox.ItemsSource = Dictionaries.GetNameList(DictionaryKind.Transport);
+                    comboBox.ItemsSource = Ticket.Empty.Equals(record)
+                        ? Dictionaries.GetNameList(DictionaryKind.Transport)
+                        : new List<string> {((Ticket) record).Name};
                     inputs.Add(comboBox);
 
                     content = new Grid { Margin = new Thickness(0, 10, 0, 0) };
@@ -96,13 +100,18 @@ namespace TravelPortal.Views
 
                     comboBox = new ComboBox();
                     comboBox.SetBinding(Selector.SelectedItemProperty,
-                        new Binding(nameof(DictionaryRecordViewModel.Record) + '.' + nameof(Ticket.From))
+                        new Binding(nameof(DictionaryRecordViewModel.Record) +
+                                    '.' + nameof(Ticket.From))
                         {
-                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                            UpdateSourceTrigger =
+                                UpdateSourceTrigger.PropertyChanged,
                             Mode = BindingMode.TwoWay
                         });
-                    HintAssist.SetHint(comboBox, Ticket.GenerateTitle(nameof(Ticket.From)));
-                    comboBox.ItemsSource = Dictionaries.GetNameList(DictionaryKind.City);
+                    HintAssist.SetHint(comboBox,
+                        Ticket.GenerateTitle(nameof(Ticket.From)));
+                    comboBox.ItemsSource = Ticket.Empty.Equals(record)
+                        ? Dictionaries.GetNameList(DictionaryKind.City)
+                        : new List<string> {((Ticket) record).From};
                     comboBox.SetValue(Grid.ColumnProperty, 0);
                     content.Children.Add(comboBox);
 
@@ -112,36 +121,47 @@ namespace TravelPortal.Views
 
                     comboBox = new ComboBox();
                     comboBox.SetBinding(Selector.SelectedItemProperty,
-                        new Binding(nameof(DictionaryRecordViewModel.Record) + '.' + nameof(Ticket.To))
+                        new Binding(nameof(DictionaryRecordViewModel.Record) +
+                                    '.' + nameof(Ticket.To))
                         {
-                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                            UpdateSourceTrigger =
+                                UpdateSourceTrigger.PropertyChanged,
                             Mode = BindingMode.TwoWay
                         });
-                    HintAssist.SetHint(comboBox, Ticket.GenerateTitle(nameof(Ticket.To)));
-                    comboBox.ItemsSource = Dictionaries.GetNameList(DictionaryKind.City);
+                    HintAssist.SetHint(comboBox,
+                        Ticket.GenerateTitle(nameof(Ticket.To)));
+                    comboBox.ItemsSource = Ticket.Empty.Equals(record)
+                        ? Dictionaries.GetNameList(DictionaryKind.City)
+                        : new List<string> {((Ticket) record).To};
                     comboBox.SetValue(Grid.ColumnProperty, 2);
                     content.Children.Add(comboBox);
                     inputs.Add(content);
 
                     textBox = new TextBox { Margin = new Thickness(0, 10, 0, 0) };
                     textBox.SetBinding(TextBox.TextProperty,
-                        new Binding(nameof(DictionaryRecordViewModel.Record) + '.' + nameof(Ticket.Cost))
+                        new Binding(nameof(DictionaryRecordViewModel.Record) +
+                                    '.' + nameof(Ticket.Cost))
                         {
-                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                            UpdateSourceTrigger =
+                                UpdateSourceTrigger.PropertyChanged,
                             Mode = BindingMode.TwoWay
                         });
-                    HintAssist.SetHint(textBox, Ticket.GenerateTitle(nameof(Ticket.Cost)));
+                    HintAssist.SetHint(textBox,
+                        Ticket.GenerateTitle(nameof(Ticket.Cost)));
                     inputs.Add(textBox);
                     break;
                 case DictionaryKind.Agency:
                     textBox = new TextBox();
                     textBox.SetBinding(TextBox.TextProperty,
-                        new Binding(nameof(DictionaryRecordViewModel.Record) + '.' + nameof(Agency.Name))
+                        new Binding(nameof(DictionaryRecordViewModel.Record) +
+                                    '.' + nameof(Agency.Name))
                         {
-                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                            UpdateSourceTrigger =
+                                UpdateSourceTrigger.PropertyChanged,
                             Mode = BindingMode.TwoWay
                         });
-                    HintAssist.SetHint(textBox, Agency.GenerateTitle(nameof(Agency.Name)));
+                    HintAssist.SetHint(textBox,
+                        Agency.GenerateTitle(nameof(Agency.Name)));
                     inputs.Add(textBox);
 
                     content = new Grid { Margin = new Thickness(0, 10, 0, 0) };

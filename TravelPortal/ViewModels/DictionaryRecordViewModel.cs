@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using Npgsql;
 using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
@@ -143,7 +144,10 @@ namespace TravelPortal.ViewModels
             }
             catch (Exception e)
             {
-                CustomMessageBox.Show("Ошибка при выполнении запроса", e.Message);
+                CustomMessageBox.Show("Ошибка при выполнении запроса",
+                    e is PostgresException pex
+                        ? pex.MessageText
+                        : e.Message);
             }
         }
 

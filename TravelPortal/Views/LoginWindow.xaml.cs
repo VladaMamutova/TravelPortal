@@ -59,7 +59,10 @@ namespace TravelPortal.Views
                     {
                         loadingWindow.Hide();
                         IsEnabled = true;
-                        CustomMessageBox.Show("Ошибка входа", ex.Message);
+                        CustomMessageBox.Show("Ошибка входа",
+                            ex is PostgresException pex
+                                ? pex.MessageText
+                                : ex.Message);
                     });
                 }
             });

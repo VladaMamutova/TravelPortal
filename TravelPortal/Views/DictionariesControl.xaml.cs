@@ -21,7 +21,6 @@ namespace TravelPortal.Views
                 {
                     CustomMessageBox.Show(args.Title, args.Text);
                 };
-
             }
         }
 

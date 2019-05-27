@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using Npgsql;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
@@ -32,10 +33,12 @@ namespace TravelPortal.ViewModels
                     MainTables.Execute(Queries.MainTables.InsertVoucher(_routeId, Customer));
                     _owner.Hide();
                 }
-                catch (Exception exception)
+                catch (Exception ex)
                 {
                     OnMessageBoxDisplayRequest("Ошибка при оформлении путёвки",
-                        exception.Message);
+                        ex is PostgresException pex
+                            ? pex.MessageText
+                            : ex.Message);
                 }
             },
             o => Customer.IsReadyToInsert());

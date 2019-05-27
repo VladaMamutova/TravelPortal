@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:TravelPortal.Views"
         mc:Ignorable="d"
         FontSize="14"
-    SizeToContent="WidthAndHeight" Width="350" MaxWidth="400" ResizeMode="NoResize" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen">
+    SizeToContent="WidthAndHeight" Width="350" MaxWidth="450" ResizeMode="NoResize" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Border>
         <Border.Effect>
             <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.8" Color="{StaticResource Accent100Foreground}" />
         </Border.Effect>
-        <Grid Background="{StaticResource PrimaryHueLightBrush}" Margin="20">
+        <Grid Background="PowderBlue" Margin="20">
             <Border BorderThickness="1" BorderBrush="{StaticResource PrimaryHueDarkBrush}">
                 <StackPanel>
                     <TextBlock x:Name="Title" FontSize="16" Padding="10" TextWrapping="Wrap" MinHeight="20" Foreground="{StaticResource MaterialDesignDarkForeground}" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Title_OnMouseLeftButtonDown"></TextBlock>
-                    <TextBlock x:Name="Message" Margin="0 10" Padding="10" TextWrapping="Wrap"></TextBlock>
-                    <Button Content="OK" IsDefault="True" Width="100" Margin="10" Click="Ok_OnClick"></Button>
+                    <TextBlock x:Name="Message" Padding="10" TextWrapping="Wrap"></TextBlock>
+                    <Button Content="OK" IsDefault="True" Width="100" Margin="10 0 10 15" Click="Ok_OnClick"></Button>
                 </StackPanel>
             </Border>
         </Grid>

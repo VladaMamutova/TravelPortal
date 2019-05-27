@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Npgsql;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
@@ -70,7 +71,10 @@ namespace TravelPortal.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        OnMessageBoxDisplayRequest("Ошибка отмены путёвки", ex.Message);
+                        OnMessageBoxDisplayRequest("Ошибка отмены путёвки",
+                            ex is PostgresException pex
+                                ? pex.MessageText
+                                : ex.Message);
                     }
                 }, o => SelectedItem != null);
                 return _cancelCommand;
@@ -105,7 +109,10 @@ namespace TravelPortal.ViewModels
             }
             catch (Exception ex)
             {
-                OnMessageBoxDisplayRequest("Ошибка получения списка путёвок", ex.Message);
+                OnMessageBoxDisplayRequest("Ошибка получения списка путёвок",
+                    ex is PostgresException pex
+                        ? pex.MessageText
+                        : ex.Message);
             }
         }
     }

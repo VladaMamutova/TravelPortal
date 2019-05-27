@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using Npgsql;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
@@ -213,9 +214,25 @@ namespace TravelPortal.ViewModels
         {
             _hotelCityTypeDictionary =
                 Dictionaries.GetHotelCityTypeCollection();
-            // Получаем две статические коллекции.
-            HotelCollection = _hotelCityTypeDictionary.Keys.ToList();
-            CityFromCollection = Dictionaries.GetNameList(DictionaryKind.City);
+            if (CanUpdateRoute == Visibility.Visible)
+            {
+                if (_hotelCityTypeDictionary.ContainsKey(Route.Name))
+                {
+                    KeyValuePair<string, int> hotelInfo =
+                        _hotelCityTypeDictionary[Route.Name];
+                    _hotelCityTypeDictionary.Clear();
+                    _hotelCityTypeDictionary.Add(Route.Name, hotelInfo);
+                    HotelCollection = _hotelCityTypeDictionary.Keys.ToList();
+                    CityFromCollection = new List<string> {Route.From};
+                }
+            }
+            else
+            {
+                // Получаем две статические коллекции.
+                HotelCollection = _hotelCityTypeDictionary.Keys.ToList();
+                CityFromCollection =
+                    Dictionaries.GetNameList(DictionaryKind.City);
+            }
 
             // Устанавливаем выбранные элементы.
             SelectedHotel = Route.Name; // В свойcтве также получаем и устанавливаем
@@ -234,7 +251,10 @@ namespace TravelPortal.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        OnMessageBoxDisplayRequest("Ошибка добавления маршрута", ex.Message);
+                        OnMessageBoxDisplayRequest("Ошибка добавления маршрута",
+                            ex is PostgresException pex
+                                ? pex.MessageText
+                                : ex.Message);
                     }
                 },
                 o =>
@@ -243,19 +263,51 @@ namespace TravelPortal.ViewModels
                     Route.From = SelectedCityFrom;
                     Route.To = SelectedCityTo;
                     Route.Transport = SelectedTransport;
+                    Route.HotelPrice = SelectedHotelPrice;
                     return Route.IsReadyToInsert();
                 });
             OnPropertyChanged(nameof(AddCommand));
-            UpdateCommand = new RelayCommand(o => { }, o =>
+
+            UpdateCommand = new RelayCommand(o =>
             {
-                Route.Name = SelectedHotel;
-                Route.From = SelectedCityFrom;
-                Route.To = SelectedCityTo;
+                try
+                {
+                    MainTables.ExecuteAddUpdateQuery(
+                        Queries.MainTables.UpdateRoute(Route));
+                    _window.Hide();
+                }
+                catch (Exception ex)
+                {
+                    OnMessageBoxDisplayRequest("Ошибка изменения маршрута",
+                        ex is PostgresException pex
+                            ? pex.MessageText
+                            : ex.Message);
+                }
+            }, o =>
+            {
                 Route.Transport = SelectedTransport;
+                Route.HotelPrice = SelectedHotelPrice;
                 return Route.IsReadyToInsert() &&
                        !Route.Equals(_sourceRoute);
             });
             OnPropertyChanged(nameof(UpdateCommand));
+
+            DeleteCommand = new RelayCommand(o =>
+            {
+                try
+                {
+                    MainTables.Execute(Queries.MainTables.DeleteRoute(Route.GetId()));
+                    _window.Hide();
+                }
+                catch (Exception ex)
+                {
+                    OnMessageBoxDisplayRequest("Ошибка удаления маршрута",
+                        ex is PostgresException pex
+                            ? pex.MessageText
+                            : ex.Message);
+                }
+            });
+            OnPropertyChanged(nameof(DeleteCommand));
         }
 
         public void TryUpdateTransportCollection()
@@ -280,7 +332,9 @@ namespace TravelPortal.ViewModels
             {
                 OnMessageBoxDisplayRequest(
                     "Ошибка получения билетов на любой из видов транспорта",
-                    ex.Message);
+                    ex is PostgresException pex
+                        ? pex.MessageText
+                        : ex.Message);
             }
         }
     }

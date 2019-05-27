@@ -54,7 +54,7 @@ namespace TravelPortal.DataAccessLayer
             set
             {
                 _duration = value;
-                OnPropertyChanged(nameof(From));
+                OnPropertyChanged(nameof(Duration));
             }
         }
 
@@ -186,7 +186,8 @@ namespace TravelPortal.DataAccessLayer
 
         public override string GetIdentifiedParameterList()
         {
-            return $"{Id}, {GetParameterList()}";
+            return $"{Id}, '{Transport}', '{new NpgsqlDate(Date)}', " +
+                   $"{Duration}, {HotelPrice}, {Meels}";
         }
 
         public string GetParameterListForFilter()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Npgsql;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
@@ -89,7 +90,9 @@ namespace TravelPortal.ViewModels
                                   }
                                   catch (Exception e)
                                   {
-                                      OnMessageBoxDisplayRequest("Ошибка удаления сотрудника", e.Message);
+                                      OnMessageBoxDisplayRequest("Ошибка удаления сотрудника", e is PostgresException pex
+                                          ? pex.MessageText
+                                          : e.Message);
                                   }
                                   UpdateCollection();
                                   SelectedItem = null;
@@ -109,7 +112,10 @@ namespace TravelPortal.ViewModels
             }
             catch (Exception e)
             {
-                OnMessageBoxDisplayRequest("Ошибка получения данных", e.Message);
+                OnMessageBoxDisplayRequest("Ошибка получения данных",
+                    e is PostgresException pex
+                        ? pex.MessageText
+                        : e.Message);
             }
         }
     }

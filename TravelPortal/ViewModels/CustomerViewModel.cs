@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Npgsql;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
 
@@ -79,7 +80,11 @@ namespace TravelPortal.ViewModels
                                   }
                                   catch (Exception ex)
                                   {
-                                      OnMessageBoxDisplayRequest("Ошибка при фильтрации записей", ex.Message);
+                                      OnMessageBoxDisplayRequest(
+                                          "Ошибка при фильтрации записей",
+                                          ex is PostgresException pex
+                                              ? pex.MessageText
+                                              : ex.Message);
                                   }
                               }));
                 return _filterCommand;

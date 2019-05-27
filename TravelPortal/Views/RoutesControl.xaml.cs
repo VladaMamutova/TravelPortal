@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using TravelPortal.DataAccessLayer;
@@ -69,13 +70,24 @@ namespace TravelPortal.Views
 
         private void RouteGrid_OnMouseClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (((RoutesViewModel) DataContext).SelectedItem != null)
+            if(!(DataContext is RoutesViewModel model))
+                return;
+            if (model.SelectedItem != null)
             {
+                int id = model.SelectedItem.GetId();
                 var view =
-                    new RouteRecordDialog(((RoutesViewModel) DataContext)
-                        .SelectedItem) {Owner = _owner};
+                    new RouteRecordDialog(model.SelectedItem) {Owner = _owner};
                 view.ShowDialog();
+                model.FilterCommand.Execute(null);
+                model.SelectedItem =
+                    model.Collection.FirstOrDefault(
+                        route => route.GetId() == id);
             }
+        }
+        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((DataGrid)sender).SelectedItem != null)
+                ((DataGrid)sender).ScrollIntoView(((DataGrid)sender).SelectedItem);
         }
     }
 }
