@@ -10,12 +10,12 @@ namespace TravelPortal.Views
     /// </summary>
     public partial class VoucherRecordDialog : Window
     {
-        public VoucherRecordDialog(Route route)
+        public VoucherRecordDialog(Route route, Customer customer)
         {
             InitializeComponent();
             HotelName.Text = route.Name;
             Date.Text = route.Date.ToShortDateString();
-            DataContext = new VoucherRecordViewModel(route.GetId(), this);
+            DataContext = new VoucherRecordViewModel(route.GetId(), customer, this);
             ((VoucherRecordViewModel)DataContext).MessageBoxDisplayRequested += (sender, e) =>
             {
                 CustomMessageBox.Show(e.Title, e.Text);

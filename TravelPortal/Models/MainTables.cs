@@ -12,17 +12,17 @@ namespace TravelPortal.Models
 {
     public static class MainTables
     {
-        private static readonly Configuration _configuration;
+        private static readonly Configuration Configuration;
 
         static MainTables()
         {
-            _configuration = Configuration.GetConfiguration();
+            Configuration = Configuration.GetConfiguration();
         }
 
         public static void Execute(string query)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command =
@@ -36,7 +36,7 @@ namespace TravelPortal.Models
         public static object ExecuteAddUpdateQuery(string query)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command =
@@ -50,7 +50,7 @@ namespace TravelPortal.Models
         public static ObservableCollection<Route> GetRoutes(string query)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand(query, connection))
@@ -89,7 +89,7 @@ namespace TravelPortal.Models
         public static ObservableCollection<Voucher> GetVouchers(string query)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand(query, connection))
@@ -127,10 +127,10 @@ namespace TravelPortal.Models
         public static ObservableCollection<Customer> GetCustomers(string query = "")
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
-                    query == "" ? Queries.MainTables.GetCustomers() : query, connection))
+                    query == "" ? Queries.MainTables.GetCustomers : query, connection))
                 {
                     connection.Open();
                     using (var reader = command.ExecuteReader())
@@ -163,7 +163,7 @@ namespace TravelPortal.Models
         public static ObservableCollection<User> GetUsers()
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
                     Queries.Dictionaries.SelectAll(DictionaryKind.User), connection))
@@ -203,7 +203,7 @@ namespace TravelPortal.Models
         public static User GetCurrentUser(string login)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
                     Queries.GetUser(login), connection))
@@ -242,7 +242,7 @@ namespace TravelPortal.Models
             ref IList<string> headers)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(query, connection))
                 {
@@ -299,7 +299,7 @@ namespace TravelPortal.Models
         public static List<HotelRank> GetHotelRankCollection()
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
                     Queries.Ratings.RankHotels(), connection))
@@ -367,7 +367,7 @@ namespace TravelPortal.Models
         public static void CheckUserPassword(string userId, string password)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.GetConnectionStringForUser(userId, password)))
+                new NpgsqlConnection(Configuration.GetConnectionStringForUser(userId, password)))
             {
                 connection.Open();
             }

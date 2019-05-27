@@ -57,37 +57,35 @@ namespace TravelPortal.ViewModels
             Collection = MainTables.GetCustomers();
         }
 
-         private RelayCommand _filterCommand;
+        private RelayCommand _filterCommand;
         public RelayCommand FilterCommand
         {
             get
             {
                 _filterCommand = _filterCommand ??
-                              (_filterCommand = new RelayCommand(obj =>
-                              {
-                                  try
-                                  {
-                                      Customer customer = new Customer
-                                      {
-                                         Fio = SelectedFio,
-                                         Phone =  SelectedPhoneNumber
-                                      };
-
-                                      Collection =
-                                          MainTables.GetCustomers(
-                                              Queries.MainTables
-                                                  .FilterCustomers(customer));
-                                  }
-                                  catch (Exception ex)
-                                  {
-                                      OnMessageBoxDisplayRequest(
-                                          "Ошибка при фильтрации записей",
-                                          ex is PostgresException pex
-                                              ? pex.MessageText
-                                              : ex.Message);
-                                  }
-                              }));
+                                 (_filterCommand =
+                                     new RelayCommand(FilterCustomers));
                 return _filterCommand;
+            }
+        }
+
+        void FilterCustomers(object o)
+        {
+            try
+            {
+                Customer customer = new Customer(Customer.Empty)
+                {
+                    Name = SelectedFio,
+                    Phone = SelectedPhoneNumber
+                };
+
+                Collection = MainTables.GetCustomers(
+                        Queries.MainTables.FilterCustomers(customer));
+            }
+            catch (Exception ex)
+            {
+                OnMessageBoxDisplayRequest("Ошибка при фильтрации записей",
+                    ex is PostgresException pex ? pex.MessageText : ex.Message);
             }
         }
     }

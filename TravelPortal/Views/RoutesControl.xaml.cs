@@ -64,7 +64,7 @@ namespace TravelPortal.Views
 
         private void AddVoucher_Click(object sender, RoutedEventArgs e)
         {
-            var view = new VoucherRecordDialog(((RoutesViewModel)DataContext).SelectedItem){Owner = _owner};
+            var view = new VoucherRecordDialog(((RoutesViewModel)DataContext).SelectedItem, Customer.Empty){Owner = _owner};
             view.ShowDialog();
         }
 

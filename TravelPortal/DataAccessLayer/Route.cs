@@ -115,7 +115,8 @@ namespace TravelPortal.DataAccessLayer
         static Route()
         {
             Empty = new Route(-1, "", "", "",
-                DateTime.Today, 0, false, "", 0, 0, 0); }
+                DateTime.Today, 0, false, "", 0, 0, 0);
+        }
 
         public Route(Route route) : base(route.Id, route.Name)
         {

@@ -1,5 +1,4 @@
 ﻿using System;
-using NpgsqlTypes;
 using TravelPortal.DataAccessLayer;
 
 namespace TravelPortal.Models
@@ -76,14 +75,14 @@ namespace TravelPortal.Models
                 $"select * from filter_route({_agencyId}, {example.GetParameterListForFilter()})";
 
             public static string FilterCustomers(Customer customer) =>
-                $"select * from filter_customer({_agencyId}, '{customer.Fio}', '{customer.Phone}')";
+                $"select * from filter_customer({_agencyId}, '{customer.Name}', '{customer.Phone}')";
 
-            public static string GetCustomers()
-            {
-                if (_role == Roles.Admin)
-                    return "select * from customer_view";
-                return $"select * from get_customers_from_agency({_agencyId})";
-            }
+            public static string GetCustomers =>
+                $"select * from get_customers_from_agency({_agencyId})";
+        
+            public static string UpdateCustomer(Customer customer) =>
+                $"select update_customer({_agencyId}, {customer.GetIdentifiedParameterList()})";
+
         }
 
         public static class Dictionaries

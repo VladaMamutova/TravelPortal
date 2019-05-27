@@ -9,11 +9,11 @@ namespace TravelPortal.Models
 {
     static class Dictionaries
     {
-        private static readonly Configuration _configuration;
+        private static readonly Configuration Configuration;
 
         static Dictionaries()
         {
-            _configuration = Configuration.GetConfiguration();
+            Configuration = Configuration.GetConfiguration();
         }
 
         public static ObservableCollection<SimpleRecord> GetDictionary(
@@ -32,7 +32,7 @@ namespace TravelPortal.Models
             DictionaryKind dictionary)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand(
@@ -55,7 +55,7 @@ namespace TravelPortal.Models
         public static object ExecuteQuery(string query)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command =
@@ -70,7 +70,7 @@ namespace TravelPortal.Models
             DictionaryKind dictionary)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand(
@@ -98,7 +98,7 @@ namespace TravelPortal.Models
         private static ObservableCollection<SimpleRecord> GetAgencies()
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 using (var command = new NpgsqlCommand(
                     Queries.Dictionaries.SelectAll(DictionaryKind.Agency), connection))
@@ -134,7 +134,7 @@ namespace TravelPortal.Models
         private static ObservableCollection<SimpleRecord> GetHotels()
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand(
@@ -164,7 +164,7 @@ namespace TravelPortal.Models
         public static Dictionary<string, KeyValuePair<string, int>> GetHotelCityTypeCollection()
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand(
@@ -193,7 +193,7 @@ namespace TravelPortal.Models
         public static Dictionary<string, double> GetTransportPriceCollection(string from, string to)
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand(
@@ -216,7 +216,7 @@ namespace TravelPortal.Models
         private static ObservableCollection<SimpleRecord> GetTickets()
         {
             using (var connection =
-                new NpgsqlConnection(_configuration.ConnectionString))
+                new NpgsqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
                 using (var command = new NpgsqlCommand(

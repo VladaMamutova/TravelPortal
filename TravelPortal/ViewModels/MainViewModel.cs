@@ -40,7 +40,7 @@ namespace TravelPortal.ViewModels
                         new TabViewModel("Путёвки".ToUpper(),
                             new VouchersControl()),
                         new TabViewModel("Клиенты".ToUpper(),
-                            new CustomersControl())
+                            new CustomersControl(owner))
                     };
                     break;
                 }

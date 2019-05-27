@@ -21,7 +21,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ListBox Grid.Row="0" FontSize="16" Margin="10" ItemsSource="{Binding Filters}" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}" Style="{StaticResource MaterialDesignToolToggleListBox}">
+            <ListBox Grid.Row="0" FontSize="16" Margin="10 10 10 5" ItemsSource="{Binding Filters}" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}" Style="{StaticResource MaterialDesignToolToggleListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"/>

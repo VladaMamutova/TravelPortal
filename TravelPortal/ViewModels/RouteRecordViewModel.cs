@@ -182,6 +182,8 @@ namespace TravelPortal.ViewModels
         public string CaptionText { get; }
         public Visibility CanAddRoute { get; }
         public Visibility CanUpdateRoute { get; }
+        public Visibility CancelOnly { get; }
+        public bool ReadOnly { get; }
 
         private readonly Window _window;
 
@@ -193,12 +195,25 @@ namespace TravelPortal.ViewModels
                 CaptionText = "Добавление маршрута";
                 CanAddRoute = Visibility.Visible;
                 CanUpdateRoute = Visibility.Collapsed;
+                CancelOnly = Visibility.Collapsed;
+                ReadOnly = false;
             }
-            else if (route.CanAddVoucher == Visibility.Visible)
+            else
             {
                 CaptionText = "Просмотр маршрута";
                 CanAddRoute = Visibility.Collapsed;
-                CanUpdateRoute = Visibility.Visible;
+                if (route.CanAddVoucher == Visibility.Visible)
+                {
+                    CanUpdateRoute = Visibility.Visible;
+                    CancelOnly = Visibility.Collapsed;
+                    ReadOnly = false;
+                }
+                else
+                {
+                    CanUpdateRoute = Visibility.Collapsed;
+                    CancelOnly = Visibility.Visible;
+                    ReadOnly = true;
+                }
             }
 
             _sourceRoute = route;
@@ -214,7 +229,7 @@ namespace TravelPortal.ViewModels
         {
             _hotelCityTypeDictionary =
                 Dictionaries.GetHotelCityTypeCollection();
-            if (CanUpdateRoute == Visibility.Visible)
+            if (CanUpdateRoute == Visibility.Visible || ReadOnly)
             {
                 if (_hotelCityTypeDictionary.ContainsKey(Route.Name))
                 {
@@ -286,7 +301,6 @@ namespace TravelPortal.ViewModels
             }, o =>
             {
                 Route.Transport = SelectedTransport;
-                Route.HotelPrice = SelectedHotelPrice;
                 return Route.IsReadyToInsert() &&
                        !Route.Equals(_sourceRoute);
             });

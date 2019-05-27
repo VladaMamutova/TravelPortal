@@ -11,6 +11,7 @@ namespace TravelPortal.ViewModels
     {
         private readonly Window _owner;
         private readonly int _routeId;
+        private Customer _sourceCustomer;
         private Customer _customer;
         public Customer Customer
         {
@@ -22,40 +23,86 @@ namespace TravelPortal.ViewModels
             }
         }
 
-        public bool IsInProgress { get; set; }
         public List<string> StatusCollection { get; }
 
-        public RelayCommand AddVoucher => new RelayCommand(
-            e =>
+        public Visibility AddVoucherVisibility { get; }
+        public Visibility UpdateCustomerVisibility { get; }
+        public bool UpdateCustomer { get; }
+
+        public RelayCommand AddVoucherCommand
+        {
+            get
             {
-                try
-                {
-                    MainTables.Execute(Queries.MainTables.InsertVoucher(_routeId, Customer));
-                    _owner.Hide();
-                }
-                catch (Exception ex)
-                {
-                    OnMessageBoxDisplayRequest("Ошибка при оформлении путёвки",
-                        ex is PostgresException pex
-                            ? pex.MessageText
-                            : ex.Message);
-                }
-            },
-            o => Customer.IsReadyToInsert());
+                return new RelayCommand(
+                    e =>
+                    {
+                        try
+                        {
+                            MainTables.Execute(
+                                Queries.MainTables.InsertVoucher(_routeId,
+                                    Customer));
+                            _owner.Hide();
+                        }
+                        catch (Exception ex)
+                        {
+                            OnMessageBoxDisplayRequest(
+                                "Ошибка при оформлении путёвки",
+                                ex is PostgresException pex
+                                    ? pex.MessageText
+                                    : ex.Message);
+                        }
+                    },
+                    o => Customer.IsReadyToInsert());
+            }
+        }
 
-        public RelayCommand CheckCustomer => new RelayCommand(
-            e => { IsInProgress = true; },
-            o => !string.IsNullOrWhiteSpace(Customer.Fio) ||
-                 !string.IsNullOrWhiteSpace(Customer.Phone));
+        public RelayCommand UpdateCustomerCommand
+        {
+            get
+            {
+                return new RelayCommand(
+                    e =>
+                    {
+                        try
+                        {
+                            MainTables.ExecuteAddUpdateQuery(
+                                Queries.MainTables.UpdateCustomer(Customer));
+                            _owner.Hide();
+                        }
+                        catch (Exception ex)
+                        {
+                            OnMessageBoxDisplayRequest(
+                                "Ошибка при изменении данных клиента",
+                                ex is PostgresException pex
+                                    ? pex.MessageText
+                                    : ex.Message);
+                        }
+                    },
+                    o => Customer.IsReadyToInsert() &&
+                         !Customer.Equals(_sourceCustomer));
+            }
+        }
 
-        public VoucherRecordViewModel(int routeId, Window owner)
+        public VoucherRecordViewModel(int routeId, Customer customer, Window owner)
         {
             _owner = owner;
-            Customer = new Customer();
             _routeId = routeId;
-            IsInProgress = false;
             StatusCollection =
                 Dictionaries.GetNameList(DictionaryKind.Status);
+            _sourceCustomer = customer;
+            Customer = new Customer(customer);
+            if (Customer.Empty.Equals(customer))
+            {
+                AddVoucherVisibility = Visibility.Visible;
+                UpdateCustomerVisibility = Visibility.Collapsed;
+                UpdateCustomer = false;
+            }
+            else
+            {
+                AddVoucherVisibility = Visibility.Collapsed;
+                UpdateCustomerVisibility = Visibility.Visible;
+                UpdateCustomer = true;
+            }
         }
     }
 }

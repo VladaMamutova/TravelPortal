@@ -49,7 +49,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="Дата начала" SelectedDate="{Binding Route.Date, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="0 0 5 0"/>
-                            <TextBox Grid.Column="1" MinWidth="130" materialDesign:HintAssist.Hint="Количество дней" Text="{Binding Route.Duration, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                            <TextBox Grid.Column="1" IsReadOnly="{Binding ReadOnly}" MinWidth="130" materialDesign:HintAssist.Hint="Количество дней" Text="{Binding Route.Duration, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
                         </Grid>
                         <CheckBox Content="Питание включено" IsChecked="{Binding Route.Meels, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 5 0 0"/>
                         <Grid Margin="0 15 0 0">
@@ -57,7 +57,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Стоимость проживания" Text="{Binding SelectedHotelPrice, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 5 0"/>
+                            <TextBox Grid.Column="0" IsReadOnly="{Binding ReadOnly}" materialDesign:HintAssist.Hint="Стоимость проживания" Text="{Binding SelectedHotelPrice, UpdateSourceTrigger = PropertyChanged, Mode=TwoWay}" Margin="0 0 5 0"/>
                             <TextBox Grid.Column="1" Foreground="{StaticResource PrimaryHueDarkBrush}" materialDesign:HintAssist.Hint="Общая стоимость" Text="{Binding SelectedFullPrice, UpdateSourceTrigger = PropertyChanged, Mode=OneWay}" IsReadOnly="True" Margin="5 0 0 0"/>
                         </Grid>
                         <Grid Margin="0 15 0 0" Visibility="{Binding CanUpdateRoute}">
@@ -79,6 +79,7 @@
                             <Button Content="ОТМЕНА" Grid.Column="0" Margin="0 0 5 0" IsCancel="True" Style="{StaticResource MaterialDesignFlatButton}"/>
                             <Button Grid.Column="1" IsDefault="True" Command="{Binding AddCommand}" Content="ДОБАВИТЬ" Margin="5 0 0 0"/>
                         </Grid>
+                        <Button Margin="0 15 0 0" Visibility="{Binding CancelOnly}" Content="ЗАКРЫТЬ" IsCancel="True"/>
                     </StackPanel>
                 </Grid>
             </Border>
