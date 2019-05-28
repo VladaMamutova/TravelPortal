@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 using Npgsql;
 using TravelPortal.DataAccessLayer;
@@ -25,10 +26,11 @@ namespace TravelPortal.ViewModels
 
         public List<string> StatusCollection { get; }
 
+        public string CaptionText { get; }
         public Visibility AddVoucherVisibility { get; }
         public Visibility UpdateCustomerVisibility { get; }
         public bool UpdateCustomer { get; }
-
+        
         public RelayCommand AddVoucherCommand
         {
             get
@@ -38,6 +40,11 @@ namespace TravelPortal.ViewModels
                     {
                         try
                         {
+                            Regex regex = new Regex(@"^\+7(9[0-9]{2}|495|499)\d{7}$");
+                            if (!regex.IsMatch(Customer.Phone))
+                                throw new Exception("Номер должен быть введён в международном формате (+7), " +
+                                                    "затем должен быть указан префикс региона и оператора " +
+                                                    "(900-999, для городских - 495 или 499), далее семь цифр.");
                             MainTables.Execute(
                                 Queries.MainTables.InsertVoucher(_routeId,
                                     Customer));
@@ -65,6 +72,11 @@ namespace TravelPortal.ViewModels
                     {
                         try
                         {
+                            Regex regex = new Regex(@"^\+7(9[0-9]{2}|495|499)\d{7}$");
+                            if (!regex.IsMatch(Customer.Phone))
+                                throw new Exception("Номер должен быть введён в международном формате (+7), " +
+                                                    "затем должен быть указан префикс региона и оператора " +
+                                                    "(900-999, для городских - 495 или 499), далее семь цифр.");
                             MainTables.ExecuteAddUpdateQuery(
                                 Queries.MainTables.UpdateCustomer(Customer));
                             _owner.Hide();
@@ -93,12 +105,14 @@ namespace TravelPortal.ViewModels
             Customer = new Customer(customer);
             if (Customer.Empty.Equals(customer))
             {
+                CaptionText = "Оформление путёвки";
                 AddVoucherVisibility = Visibility.Visible;
                 UpdateCustomerVisibility = Visibility.Collapsed;
                 UpdateCustomer = false;
             }
             else
             {
+                CaptionText = "Просмотр данных клиента";
                 AddVoucherVisibility = Visibility.Collapsed;
                 UpdateCustomerVisibility = Visibility.Visible;
                 UpdateCustomer = true;

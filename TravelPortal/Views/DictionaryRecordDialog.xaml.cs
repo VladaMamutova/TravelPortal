@@ -22,6 +22,10 @@ namespace TravelPortal.Views
             DictionaryRecordViewModel viewModel =
                 new DictionaryRecordViewModel(dictionary, this, record);
             InputBoxes.ItemsSource = GenerateContent(dictionary, record);
+            viewModel.MessageBoxDisplayRequested += (sender, e) =>
+            {
+                CustomMessageBox.Show(e.Title, e.Text);
+            };
             DataContext = viewModel;
         }
 

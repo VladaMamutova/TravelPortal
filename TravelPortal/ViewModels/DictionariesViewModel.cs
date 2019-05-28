@@ -8,18 +8,18 @@ namespace TravelPortal.ViewModels
     {
         public ObservableCollection<DictionaryViewModel> DictionariesTabs { get; }
 
-        public DictionariesViewModel(Window owner)
+        public DictionariesViewModel()
         {
             DictionariesTabs =
                 new ObservableCollection<DictionaryViewModel>
                 {
-                    new DictionaryViewModel(DictionaryKind.Agency, owner),
-                    new DictionaryViewModel(DictionaryKind.Hotel, owner),
-                    new DictionaryViewModel(DictionaryKind.Ticket, owner),
-                    new DictionaryViewModel(DictionaryKind.Transport, owner),
-                    new DictionaryViewModel(DictionaryKind.City, owner),
-                    new DictionaryViewModel(DictionaryKind.Ownership, owner),
-                    new DictionaryViewModel(DictionaryKind.Status, owner)
+                    new DictionaryViewModel(DictionaryKind.Agency),
+                    new DictionaryViewModel(DictionaryKind.Hotel),
+                    new DictionaryViewModel(DictionaryKind.Ticket),
+                    new DictionaryViewModel(DictionaryKind.Transport),
+                    new DictionaryViewModel(DictionaryKind.City),
+                    new DictionaryViewModel(DictionaryKind.Ownership),
+                    new DictionaryViewModel(DictionaryKind.Status)
                 };
         }
     }

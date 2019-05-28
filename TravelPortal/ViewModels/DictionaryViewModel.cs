@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using MaterialDesignThemes.Wpf;
 using Npgsql;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
-using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
@@ -14,15 +12,13 @@ namespace TravelPortal.ViewModels
     {
         public string Title { get; }
         public PackIconKind IconKind { get; }
+        public DictionaryKind Dictionary { get; }
 
-        private readonly DictionaryKind _dictionary;
-        private readonly Window _owner;
-
-        public DictionaryViewModel(DictionaryKind dictionary, Window owner)
+        
+        public DictionaryViewModel(DictionaryKind dictionary)
         {
-            _dictionary = dictionary;
-            _owner = owner;
-            switch (_dictionary)
+            Dictionary = dictionary;
+            switch (Dictionary)
             {
                 case DictionaryKind.Transport:
                     Title = "Вид транспорта";
@@ -50,7 +46,7 @@ namespace TravelPortal.ViewModels
                     GenerateTitleFunc = Hotel.GenerateTitle;
                     break;
                 case DictionaryKind.Ticket:
-                    Title = "Билеты на проезд";
+                    Title = "Проездные билеты";
                     IconKind = PackIconKind.Cards;
                     GenerateTitleFunc = Ticket.GenerateTitle;
                     break;
@@ -97,7 +93,7 @@ namespace TravelPortal.ViewModels
                 try
                 {
                     Dictionaries.ExecuteQuery(
-                        Queries.Dictionaries.Delete(_dictionary,
+                        Queries.Dictionaries.Delete(Dictionary,
                             (SimpleRecord) _selectedItem));
                 }
                 catch (Exception ex)
@@ -113,7 +109,7 @@ namespace TravelPortal.ViewModels
         private void ShowDialog(object o)
         {
             SimpleRecord recordCopy;
-            switch (_dictionary)
+            switch (Dictionary)
             {
                 case DictionaryKind.Hotel:
                     recordCopy = new Hotel(o != null ? (Hotel) o : Hotel.Empty);
@@ -133,9 +129,8 @@ namespace TravelPortal.ViewModels
                     break;
             }
 
-            var view = new DictionaryRecordDialog(_dictionary, recordCopy) {Owner = _owner};
-            view.ShowDialog();
-
+            OnDialogDisplayRequest(recordCopy);
+            
             UpdateCollection();
             SelectedItem = Collection.SingleOrDefault(i => 
                     ((SimpleRecord)i).GetId() == recordCopy.GetId());
@@ -149,18 +144,18 @@ namespace TravelPortal.ViewModels
             ObservableCollection<SimpleRecord> collection;
             try
             {
-                collection = Dictionaries.GetDictionary(_dictionary);
+                collection = Dictionaries.GetDictionary(Dictionary);
             }
             catch (Exception e)
             {
-                CustomMessageBox.Show("Ошибка получения данных",
+                OnMessageBoxDisplayRequest("Ошибка получения данных",
                     e is PostgresException pex
                         ? pex.MessageText
                         : e.Message);
                 return;
             }
           
-            switch (_dictionary)
+            switch (Dictionary)
             {
                 case DictionaryKind.Hotel:
                     foreach (var item in collection)

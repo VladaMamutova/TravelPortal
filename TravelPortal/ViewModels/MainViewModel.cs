@@ -28,6 +28,7 @@ namespace TravelPortal.ViewModels
             }
             else AgencyVisibility = Visibility.Hidden;
 
+            // Генерация меню в зависимости от роли текущего пользователя.
             switch (Configuration.GetConfiguration().CurrentUser.Role)
             {
                 // Меню рядового сотрудника туристического портала.
@@ -57,13 +58,15 @@ namespace TravelPortal.ViewModels
                     break;
                 }
 
-                // Меню администратора БД.
+                // Меню администратора комплекса.
                 case Roles.Admin:
                 {
                     Tabs = new ObservableCollection<TabViewModel>
                     {
-                        new TabViewModel("Сотрудники портала".ToUpper(), new UsersControl(owner)),
-                        new TabViewModel("Cправочные таблицы".ToUpper(), new DictionariesControl(owner))
+                        new TabViewModel("Сотрудники портала".ToUpper(),
+                            new UsersControl(owner)),
+                        new TabViewModel("Cправочные таблицы".ToUpper(),
+                            new DictionariesControl(owner))
                     };
                     break;
                 }

@@ -20,7 +20,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Background="{StaticResource PrimaryHueMidBrush}" MouseLeftButtonDown="Move">
-                        <TextBlock Text="Оформление путёвки" Padding="5" TextAlignment="Center" Foreground="WhiteSmoke" FontSize="20" materialDesign:ShadowAssist.ShadowDepth="Depth0" />
+                        <TextBlock Text="{Binding CaptionText}" Padding="5" TextAlignment="Center" Foreground="WhiteSmoke" FontSize="20" materialDesign:ShadowAssist.ShadowDepth="Depth0" />
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
                         <WrapPanel Margin="0 0 10 0" Visibility="{Binding AddVoucherVisibility}">

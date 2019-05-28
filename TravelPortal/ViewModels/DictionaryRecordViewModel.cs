@@ -1,16 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 using Npgsql;
 using TravelPortal.Annotations;
 using TravelPortal.DataAccessLayer;
 using TravelPortal.Models;
-using TravelPortal.Views;
 
 namespace TravelPortal.ViewModels
 {
-    public class DictionaryRecordViewModel :INotifyPropertyChanged
+    public class DictionaryRecordViewModel : ViewModelBase
     {
         private SimpleRecord _record;
         private readonly SimpleRecord _sourceRecord;
@@ -86,9 +85,22 @@ namespace TravelPortal.ViewModels
 
             if (SimpleRecord.Empty.Equals(record))
                 Command = new RelayCommand(
-                    o => Execute(
+                    o =>
+                    {
+                        if (dictionary == DictionaryKind.Agency)
+                        {
+                            Regex regex = new Regex(@"^\+7(9[0-9]{2}|495|499)\d{7}$");
+                            if (!regex.IsMatch(((Agency)Record).Phone)){
+                                OnMessageBoxDisplayRequest("Ошибка добавления", "Номер должен быть введён в международном формате (+7), " +
+                                                                                      "затем должен быть указан префикс региона и оператора " +
+                                                                                      "(900-999, для городских - 495 или 499), далее семь цифр.");
+                                return;
+                            }
+                        }
+                        Execute(
                         Queries.Dictionaries.Insert(dictionary, Record),
-                        window), o => Record.IsReadyToInsert());
+                        window);
+                    }, o => Record.IsReadyToInsert());
             else
             {
                 switch (dictionary)
@@ -113,9 +125,16 @@ namespace TravelPortal.ViewModels
                         break;
                     case DictionaryKind.Agency:
                         Command = new RelayCommand(
-                            o => Execute(
-                                Queries.Dictionaries.Update(dictionary,
-                                    Record), window),
+                            o =>
+                            {
+                                Regex regex = new Regex(@"^\+7(9[0-9]{2}|495|499)\d{7}$");
+                                if (!regex.IsMatch(((Agency)Record).Phone))
+                                    OnMessageBoxDisplayRequest("Ошибка изменения данных", "Номер должен быть введён в международном формате (+7), " +
+                                                        "затем должен быть указан префикс региона и оператора " +
+                                                        "(900-999, для городских - 495 или 499), далее семь цифр.");
+                                else Execute(Queries.Dictionaries.Update(dictionary,
+                                        Record), window);
+                            },
                             o => Record.IsReadyToInsert() &&
                                  !((Agency)Record).Equals(
                                      (Agency)_sourceRecord));
@@ -144,21 +163,11 @@ namespace TravelPortal.ViewModels
             }
             catch (Exception e)
             {
-                CustomMessageBox.Show("Ошибка при выполнении запроса",
+                OnMessageBoxDisplayRequest("Ошибка изменения данных",
                     e is PostgresException pex
                         ? pex.MessageText
                         : e.Message);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(
-            [CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this,
-                new PropertyChangedEventArgs(propertyName));
         }
     }
 }

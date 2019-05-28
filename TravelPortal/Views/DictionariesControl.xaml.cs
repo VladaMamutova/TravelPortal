@@ -14,12 +14,19 @@ namespace TravelPortal.Views
         public DictionariesControl(Window owner)
         {
             InitializeComponent();
-            DataContext = new DictionariesViewModel(owner);
+            DataContext = new DictionariesViewModel();
             foreach (var tab in ((DictionariesViewModel)DataContext).DictionariesTabs)
             {
                 tab.MessageBoxDisplayRequested += (sender, args) =>
                 {
                     CustomMessageBox.Show(args.Title, args.Text);
+                };
+
+                tab.DialogDisplayRequested += (sender, args) =>
+                {
+                    if(!(args.Record is SimpleRecord record)) return;
+                    var view = new DictionaryRecordDialog(tab.Dictionary, record) { Owner = owner };
+                    view.ShowDialog();
                 };
             }
         }
