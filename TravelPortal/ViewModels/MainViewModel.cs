@@ -50,7 +50,7 @@ namespace TravelPortal.ViewModels
                 {
                     Tabs = new ObservableCollection<TabViewModel>
                     {
-                        new TabViewModel("Рейтинг агенств".ToUpper(),
+                        new TabViewModel("Рейтинг агентств".ToUpper(),
                             new AgencyRatingControl()),
                         new TabViewModel("Рейтинг отелей".ToUpper(),
                             new HotelRatingControl()),

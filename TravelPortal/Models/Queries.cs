@@ -5,18 +5,15 @@ namespace TravelPortal.Models
 {
     public static class Queries
     {
-        private static Roles _role;
         private static int _agencyId;
 
         static Queries()
         {
-            _role = Roles.None;
             _agencyId = -1;
         }
 
-        public static void SetRole(Roles role, int agencyId)
+        public static void SetRole(int agencyId)
         {
-            _role = role;
             _agencyId = agencyId;
         }
 
@@ -24,40 +21,23 @@ namespace TravelPortal.Models
 
         public static class MainTables
         {
-            public static string GetRoutes()
-            {
-                if (_role == Roles.Admin)
-                    return "select * from route_view";
-                return $"select * from get_routes_from_agency({_agencyId})";
-            }
+            public static string InsertRoute(Route route) =>
+                $"select insert_route({_agencyId}, {route.GetParameterList()})";
 
-            public static string InsertRoute(Route route)
-            {
-                return $"select insert_route({_agencyId}, {route.GetParameterList()})";
-            }
-
-            public static string UpdateRoute(Route route)
-            {
-                return $"select update_route({route.GetIdentifiedParameterList()})";
-            }
-
-            public static string DeleteRoute(int id)
-            {
-                return $"select delete_route({id})";
-            }
+            public static string UpdateRoute(Route route) =>
+                $"select update_route({route.GetIdentifiedParameterList()})";
+        
+            public static string DeleteRoute(int id) =>
+                $"select delete_route({id})";
 
             public static string GetVouchers =>
                 $"select * from get_vouchers_from_agency({_agencyId})";
 
-            public static string InsertVoucher(int routeId, Customer customer)
-            {
-                return $"select insert_voucher({routeId}, {customer.GetParameterList()})";
-            }
+            public static string InsertVoucher(int routeId, Customer customer) =>
+                $"select insert_voucher({routeId}, {customer.GetParameterList()})";
 
-            public static string CancelVoucher(int voucherId)
-            {
-                return $"select cancel_voucher({voucherId})";
-            }
+            public static string CancelVoucher(int voucherId) =>
+                $"select cancel_voucher({voucherId})";
 
             public static string GetTodayVouchers =>
                 $"select * from get_today_vouchers_from_agency({_agencyId})";
@@ -94,25 +74,17 @@ namespace TravelPortal.Models
                 $"select * from {dictionary}_view";
 
             public static string Insert(DictionaryKind dictionary,
-                SimpleRecord record)
-            {
-                return $"select insert_{dictionary}" +
-                       $"({record.GetParameterList()})";
-            }
+                SimpleRecord record) =>
+                $"select insert_{dictionary}({record.GetParameterList()})";
 
             public static string Update(DictionaryKind dictionary,
-                SimpleRecord record)
-            {
-                return $"select update_{dictionary}" +
-                       $"({record.GetIdentifiedParameterList()})";
-            }
+                SimpleRecord record) =>
+                $"select update_{dictionary}" +
+                $"({record.GetIdentifiedParameterList()})";
 
             public static string Delete(DictionaryKind dictionary,
-                SimpleRecord record)
-            {
-                return $"select delete_{dictionary}" +
-                       $"({record.GetId()})";
-            }
+                SimpleRecord record) =>
+                $"select delete_{dictionary}({record.GetId()})";
 
             public static string GetHotelCityTypeCollection =>
                 "select * from get_hotel_city_type_collection()";
@@ -150,36 +122,12 @@ namespace TravelPortal.Models
 
         public static class Users
         {
-            public static string SelectAgenciesWithStaff =>
-                "select * from get_agencies_with_staff()"; // user_view
+            public static string AddUser(User user, string password) =>
+                $"select add_user({user.GetParameterList()}, '{password}')";
 
-            public static string AddUser(User user, string password)
-            {
-                switch (user.Role)
-                {
-                    case Roles.Employee:
-                        return
-                            $"select add_employee({user.GetParameterList()}, '{password}')";
-                    case Roles.Supervisor:
-                        return
-                            $"select add_supervisor({user.GetParameterList()}, '{password}')";
-                    default: throw new ArgumentException(nameof(user.Role));
-                }
-            }
-
-            public static string UpdateUser(User user, string password)
-            {
-                switch (user.Role)
-                {
-                    case Roles.Employee:
-                        return
-                            $"select update_employee({user.GetIdentifiedParameterList()}, '{password}')";
-                    case Roles.Supervisor:
-                        return
-                            $"select update_supervisor({user.GetIdentifiedParameterList()}, '{password}')";
-                    default: throw new ArgumentException(nameof(user.Role));
-                }
-            }
+            public static string UpdateUser(User user, string password) =>
+                $"select update_user({user.GetIdentifiedParameterList()}, " +
+                $"'{password}')";
 
             public static string DeleteUser(int userId) =>
                 $"select delete_user({userId})";

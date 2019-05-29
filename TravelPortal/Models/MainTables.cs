@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using Microsoft.Office.Interop.Excel;
 using Npgsql;
 using NpgsqlTypes;
 using TravelPortal.DataAccessLayer;
@@ -331,22 +332,23 @@ namespace TravelPortal.Models
         public static void SaveHotelsRankToExcel(List<HotelRank> collection)
         {
             // Создаём объект приложения Excel и новый рабочий лист.
-            Microsoft.Office.Interop.Excel.Application excelApp =
-                new Microsoft.Office.Interop.Excel.Application();
+            Application excelApp = new Application();
             excelApp.Application.Workbooks.Add(Type.Missing);
-            
-            // Подписываем заголовки столбцов и вычисляем ширину ячейки так,
-            // так чтобы все значения в неё вмещались без обрезки.
-            excelApp.Cells[1, 1] = "Название отеля";
-            excelApp.Columns[1].ColumnWidth = collection.Max(hotel => hotel.Name.Length) + 2;
-            excelApp.Cells[1, 2] = "Город";
-            excelApp.Columns[2].ColumnWidth = collection.Max(hotel => hotel.City.Length) + 2;
-            excelApp.Cells[1, 3] = "Категория (кол-во звёзд)";
-            excelApp.Columns[3].ColumnWidth = 23;
-            excelApp.Cells[1, 4] = "Количество путёвок (шт.)";
-            excelApp.Columns[4].ColumnWidth = 23;
-            excelApp.Cells[1, 5] = "Популярность (%)";
-            excelApp.Columns[5].ColumnWidth = 17;
+
+            // Подписываем заголовки столбцов и изменяем стиль ячеек заголовков.
+            string[] headers = new[]
+            {
+                "Название отеля", "Город", "Категория (кол-во звёзд)",
+                "Количество путёвок (шт.)", "Популярность (%)"
+            };
+            for (int i = 0; i < 5; i++)
+            {
+                excelApp.Cells[1, i + 1] = headers[i];
+                excelApp.Cells[1, i + 1].Font.Bold = true;
+                excelApp.Cells[1, i + 1].Interior.Color =
+                    System.Drawing.ColorTranslator.ToOle(System.Drawing.Color
+                        .LightSkyBlue);
+            }
 
             // Выводим данные.
             for (int i = 0; i < collection.Count; i++)
@@ -359,7 +361,12 @@ namespace TravelPortal.Models
                 excelApp.Cells[i + 2, 5] = collection[i].Popularity
                     .ToString(CultureInfo.InvariantCulture);
             }
-
+            excelApp.Cells[collection.Count + 2, 1] = "Итого";
+            excelApp.Cells[collection.Count + 2, 1].Font.Bold = true;
+            excelApp.Cells[collection.Count + 2, 4] =
+                collection.Sum(hotel => hotel.VoucherClount);
+            excelApp.Cells[collection.Count + 2, 4].Font.Bold = true;
+            excelApp.Columns.AutoFit();
             // Для отображения полученного результата, показываем документ.
             excelApp.Visible = true;
         }

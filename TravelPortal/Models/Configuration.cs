@@ -82,7 +82,7 @@ namespace TravelPortal.Models
                         throw new Exception(
                             "Не удалось авторизировать пользователя.");
                     CurrentUser = MainTables.GetCurrentUser(userId);
-                    Queries.SetRole(currentRole, CurrentUser.GetAgencyId());
+                    Queries.SetRole(CurrentUser.GetAgencyId());
                 }
             }
             catch

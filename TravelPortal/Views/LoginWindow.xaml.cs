@@ -53,7 +53,7 @@ namespace TravelPortal.Views
                         loadingWindow.Hide();
                     });
                 }
-                catch (Exception ex)
+                catch
                 {
                     Dispatcher.Invoke(() =>
                     {

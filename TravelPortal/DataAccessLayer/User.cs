@@ -105,8 +105,7 @@ namespace TravelPortal.DataAccessLayer
 
         public override string GetParameterList()
         {
-            return base.GetParameterList() + $", '{Login}'" +
-                   (Role == Roles.Employee ? $", '{Agency}'" : "");
+            return $"{(int)Role}, '{Name}', '{Login}', '{Agency}'";
         }
 
         public override string GetIdentifiedParameterList()
